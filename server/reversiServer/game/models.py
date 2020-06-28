@@ -9,3 +9,10 @@ class Game(models.Model):
 
     def __str__(self):
         return self.gid
+
+    def save(self):
+        pass
+    
+    def get_queryset(self):
+        print("Overwritten")
+        pass
