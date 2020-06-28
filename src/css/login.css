@@ -1,0 +1,16 @@
+.center{
+    margin: auto;
+}
+
+.fullScreen{
+    height:100vh;
+    overflow: hidden;
+}
+
+body {
+    background-color: gainsboro;
+}
+
+.white-background{
+    background-color: white;
+}
