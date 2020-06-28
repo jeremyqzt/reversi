@@ -4,4 +4,4 @@ from game.models import Game
 class gameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
-        fields = '__all__'
+        fields = ('gid', 'pid', 'moveX', 'moveY', 'moveTime')

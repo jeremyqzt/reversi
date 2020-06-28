@@ -6,3 +6,6 @@ class Game(models.Model):
     moveX = models.IntegerField()
     moveY = models.IntegerField()
     moveTime = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.gid

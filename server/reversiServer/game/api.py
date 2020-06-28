@@ -1,8 +1,11 @@
-from game.models import Game
-from rest_framework import viewsets, permissions
+#from game.models import Game
+from rest_framework import permissions, views, response, status
 from .serializer import gameSerializer
+from .gameLogic import gameLogic
+from .models import Game
 
-class gameViewSet(viewsets.ModelViewSet):
-    queryset = Game.objects.all()
-    permissions_classes= [permissions.AllowAny]
-    serializer_class = gameSerializer
+class gameViewSet(views.APIView):
+    def get(self, request):
+        serializer = gameSerializer(Game.objects.all(), many=True)
+        return response.Response({"game": serializer.data})
+ 
