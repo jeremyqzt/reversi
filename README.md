@@ -20,8 +20,10 @@ node ./dbStarter.js
 
 ## FrontEnd
 
-The frontend is based off of React, it sits in the project root. Run it using
+The frontend is based off of React, it sits in the project root. Run it using:
 ```
 npm start
 ```
+
+Login/register is functional currently. logging in will return a Json web token for access. next step is to save to local storage.
 
