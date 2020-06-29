@@ -11,6 +11,7 @@ python manage.py runserver
 ## DB Server Aspect
 This db server is a simple in-memeory db for storing game states. It will be managed internally using plain http post/gets. 3 instances are spun up based on the config file.
 The logic of which DB to use will be decided by the django server.
+
 Go to the db server direction and run:
 ```
 cd  nodeDb
