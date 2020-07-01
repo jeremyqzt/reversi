@@ -23,10 +23,14 @@ class Piece extends Component {
   }
 
   render(){
-    console.log(this.props)
     let color = this.props.rendeDetails.background ? "blackBoard": "whiteBoard";
+    let hasPiece = this.props.rendeDetails.hasPiece;
+    let pieceColor = (this.props.rendeDetails.piece === pieceVal.WHITE) ? "whitePiece": "blackPiece";
+    console.log(hasPiece)
     return (
-      <div className={`flex-item ${color}`}></div>
+      <div className={`flex-item ${color}`}>
+        {hasPiece && <div className={`circle ${pieceColor}`}></div>}
+      </div>
     );
   };
 }

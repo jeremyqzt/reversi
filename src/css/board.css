@@ -1,11 +1,23 @@
 
 
 .whiteBoard{
-    background: wheat;
-}
+    background: white;
+    border: 1px solid black;
+  }
 
 .blackBoard{
-    background: black;
+    background: #505160;
+    border: 1px solid black;
+}
+
+.whitePiece{
+  background: lavender;
+  border: 2px solid black;
+}
+
+.blackPiece{
+  background: black;
+  border: 2px solid lavender;
 }
 
 .flex-container {
@@ -21,13 +33,16 @@
   justify-content: space-around;
 
 }
-#circle {
-  width: 85%;
-  height: 85%;
-  background: black;
+.circle {
+  width: 65%;
+  height: 65%;
   -moz-border-radius: 50px;
   -webkit-border-radius: 50px;
   border-radius: 50px;
+}
+
+.circle:hover {
+  border: 2px solid #fcba03;
 }
 
 .flex-item {
@@ -39,11 +54,10 @@
   justify-content: center;
   align-items: center;
   margin: 0px;
-  border:1px solid white;
 }
 
 .flex-item:hover{
-border-color: black;
+  border: 1px solid #fcba03;
 }
 
 .flex-item:after {
