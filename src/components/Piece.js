@@ -35,7 +35,7 @@ class Piece extends Component {
     let hasPiece = this.state.hasPiece;
     let pieceColor = (this.state.piece === pieceVal.WHITE) ? "whitePiece": "blackPiece";
     return (
-      <div className={`flex-item ${color}`} onClick={e => this.props.rendeDetails.action(e, this.props.rendeDetails.row, this.props.rendeDetails.col, this.setPiece)}>
+      <div className={`flex-item ${color}`} onClick={e => this.props.rendeDetails.action(e, this.props.rendeDetails.row, this.props.rendeDetails.col, this)}>
         {hasPiece && <div className={`circle ${pieceColor}`}></div>}
       </div>
     );

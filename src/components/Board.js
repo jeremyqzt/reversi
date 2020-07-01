@@ -12,10 +12,12 @@ class Board extends Component {
         }
       }
 
-      handleClick = (e, i, j, clickFunc) => {
-        console.log(e.target)
-        console.log(`${i} ${j}`);
-        clickFunc(pieceVal.BLACK);
+      handleClick = (e, i, j, piece) => {
+        //console.log(e.target)
+        //console.log(`${i} ${j}`);
+        if (!piece.hasPieceAlready()){
+          piece.setPiece(pieceVal.BLACK);
+        }
       }
 
       initBoard = (x,y) =>{
