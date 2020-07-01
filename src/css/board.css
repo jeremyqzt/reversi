@@ -1,11 +1,11 @@
 
 
 .whiteBoard{
-    background-color: wheat;
+    background: wheat;
 }
 
 .blackBoard{
-    background-color: black;
+    background: black;
 }
 
 .flex-container {
@@ -35,9 +35,7 @@
   width: 100%;
   display: flex;
   font-size: 20px;
-  color: white;
   font-weight: bold;
-  background: tomato;
   justify-content: center;
   align-items: center;
   margin: 0px;

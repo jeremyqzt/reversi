@@ -18,9 +18,14 @@ class Board extends Component {
         let background = true;
         for (let i = 0; i < x; i++){
             for (let j = 0; j < y; j++){
-              row.push(<Piece />);
+              let pieceProps = {
+                background: background,
+                piece: pieceVal.EMPTY,
+              }
+              row.push(<Piece rendeDetails={pieceProps} />);
               background = !background;
             }
+          background = !background;
           grid.push(<div className = "flex-container">{ row } </div>);
           row = [];
         }
@@ -35,7 +40,6 @@ class Board extends Component {
     
       render(){
       let grid = this.state.grid;
-      console.log(grid);
         return (
         <body><div className="container">{grid}</div></body>
         );
