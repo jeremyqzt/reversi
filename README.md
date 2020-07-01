@@ -27,3 +27,9 @@ npm start
 
 Login/register is functional currently. logging in will return a Json web token for access. next step is to save to local storage.
 
+The Django server must be started first for this to work.
+
+## Todo
+
+Webpack the react add and server with Django
+
