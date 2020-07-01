@@ -40,7 +40,7 @@ class Board extends Component {
               background = !background;
             }
           background = !background;
-          grid.push(<div className = "flex-container">{ row } </div>);
+          grid.push(<div key={`R${i}`}className= "flex-container">{ row } </div>);
           row = [];
         }
         return grid;
@@ -55,7 +55,7 @@ class Board extends Component {
       render(){
       let grid = this.state.grid;
         return (
-        <div className="container"><div class = "row"><div class = "col-9">{grid}</div></div></div>
+        <div className="container"><div className = "row"><div className = "col-9">{grid}</div></div></div>
         );
       };
 }
