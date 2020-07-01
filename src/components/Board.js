@@ -12,12 +12,10 @@ class Board extends Component {
         }
       }
 
-      initPieces(grid, piece, x, y){
-        let pieceProps = {
-          //background: background,
-          piece: piece,
-        }
-        grid[x][y] = <Piece rendeDetails={pieceProps} />;
+      handleClick = (e, i, j, clickFunc) => {
+        console.log(e.target)
+        console.log(`${i} ${j}`);
+        clickFunc(pieceVal.BLACK);
       }
 
       initBoard = (x,y) =>{
@@ -35,6 +33,9 @@ class Board extends Component {
                 background: background,
                 piece: piece,
                 hasPiece: hasPiece,
+                row: i,
+                col: j,
+                action: this.handleClick,
               }
               row.push(<Piece key={`R${i}C${j}`} rendeDetails={pieceProps} />);
               background = !background;

@@ -12,22 +12,30 @@ class Piece extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        squareValue: pieceVal.EMPTY,
+        hasPiece: this.props.rendeDetails.hasPiece,
+        piece: this.props.rendeDetails.piece,
+        background: this.props.rendeDetails.background,
     }
   }
 
   setPiece = (val) => {
+    console.log(this);
     this.setState({
-        squareValue: val,
+        piece: val,
+        hasPiece:  true,
     });
   }
 
+  hasPieceAlready = () => {
+    return this.state.hasPiece;
+  }
+
   render(){
-    let color = this.props.rendeDetails.background ? "blackBoard": "whiteBoard";
-    let hasPiece = this.props.rendeDetails.hasPiece;
-    let pieceColor = (this.props.rendeDetails.piece === pieceVal.WHITE) ? "whitePiece": "blackPiece";
+    let color = this.state.background ? "blackBoard": "whiteBoard";
+    let hasPiece = this.state.hasPiece;
+    let pieceColor = (this.state.piece === pieceVal.WHITE) ? "whitePiece": "blackPiece";
     return (
-      <div className={`flex-item ${color}`}>
+      <div className={`flex-item ${color}`} onClick={e => this.props.rendeDetails.action(e, this.props.rendeDetails.row, this.props.rendeDetails.col, this.setPiece)}>
         {hasPiece && <div className={`circle ${pieceColor}`}></div>}
       </div>
     );

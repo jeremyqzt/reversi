@@ -80,8 +80,8 @@ class LoginPage extends Component {
         <body>
           <div className="d-flex fullScreen">
             <form className="white-background justify-content-center center text-center border border-light p-5 shadow" onSubmit={this.handleSubmit}>
-                <p className="h2">Reversi</p>
-                <p className="mb-4">{this.state.login}</p>
+                <p className="h2 noSelect">Reversi</p>
+                <p className="mb-4 noSelect">{this.state.login}</p>
                 <input type="email" id="email" className="form-control mb-4" placeholder="E-mail" value={this.email} onChange={this.onChange} />
                 <input type="password" id="password" className="form-control mb-4" placeholder="Password" value={this.pwd1} onChange={this.onChange} />
                 {this.state.signup && <input type="password" id="passwordConfirm" className="form-control mb-4" placeholder="Confirm Password" value={this.passwordConfirm} onChange={this.onChange} />}
