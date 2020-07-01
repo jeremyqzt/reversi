@@ -20,7 +20,7 @@ class Board extends Component {
         grid[x][y] = <Piece rendeDetails={pieceProps} />;
       }
 
-      initBoard(x,y){
+      initBoard = (x,y) =>{
         let grid = [];
         let row = []
         let background = true;
@@ -55,7 +55,9 @@ class Board extends Component {
       render(){
       let grid = this.state.grid;
         return (
-        <div className="container"><div className = "row"><div className = "col-8">{grid}</div></div></div>
+          <div className = "col-8">
+            {grid}
+          </div>
         );
       };
 }

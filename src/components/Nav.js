@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Nav extends Component {
   render(){
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow mb-5" >
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow mb-2" >
             <h6 className="navbar-brand">Reversi!</h6>
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav mr-auto">
