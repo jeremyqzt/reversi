@@ -10,7 +10,7 @@ const pieceVal = {
 
 class Piece extends Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {
         squareValue: pieceVal.EMPTY,
     }
@@ -23,11 +23,11 @@ class Piece extends Component {
   }
 
   render(){
+    //let color = this.props.value.background ? "blackBoard": "whiteBoard";
     return (
-        <div class="col-xs-3 square">
-        </div>
+      <div className="flex-item"></div>
     );
   };
 }
 
-export default Piece;
+export {Piece, pieceVal} ;
