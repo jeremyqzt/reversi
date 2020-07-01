@@ -55,7 +55,7 @@ class Board extends Component {
       render(){
       let grid = this.state.grid;
         return (
-        <div className="container"><div className = "row"><div className = "col-9">{grid}</div></div></div>
+        <div className="container"><div className = "row"><div className = "col-8">{grid}</div></div></div>
         );
       };
 }
