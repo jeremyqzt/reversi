@@ -21,10 +21,14 @@ class Board extends Component {
         }
       }
 
+      registerPiece = (i, j, obj) => {
+        this.gridRef[i][j] = obj;
+        console.log(this.gridRef);
+      }
+
       initBoard = (x,y) =>{
         let grid = [];
         let row = []
-        let rowRef = []
         let background = true;
         for (let i = 0; i < x; i++){
             for (let j = 0; j < y; j++){
@@ -40,20 +44,17 @@ class Board extends Component {
                 row: i,
                 col: j,
                 action: this.handleClick,
+                registration: this.registerPiece,
               }
               //let pieceToRender = this.createComponent("Piece", pieceProps);
               //row.push(pieceToRender);
-              let item = React.createRef();
-              row.push(<Piece key={`R${i}C${j}`} rendeDetails={pieceProps} ref={item}/>);
-              console.log(item.current);
-              rowRef.push(item);
+              row.push(<Piece key={`R${i}C${j}`} rendeDetails={pieceProps}/>);
               background = !background;
             }
           background = !background;
           grid.push(<div key={`R${i}`}className= "flex-container">{ row } </div>);
-          this.gridRef.push(rowRef);
+          this.gridRef.push(new Array(8));
           row = [];
-          rowRef = [];
         }
         return grid;
       }
