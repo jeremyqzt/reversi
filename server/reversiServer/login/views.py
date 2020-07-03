@@ -15,18 +15,6 @@ class CreateReversiUser(APIView):
 
     def post(self, request, format='json'):
         inputData = request.data
-        inputData["username"] = inputData["email"]
-        print(inputData)
-        serializer = ReversiUserSerializer(data=inputData)
-        if serializer.is_valid():
-            user = serializer.save()
-            if user:
-                json = serializer.data
-                return Response(json, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def post(self, request, format='json'):
-        inputData = request.data
         serializer = ReversiUserSerializer(data=inputData)
         if serializer.is_valid() and serializer.user_ok(inputData["email"]):
             user = serializer.save()

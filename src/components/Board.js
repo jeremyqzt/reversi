@@ -5,7 +5,8 @@ import '../css/board.css';
 
 class Board extends Component {
       constructor(props) {
-        super();
+        super(props);
+        this.gridRef = [];
         let grid = this.initBoard(8,8);
         this.state = {
             grid: grid,
@@ -23,6 +24,7 @@ class Board extends Component {
       initBoard = (x,y) =>{
         let grid = [];
         let row = []
+        let rowRef = []
         let background = true;
         for (let i = 0; i < x; i++){
             for (let j = 0; j < y; j++){
@@ -39,12 +41,19 @@ class Board extends Component {
                 col: j,
                 action: this.handleClick,
               }
-              row.push(<Piece key={`R${i}C${j}`} rendeDetails={pieceProps} />);
+              //let pieceToRender = this.createComponent("Piece", pieceProps);
+              //row.push(pieceToRender);
+              let item = React.createRef();
+              row.push(<Piece key={`R${i}C${j}`} rendeDetails={pieceProps} ref={item}/>);
+              console.log(item.current);
+              rowRef.push(item);
               background = !background;
             }
           background = !background;
           grid.push(<div key={`R${i}`}className= "flex-container">{ row } </div>);
+          this.gridRef.push(rowRef);
           row = [];
+          rowRef = [];
         }
         return grid;
       }
