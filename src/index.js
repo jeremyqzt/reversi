@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import './index.css';
 import LoginPage from './components/Login';
 import Game from './components/Game';
+import Lobby from './components/Lobby';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -12,6 +13,7 @@ ReactDOM.render(
     <Router>
       <Switch>
         <Route path="/board" component={Game} />
+        <Route path="/lobby" component={Lobby} />
         <Route path="/" component={LoginPage} />
       </Switch>
     </Router>

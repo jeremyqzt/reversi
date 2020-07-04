@@ -16,7 +16,6 @@ class Piece extends Component {
         piece: this.props.rendeDetails.piece,
         background: this.props.rendeDetails.background,
     };
-
     this.props.rendeDetails.registration(this.props.rendeDetails.row, this.props.rendeDetails.col, this);
   }
 

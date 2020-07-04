@@ -23,7 +23,6 @@ class Board extends Component {
 
       registerPiece = (i, j, obj) => {
         this.gridRef[i][j] = obj;
-        console.log(this.gridRef);
       }
 
       initBoard = (x,y) =>{
