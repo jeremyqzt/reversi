@@ -1,6 +1,6 @@
 from django.urls import path
 from rest_framework_simplejwt import views as jwt_views
-from .views import ObtainTokenPairWithColorView, CreateReversiUser
+from .views import CreateReversiUser
 
 urlpatterns = [
     path('user/create/', CreateReversiUser.as_view(), name="create_user"),

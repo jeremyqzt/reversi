@@ -5,14 +5,9 @@ from rest_framework.views import APIView
 
 from .serializer import ReversiTokenObtainPairSerializer, ReversiUserSerializer
 
-class ObtainTokenPairWithColorView(TokenObtainPairView):
-    serializer_class = ReversiTokenObtainPairSerializer
-
-
 class CreateReversiUser(APIView):
     permission_classes = [permissions.AllowAny]
     authentication_classes = []
-
     def post(self, request, format='json'):
         inputData = request.data
         serializer = ReversiUserSerializer(data=inputData)

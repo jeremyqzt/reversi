@@ -37,6 +37,10 @@ class LoginPage extends Component {
       });
       return;
     }
+    this.tryLoginOrSignUp(signup, email, password);
+  }
+
+  tryLoginOrSignUp(signup, email, password){
     let postLocat = (signup) ? "/auth/user/create/" : "auth/token/obtain/";
 
     const instance = axios.create({baseURL: 'http://127.0.0.1:8000'})
@@ -50,14 +54,20 @@ class LoginPage extends Component {
         "password": password
       })
     .then((result) => {
-      let token = result.data;
-      JwtUtils.storeToken(token);
-      window.location.href = '/home';
+      if (!signup){
+        let token = result.data;
+        JwtUtils.storeToken(token);
+        window.location.href = '/home';
+      } else {
+        this.tryLoginOrSignUp(!signup, email, password);
+      }
     })
     .catch((result)=> {
-      console.log(result);
+      let err = "User already present!";
+      this.setState({
+        login: err,
+      });    
     });
-
   }
 
   onChange = (e) => {
