@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import '../css/login.css';
+import JwtUtils from '../utils/jwtUtils.js';
 
 class LoginPage extends Component {
   constructor() {
@@ -49,7 +50,9 @@ class LoginPage extends Component {
         "password": password
       })
     .then((result) => {
-      console.log(result);
+      let token = result.data;
+      JwtUtils.storeToken(token);
+      window.location.href = '/home';
     })
     .catch((result)=> {
       console.log(result);

@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 import Board from './Board';
 import Nav from './Nav';
 import Stats from './Stats';
+import JwtUtils from '../utils/jwtUtils.js';
 
 import '../css/board.css';
 
 class Game extends Component {
+    constructor(){
+        super();
+        JwtUtils.checkTokenPresent();
+    }
     render(){
         return (
             <div>           
