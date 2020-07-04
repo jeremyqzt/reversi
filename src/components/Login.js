@@ -74,15 +74,15 @@ class LoginPage extends Component {
     this.setState({ [e.target.id]: e.target.value });
   }
 
-  _checkSignup = (bool) => {
+  _checkSignup = (e) => {
     let msg = "Sign In"
 
-    if (this.refs.signupCheck.checked){
+    if (e.target.checked){
       msg = "Sign Up!"
     }
 
     this.setState({
-      signup: this.refs.signupCheck.checked,
+      signup: e.target.checked,
       login: msg,
     });
   }
@@ -90,7 +90,6 @@ class LoginPage extends Component {
   render(){
     return (
       <div>
-        <body>
           <div className="d-flex fullScreen">
             <form className="white-background justify-content-center center text-center border border-light p-5 shadow" onSubmit={this.handleSubmit}>
                 <p className="h2 noSelect">Reversi</p>
@@ -98,17 +97,16 @@ class LoginPage extends Component {
                 <input type="email" id="email" className="form-control mb-4" placeholder="E-mail" value={this.email} onChange={this.onChange} />
                 <input type="password" id="password" className="form-control mb-4" placeholder="Password" value={this.pwd1} onChange={this.onChange} />
                 {this.state.signup && <input type="password" id="passwordConfirm" className="form-control mb-4" placeholder="Confirm Password" value={this.passwordConfirm} onChange={this.onChange} />}
-              <button className="btn btn-primary btn-block my-4" type="submit">Sign In/Up</button>
+              <button className="btn btn-dark btn-block my-4" type="submit">Sign In/Up</button>
                 <div className="d-flex justify-content-around mb-3">
                     <div className="custom-control custom-checkbox">
-                        <input type="checkbox" ref="signupCheck" onClick={this._checkSignup} className="custom-control-input" id="signup" checked={this.state.signup} />
-                        <label className="custom-control-label" for="signup">Create This Account</label>
+                        <input type="checkbox" onChange={this._checkSignup} className="custom-control-input" id="signup" checked={this.state.signup} />
+                        <label className="custom-control-label" htmlFor="signup">Create This Account</label>
                     </div>
                 </div>
                 <a href="/">Continue As Guest</a>
             </form>
           </div>
-        </body>
       </div>
     );
   };

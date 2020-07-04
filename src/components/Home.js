@@ -10,12 +10,12 @@ class Home extends Component {
         return (
             <div>           
                 <Nav />
-                <div class="container mt-1">
-                        <div class="row mt-4">
-                            <div class="col-6">
+                <div className="container mt-1">
+                        <div className="row mt-4">
+                            <div className="col-6">
                                 <CreateLobbyCard />
                             </div>
-                            <div class="col-6">
+                            <div className="col-6">
                                 <JoinLobbyCard />
                             </div>
                         </div>
