@@ -94,8 +94,8 @@ class LoginPage extends Component {
             <form className="white-background justify-content-center center text-center border border-light p-5 shadow" onSubmit={this.handleSubmit}>
                 <p className="h2 noSelect">Reversi</p>
                 <p className="mb-4 noSelect">{this.state.login}</p>
-                <input type="email" id="email" className="form-control mb-4" placeholder="E-mail" value={this.email} onChange={this.onChange} />
-                <input type="password" id="password" className="form-control mb-4" placeholder="Password" value={this.pwd1} onChange={this.onChange} />
+                <input type="email" id="email" className="form-control mb-4" placeholder="E-mail" value={this.state.email} onChange={this.onChange} />
+                <input type="password" id="password" className="form-control mb-4" placeholder="Password" value={this.state.pwd1} onChange={this.onChange} />
                 {this.state.signup && <input type="password" id="passwordConfirm" className="form-control mb-4" placeholder="Confirm Password" value={this.passwordConfirm} onChange={this.onChange} />}
               <button className="btn btn-dark btn-block my-4" type="submit">Sign In/Up</button>
                 <div className="d-flex justify-content-around mb-3">

@@ -17,6 +17,10 @@ class JwtUtils{
             window.location.href = '/';
         }
     }
+
+    static getAccessToken(){
+        return localStorage.getItem(tokenKey);
+    }
 }
 
 export default JwtUtils;
