@@ -8,22 +8,80 @@ class CreateLobbyCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            room: "",
+            room: "No Room",
             playerB: "...",
             playerW: "...",
+            inLobby: false,
         }
         this.handleJoin = this.handleJoin.bind(this);
         this.handleLobbyUpdate = this.handleLobbyUpdate.bind(this);
         this.handleCreate = this.handleCreate.bind(this);
+        // eslint-disable-next-line
+        var intervalID = setInterval(this.handleLobbyUpdate, 2500);
+    }
 
+    setPlayers(pArr){
+        let pB = pArr[0].split("@")[0];
+        let pW = (pArr.length > 1)? pArr[1].split("@")[0]: "...";
+        this.setState({
+            playerB: pB,
+            playerW: pW,
+        })
     }
 
     handleJoin = (event) => {
         event.preventDefault();
+        let postLocat = "lobby/room/";
+
+        const instance = axios.create({baseURL: 'http://127.0.0.1:8000'})
+        const token = `JWT ${JwtUtils.getAccessToken()}`;
+        instance.post(postLocat, {
+            gid: this.state.room,
+        },
+        {
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept' : 'application/json',
+              'Authorization': token,
+            },
+        })
+        .then((result) => {
+            console.log(result.data);
+            this.setState({
+                inLobby: true,
+            })
+        })
+        .catch((result)=> {
+            console.log(result);
+        });
     }
 
     handleLobbyUpdate = () => {
+        if (!this.state.inLobby){
+            return;
+        }
+        let roomLocat = "lobby/room/";
 
+        const instance = axios.create({baseURL: 'http://127.0.0.1:8000'})
+        const token = `JWT ${JwtUtils.getAccessToken()}`;
+
+        instance.get(roomLocat,
+            {
+                params: {
+                    gid: this.state.room,
+                },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept' : 'application/json',
+                    'Authorization': token,
+                },
+            })
+        .then((result) => {
+            this.setPlayers(result.data);
+        })
+        .catch((result)=> {
+            console.log(result);
+        });     
     }
 
     handleCreate = (event) => {
@@ -32,7 +90,6 @@ class CreateLobbyCard extends Component {
 
         const instance = axios.create({baseURL: 'http://127.0.0.1:8000'})
         const token = `JWT ${JwtUtils.getAccessToken()}`;
-        console.log(token);
         instance.post(postLocat, {},
           {
             headers: {
@@ -42,30 +99,15 @@ class CreateLobbyCard extends Component {
             },
           })
         .then((result) => {
-            console.log(result);
+            console.log(result.data);
+            this.setState({
+                room: result.data,
+                inLobby: true,
+            })
         })
         .catch((result)=> {
             console.log(result);
-        });     
-    }
-
-    __getAllUsers(){
-        let postLocat = "lobby/room/";
-
-        const instance = axios.create({baseURL: 'http://127.0.0.1:8000'})
-        instance.post(postLocat, 
-          {
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            "gid": "test",
-          })
-        .then((result) => {
-            console.log(result);
-        })
-        .catch((result)=> {
-            console.log(result);
-        });       
+        });
     }
 
     onChange = (e) => {
@@ -99,7 +141,7 @@ class CreateLobbyCard extends Component {
                             <div className="input-group mb-10">
                             <input type="text" className="form-control" id="room" placeholder="Enter ID" aria-label="opp" aria-describedby="basic-addon2" onChange={this.onChange} value={this.state.room} />
                             <div className="input-group-append">
-                                <button className="btn btn-outline-secondary" type="button">Join Room</button>
+                                <button className="btn btn-outline-secondary" type="button" onClick={this.handleJoin}>Join Room</button>
                             </div>
                             </div>
                             <div className="col-1"></div>
@@ -108,7 +150,7 @@ class CreateLobbyCard extends Component {
                 </div>
                 <div className="col-6">
                     <div className="card-body">
-                        <h5 className="card-title">Current Room</h5>
+                        <h5 className="card-title">{this.state.room}</h5>
                         <p className="card-text noSelect"><span role="img" aria-label="blackCircle">⚫</span> {this.state.playerB} Vs. <span role="img" aria-label="whiteCircle"> {this.state.playerW}⚪</span></p>
                         <div className="row">
                             <div className="col-1"></div>

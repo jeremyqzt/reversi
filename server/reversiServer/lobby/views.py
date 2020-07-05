@@ -14,6 +14,7 @@ class CreateReversiRoom(APIView):
 
 class ReversiRoom(APIView):
     def post(self, request, format='json'):
+        print(request.data)
         if not "gid" in request.data:
             return Response(None, status=status.HTTP_404_NOT_FOUND)
         gid = request.data["gid"]
@@ -23,10 +24,9 @@ class ReversiRoom(APIView):
         return Response(None, status=status.HTTP_202_ACCEPTED)
 
     def get(self, request, format='json'):
-        if not "gid" in request.data:
+        if not "gid" in request.query_params:
             return Response(None, status=status.HTTP_404_NOT_FOUND)        
-        gid = request.data["gid"]
+        gid = request.query_params["gid"]
         serializer = LobbySerializer()
         data = serializer.getEveryone(gid)
-
-        return Response(None, status=status.HTTP_200_OK)
+        return Response(data, status=status.HTTP_200_OK)
