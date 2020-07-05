@@ -6,7 +6,7 @@ class CreateLobbyCard extends Component {
     render(){
         return (
             <div className="card text-center h-100">
-            <h5 className="card-header bg-dark text-light noSelect"><span role="img" aria-label="multi">⚔️</span> Multiplayer - Start a Lobby</h5>
+            <h5 className="card-header bg-dark text-light noSelect"><span role="img" aria-label="multi">⚔️</span> Multiplayer - Start a Lobby <span role="img" aria-label="multi">🛡️</span></h5>
             <div className="row">
                 <div className="col-3">
                     <div className="card-body">

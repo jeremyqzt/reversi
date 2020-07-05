@@ -33,6 +33,7 @@ app.post('/gameState/:gid', function (req, res) {
     var gid = req.params.gid;
     var newState = req.body.newState;
     gameStates[gid] = newState;
+    console.log("Created " + gid)
     res.status(200).end();
 })
         

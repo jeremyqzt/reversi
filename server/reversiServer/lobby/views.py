@@ -2,25 +2,31 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from.customLobbySerializer import LobbyCreateSerializer, LobbySerializer
+import shortuuid
 
 class CreateReversiRoom(APIView):
     def post(self, request, format='json'):
-        inputData = request.data
-        serializer = ReversiUserSerializer(data=inputData)
-        if serializer.is_valid() and serializer.user_ok(inputData["email"]):
-            user = serializer.save()
-            if user:
-                json = serializer.data
-                return Response(json, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        username = str(request.user)
+        gid = shortuuid.uuid()
+        serializer = LobbyCreateSerializer()
+        return Response(gid, status=serializer.create(username, gid))
 
-class JoinReversiRoom(APIView):
+class ReversiRoom(APIView):
     def post(self, request, format='json'):
-        inputData = request.data
-        serializer = ReversiUserSerializer(data=inputData)
-        if serializer.is_valid() and serializer.user_ok(inputData["email"]):
-            user = serializer.save()
-            if user:
-                json = serializer.data
-                return Response(json, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        if not "gid" in request.data:
+            return Response(None, status=status.HTTP_404_NOT_FOUND)
+        gid = request.data["gid"]
+        username = str(request.user)
+        serializer = LobbySerializer()
+        serializer.join(username, gid)
+        return Response(None, status=status.HTTP_202_ACCEPTED)
+
+    def get(self, request, format='json'):
+        if not "gid" in request.data:
+            return Response(None, status=status.HTTP_404_NOT_FOUND)        
+        gid = request.data["gid"]
+        serializer = LobbySerializer()
+        data = serializer.getEveryone(gid)
+
+        return Response(None, status=status.HTTP_200_OK)
