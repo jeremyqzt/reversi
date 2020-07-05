@@ -14,7 +14,6 @@ class CreateReversiRoom(APIView):
 
 class ReversiRoom(APIView):
     def post(self, request, format='json'):
-        print(request.data)
         if not "gid" in request.data:
             return Response(None, status=status.HTTP_404_NOT_FOUND)
         gid = request.data["gid"]

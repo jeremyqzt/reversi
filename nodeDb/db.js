@@ -5,6 +5,7 @@ var app = express();
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 var gameStates = {};
+var playerToGame = {};
 
 var name, serverIp, port;
 
@@ -32,8 +33,31 @@ app.get('/gameState/:gid', function (req, res) {
 app.post('/gameState/:gid', function (req, res) {
     var gid = req.params.gid;
     var newState = req.body.newState;
+    if ("delete" in newState){
+        delete gameStates[gid];
+        res.status(200).end();
+    }
     gameStates[gid] = newState;
-    console.log("Created " + gid)
+    res.status(200).end();
+})
+
+app.get('/player/:pid', function (req, res) {
+    var pid = req.params.pid;
+    if(pid in playerToGame){
+        res.status(200).send(playerToGame[pid]);
+    } else {
+        res.status(404).send({});
+    }
+})
+
+app.post('/player/:pid', function (req, res) {
+    var pid = req.params.pid;
+    var rid = req.body.gid;
+    if (rid === ""){
+        delete playerToGame[pid];
+        res.status(200).end();
+    }
+    playerToGame[pid] = rid;
     res.status(200).end();
 })
         
