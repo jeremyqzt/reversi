@@ -32,13 +32,14 @@ app.get('/gameState/:gid', function (req, res) {
 
 app.post('/gameState/:gid', function (req, res) {
     var gid = req.params.gid;
-    var newState = req.body.newState;
+    var newState = JSON.parse(req.body.newState);
     if (newState.hasOwnProperty("delete")){
         delete gameStates[gid];
         res.status(200).end();
+    } else {
+        gameStates[gid] = newState;
+        res.status(200).end();
     }
-    gameStates[gid] = newState;
-    res.status(200).end();
 })
 
 app.get('/player/:pid', function (req, res) {
@@ -56,9 +57,10 @@ app.post('/player/:pid', function (req, res) {
     if (rid === ""){
         delete playerToGame[pid];
         res.status(200).end();
+    } else {
+        playerToGame[pid] = rid;
+        res.status(200).end();
     }
-    playerToGame[pid] = rid;
-    res.status(200).end();
 })
         
 var server = app.listen(port, serverIp, function () {

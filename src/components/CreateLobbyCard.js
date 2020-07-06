@@ -12,15 +12,26 @@ class CreateLobbyCard extends Component {
             playerB: "...",
             playerW: "...",
             inLobby: true,
+            compMounted: false,
         }
         this.handleJoin = this.handleJoin.bind(this);
         this.handleLobbyUpdate = this.handleLobbyUpdate.bind(this);
         this.handleCreate = this.handleCreate.bind(this);
         this.handleLeave = this.handleLeave.bind(this);
-
         // eslint-disable-next-line
+    }
+    componentDidMount(){
+        this.setState({
+            room: "No Room",
+            playerB: "...",
+            playerW: "...",
+            inLobby: true,
+            compMounted: true,
+        });
+        this.handleLobbyUpdate();
         var intervalID = setInterval(this.handleLobbyUpdate, 2500);
     }
+
 
     setPlayers(pArr, room){
         let pB = pArr[0].split("@")[0];
@@ -146,10 +157,7 @@ class CreateLobbyCard extends Component {
             },
           })
         .then((result) => {
-            this.setState({
-                room: result.data,
-                inLobby: true,
-            })
+            this.handleLobbyUpdate();
         })
         .catch((result)=> {
             console.log(result);
@@ -172,7 +180,7 @@ class CreateLobbyCard extends Component {
                         <div className="row">
                             <div className="col-3"></div>
                             <div className="col-6">
-                                <button href="/" onClick={this.handleCreate}  className="btn btn-outline-dark w-100" disabled={this.state.inLobby}>Create</button>
+                                <button href="/" onClick={this.handleCreate}  className="btn btn-outline-dark w-100" disabled={this.state.inLobby && this.state.compMounted}>Create</button>
                             </div>
                             <div className="col-3"></div>
                         </div>
@@ -187,7 +195,7 @@ class CreateLobbyCard extends Component {
                             <div className="input-group mb-10">
                             <input type="text" className="form-control" id="room" placeholder="Enter ID" aria-label="opp" aria-describedby="basic-addon2" onChange={this.onChange} value={this.state.room} />
                             <div className="input-group-append">
-                                <button className="btn btn-outline-secondary" type="button" onClick={this.handleJoin} disabled={this.state.inLobby}>Join Room</button>
+                                <button className="btn btn-outline-secondary" type="button" onClick={this.handleJoin} disabled={this.state.inLobby && this.state.compMounted}>Join Room</button>
                             </div>
                             </div>
                             <div className="col-1"></div>
@@ -201,10 +209,10 @@ class CreateLobbyCard extends Component {
                         <div className="row">
                             <div className="col-1"></div>
                             <div className="col-5">
-                                <button href="/" className="btn btn-outline-danger w-100" onClick={this.handleLeave} disabled={!this.state.inLobby}>Leave</button>
+                                <button href="/" className="btn btn-outline-danger w-100" onClick={this.handleLeave} disabled={!this.state.inLobby && this.state.compMounted}>Leave</button>
                             </div>
                             <div className="col-5">
-                                <button href="/" className="btn btn-outline-success w-100" disabled={!this.state.inLobby}>Start</button>
+                                <button href="/" className="btn btn-outline-success w-100" disabled={!this.state.inLobby && this.state.compMounted}>Start</button>
                             </div>
                             <div className="col-1"></div>
                         </div>

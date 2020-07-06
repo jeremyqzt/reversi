@@ -83,7 +83,6 @@ class LobbyModel:
         server = "%s/%s/%s" % (self.availDb[dbId], "player", player)
         r = requests.get(url = server)
         data = r.content
-        print(data)
         if (data == {} or r.status_code != 200):
             return None
         return data
