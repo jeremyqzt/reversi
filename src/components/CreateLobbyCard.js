@@ -78,11 +78,12 @@ class CreateLobbyCard extends Component {
     handleJoin = (event) => {
         event.preventDefault();
         let postLocat = "lobby/room/";
+        let roomVal = document.getElementById('room').value;
 
         const instance = axios.create({baseURL: 'http://127.0.0.1:8000'})
         const token = `JWT ${JwtUtils.getAccessToken()}`;
         instance.post(postLocat, {
-            gid: this.state.room,
+            gid: roomVal,
             join: true,
         },
         {
@@ -93,13 +94,10 @@ class CreateLobbyCard extends Component {
             },
         })
         .then((result) => {
-            console.log(result.data);
-            this.setState({
-                inLobby: true,
-            })
+            this.handleLobbyUpdate();
         })
         .catch((result)=> {
-            console.log(result);
+            alert("No Such Room");
         });
     }
 
@@ -164,10 +162,6 @@ class CreateLobbyCard extends Component {
         });
     }
 
-    onChange = (e) => {
-        this.setState({ [e.target.id]: e.target.value });
-    }
-
     render(){
         return (
             <div className="card text-center h-100">
@@ -193,7 +187,7 @@ class CreateLobbyCard extends Component {
                         <div className="row">
                             <div className="col-1"></div>
                             <div className="input-group mb-10">
-                            <input type="text" className="form-control" id="room" placeholder="Enter ID" aria-label="opp" aria-describedby="basic-addon2" onChange={this.onChange} value={this.state.room} />
+                            <input type="text" className="form-control" id="room" placeholder="Enter ID" aria-label="opp" aria-describedby="basic-addon2" />
                             <div className="input-group-append">
                                 <button className="btn btn-outline-secondary" type="button" onClick={this.handleJoin} disabled={this.state.inLobby && this.state.compMounted}>Join Room</button>
                             </div>

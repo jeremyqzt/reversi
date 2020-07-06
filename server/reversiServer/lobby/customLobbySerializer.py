@@ -38,7 +38,7 @@ class LobbySerializer:
             else:
                 existingRoom["users"].append(user)
         else:
-            return 404 #No such room...
+            return None #No such room...
         return model.storeState(gid, existingRoom, user)
 
     def getEveryone(self, username):

@@ -21,7 +21,8 @@ class ReversiRoom(APIView):
 
         username = str(request.user)
         serializer = LobbySerializer()
-        serializer.join(username, gid, join)
+        if (None == serializer.join(username, gid, join)):
+            return Response(None, status=status.HTTP_404_NOT_FOUND)
         return Response(None, status=status.HTTP_202_ACCEPTED)
 
     def get(self, request, format='json'):
