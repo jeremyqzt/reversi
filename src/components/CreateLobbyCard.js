@@ -18,8 +18,8 @@ class CreateLobbyCard extends Component {
         this.handleLobbyUpdate = this.handleLobbyUpdate.bind(this);
         this.handleCreate = this.handleCreate.bind(this);
         this.handleLeave = this.handleLeave.bind(this);
-        // eslint-disable-next-line
     }
+
     componentDidMount(){
         this.setState({
             room: "No Room",
@@ -29,6 +29,7 @@ class CreateLobbyCard extends Component {
             compMounted: true,
         });
         this.handleLobbyUpdate();
+        // eslint-disable-next-line
         var intervalID = setInterval(this.handleLobbyUpdate, 2500);
     }
 
@@ -219,6 +220,3 @@ class CreateLobbyCard extends Component {
 }
 
 export default CreateLobbyCard;
-
-/*
-*/
