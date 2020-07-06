@@ -33,7 +33,7 @@ app.get('/gameState/:gid', function (req, res) {
 app.post('/gameState/:gid', function (req, res) {
     var gid = req.params.gid;
     var newState = req.body.newState;
-    if ("delete" in newState){
+    if (newState.hasOwnProperty("delete")){
         delete gameStates[gid];
         res.status(200).end();
     }

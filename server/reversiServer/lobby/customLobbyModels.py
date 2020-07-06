@@ -58,35 +58,33 @@ class LobbyModel:
             return None
         return data
 
-    def storeState(self, gid, gameData):
+    def storeState(self, gid, gameData, user):
         dbId = LobbyModel.getDbInst(gid)
         payload = {}
         payload["newState"] = json.dumps(gameData)
         server = "%s/%s/%s" % (self.availDb[dbId], "gameState", gid)
         r = requests.post(url = server, data = payload)
-        return r.status_code
+        if r.status_code == 200:
+            r = self.storePlayerRoom(user, gid)
+        else:
+            return r.status_code
+        return r
+
     
-    def storePlayer(self, player, gid):
-        dbId = LobbyModel.getDbInst(gid)
+    def storePlayerRoom(self, player, gid):
+        dbId = LobbyModel.getDbInst(player)
         server = "%s/%s/%s" % (self.availDb[dbId], "player", player)
         payload = {"gid": gid}
         r = requests.post(url = server, data = payload)
         return r.status_code
 
-    def getPlayer(self, player):
+    def getPlayerRoom(self, player):
         dbId = LobbyModel.getDbInst(player)
         server = "%s/%s/%s" % (self.availDb[dbId], "player", player)
         r = requests.get(url = server)
         data = r.content
+        print(data)
         if (data == {} or r.status_code != 200):
             return None
-        return data        
-
-t = LobbyModel()
-#tD = {}
-#tD["test"] = "asdasd"
-#tD["Pieces"] = [1,2,3,4,5]
-t.storePlayer("jq333@asdas", "kt9FaqENxQ4qS6tickDu5i")
-z = t.getPlayer("jq333@asdas")
-print(z)
+        return data
 

@@ -13,9 +13,11 @@ class LobbyCreateSerializer:
             "users": [user]
         }
         model = self.Meta.model()
-        return model.storeState(gid, record)
-
-
+        code = model.storeState(gid, record, user)
+        if code == 200:
+            return model.storePlayerRoom(user, gid)
+        return code
+         
 class LobbySerializer:
     def __init__(self):
         pass
@@ -23,20 +25,31 @@ class LobbySerializer:
     class Meta:
         model = LobbyModel
 
-    def join(self, user, gid):
+    def join(self, user, gid, join):
         model = self.Meta.model()
         existingRoom = model.getState(gid)
-
         if(existingRoom != None):
-            existingRoom["users"].append(user)
+            if (not join):
+                existingRoom["users"].remove(user)
+                if (existingRoom["users"] == []):
+                    existingRoom = {
+                        "delete": True
+                    }
+            else:
+                existingRoom["users"].append(user)
         else:
             return 404 #No such room...
-        return model.storeState(gid, existingRoom)
+        return model.storeState(gid, existingRoom, user)
 
-    def getEveryone(self, gid):
+    def getEveryone(self, username):
         model = self.Meta.model()
+        gid = model.getPlayerRoom(username)
+        if gid == None:
+            return {}
+
+        gid = gid.decode("utf-8")
         existingRoom = model.getState(gid)
         if(existingRoom != None):
-            return existingRoom["users"]
+            return existingRoom
         else:
-            return 404
+            return {}
