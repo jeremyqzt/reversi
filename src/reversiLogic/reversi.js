@@ -1,9 +1,4 @@
-const pieceVal = {
-	EMPTY: 0,
-	BLACK: 1,
-	WHITE: 2,
-	INVALID: 3,
-}
+import {_, pieceVal} from '../components/Piece';
 
 class reversiLogic{
 	constructor(){
@@ -11,7 +6,6 @@ class reversiLogic{
 		this.extremisPieces = this.initExtremisPiece();
 		this.turn = pieceVal.BLACK;
 		this.wouldBeFlippedPieces = this.getAvailableMoves(this.extremisPieces, this.turn);
-		console.log(this.wouldBeFlippedPieces)
 	}
 
 	getGrid(){

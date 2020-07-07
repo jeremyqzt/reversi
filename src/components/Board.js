@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import {Piece, pieceVal} from './Piece';
+import reversiLogic from '../reversiLogic/reversi';
 
 import '../css/board.css';
+
 
 class Board extends Component {
       constructor(props) {
