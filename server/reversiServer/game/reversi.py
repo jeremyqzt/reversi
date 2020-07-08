@@ -1,6 +1,7 @@
 import enum
+import json
 
-class GridState(enum.Enum):
+class GridState(enum.IntEnum):
     EMPTY = 0
     BLACK = 1
     WHITE = 2
@@ -15,6 +16,7 @@ class GridState(enum.Enum):
 
         return GridState.EMPTY
 
+
 class MoveDirection(enum.Enum):
     UP = 0
     DOWN = 1
@@ -25,58 +27,161 @@ class MoveDirection(enum.Enum):
     UPLEFT = 6
     DOWNLEFT = 7
 
-class Move():
+class gridLocation():
     def __init__(self, row, col):
        self.row = row
        self.col = col
+
     def __add__(self, val):
-        return Move(self.row + val[0], self.col + val[1])
+        return gridLocation(self.row + val[0], self.col + val[1])
 
     def __iadd__(self, val):
         self.row += val[0]
         self.col += val[1]
         return self
+    
+    def __eq__(self, val):
+        if val.row == self.row and val.col == self.col:
+            return True
+        return False
+
+    def __hash__(self):
+        return self.row * 10 + self.col
+
+    def __repr__(self):
+        return str(self)
 
     def __str__(self):
-        return ("%d, %d" % (self.row, self.col))
+        return ("R%dC%d" % (self.row, self.col))
     
+
+class reversiSerializer:
+    def __init__(self, model):
+        self.model = model
+    def serialize
+    
+
+class reversiModel:
+    def __init__(this, grid, turn, move):
+        this.grid = grid
+        this.turn = turn
+        this.move = move
+
+        t = { "grid": this.grid }
+        print(json.dumps(t))
 
 class reversi:
-    def __init__(self, grid = [], extremis = {}):
-        self.grid = self.__initBoard(8,8)
-        self.extremisPieces = extremis
-        self.__initPiece(self.grid, self.extremisPieces)
-        # Black always first
-        self.turn = GridState.BLACK
-        print(self.extremisPieces)
+    def __init__(self, grid = None, turn = None, moveId = 0):
+        if(grid == None):
+            self.grid = self.__initBoard(8,8)
+        else:
+            self.grid = grid
 
+        if turn == None:
+            self.turn = GridState.BLACK
+        else:
+            self.turn = turn
+
+        self.moveId = moveId
+        
+        self.__initPiece(self.grid)
+
+        self.extremisPieces = self.computeExtremePieces()
+        self.avail = self.computeAvailable(self.turn)
+
+        #'''
+        print(self.avail)
+        print(self)
+
+        self.makeMove(gridLocation(3,2))
+        print(self.avail)
+        print(self)
+        '''
+        self.makeMove(gridLocation(2,2))
+        print(self.avail)
+        print(self)       
+
+        self.makeMove(gridLocation(1,2))
+        print(self.avail)
+        print(self)
+
+        self.makeMove(gridLocation(4,2))
+        print(self.avail)
+        print(self)    
+
+        self.makeMove(gridLocation(5,4))
+        print(self.avail)
+        print(self)    
+
+        self.makeMove(gridLocation(0,2))
+        print(self.avail)
+        print(self)
+
+        self.makeMove(gridLocation(3,1))
+        print(self.avail)
+        print(self) 
+        '''
     def makeMove(self, move):
         if (not self.grid[move.row][move.col] == GridState.EMPTY):
-            return []
+            return -1
 
-        turnedPieces = self.wouldMoveTurnOverPieces(move)
-        
-        if (turnedPieces == []): # Must turn over atleast 1 piece to be valid
-            return []
-        
+        if str(move) in self.avail:
+            return -1
+
         self.grid[move.row][move.col] = self.turn
-        self.recomputeExtremis(move)
-        return turnedPieces
 
-    def recomputeExtremis(self, move):
-        pass
-    
-    def wouldMoveTurnOverPieces(self, move):
+        for i in self.avail[move]:
+            self.grid[i.row][i.col] = self.turn
+        self.extremisPieces = self.computeExtremePieces()
+        newAvail = self.computeAvailable(GridState.getOther(self.turn))
+
+        if newAvail != {}:
+            self.turn = GridState.getOther(self.turn)
+            self.avail = newAvail
+        else:
+            self.avail = self.computeAvailable(self.turn)
+
+        return reversiModel(self.grid, self.turn, self.moveId + 1)
+
+    def computeAvailable(self, color):
+        ret = {}
+        for i in self.extremisPieces:
+            wouldTurnOver = self.wouldMoveTurnOverPieces(i, color)
+            if len(wouldTurnOver) != 0:
+                ret[i] = wouldTurnOver
+        return ret
+
+    def computerFilled(self):
+        ret = []
+        for row in range(0, len(self.grid)):
+            for col in range(0, len(self.grid[row])):
+                if (self.grid[row][col] != GridState.EMPTY):
+                    ret.append(gridLocation(row,col))
+        return ret
+
+    def computeExtremePieces(self):
+        ret = []
+        filledSpots = self.computerFilled()
+        for spot in filledSpots:
+            for direction in MoveDirection:   
+                newSpot = spot + self.__buildDirectionOffsets(direction)
+                if not self.__isFilled(newSpot):
+                    ret.append(newSpot)
+        ret = list(set(ret))
+        return ret
+
+        
+    def wouldMoveTurnOverPieces(self, move, color):
         if not self.__isMoveWithinBoard(move):
             return []
 
         ret = []
         for direction in MoveDirection:
-            ret += self.__checkDirection(move, direction)
+            ret += self.__checkDirection(move, direction, color)
 
         return ret
 
-    def __checkDirection(self, move, direction):
+    def __buildDirectionOffsets(self, direction):
         if direction == MoveDirection.UP:
             directionOffset = [1, 0] #row++, col stays same
         elif direction == MoveDirection.DOWN:
@@ -93,7 +198,10 @@ class reversi:
             directionOffset = [-1, -1]
         elif direction == MoveDirection.DOWNRIGHT:
             directionOffset = [-1, 1]
+        return directionOffset
 
+    def __checkDirection(self, move, direction, color):
+        directionOffset = self.__buildDirectionOffsets(direction)
         newMove = move + directionOffset
         newMoveNext = newMove + directionOffset
 
@@ -101,14 +209,14 @@ class reversi:
             return []
 
             
-        if (self.grid[newMove.row][newMove.col] == GridState.getOther(self.turn)):
-            if (self.grid[newMoveNext.row][newMoveNext.col] == self.turn):
-                return [[newMoveNext.row, newMoveNext.col]]
+        if (self.grid[newMove.row][newMove.col] == GridState.getOther(color)):
+            if (self.grid[newMoveNext.row][newMoveNext.col] == color):
+                return [gridLocation(newMove.row, newMove.col)]
                 
         
         ret = [] 
-        while (self.grid[newMove.row][newMove.col] == GridState.getOther(self.turn)):
-            ret.append([newMove.row, newMove.col])
+        while (self.grid[newMove.row][newMove.col] == GridState.getOther(color)):
+            ret.append(gridLocation(newMove.row, newMove.col))
             newMove += directionOffset
 
         # at end, if we're outside, return empty
@@ -116,12 +224,15 @@ class reversi:
             return []
 
         #Hit a one of ours
-        if (self.grid[newMove.row][newMove.col] == self.turn):
+        if (self.grid[newMove.row][newMove.col] == color):
             return ret
 
         return []
 
-            
+
+    def __isFilled(self, move):
+        return self.__isMoveWithinBoard(move) and self.grid[move.row][move.col] != GridState.EMPTY
+        
     def __isMoveWithinBoard(self, move):
         if (move.row < 0 and move.row > 7):
             return False
@@ -147,22 +258,8 @@ class reversi:
             row = []
         return ret
 
-    def __initPiece(self, grid, extremePiece):
+    def __initPiece(self, grid):
         grid[3][3] = grid[4][4] = GridState.WHITE
         grid[3][4] = grid[4][3] = GridState.BLACK
-        for i in range (2,6):
-            for j in range (2,6):
-                if (i == 3 and j == 3): continue
-                if (i == 3 and j == 4): continue
-                if (i == 4 and j == 3): continue
-                if (i == 4 and j == 4): continue
-                key = (i,j)
-                extremePiece[key] = key
-        
-        
 
 test = reversi()
-move = Move(2,3)
-print(test)
-print(test.makeMove(move))
-print(test)
