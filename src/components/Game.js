@@ -9,8 +9,9 @@ import '../css/board.css';
 class Game extends Component {
     constructor(){
         super();
-        JwtUtils.checkTokenPresent();
+        //JwtUtils.checkTokenPresent();
     }
+
     render(){
         return (
             <div>           

@@ -11,16 +11,22 @@ const pieceVal = {
 class Piece extends Component {
   constructor(props) {
     super(props);
+    let color = this.props.rendeDetails.background ? "blackBoard": "whiteBoard";
+
     this.state = {
+        color: color,
+        originalColor: color,
         hasPiece: this.props.rendeDetails.hasPiece,
         piece: this.props.rendeDetails.piece,
-        background: this.props.rendeDetails.background,
     };
+  }
+
+  //Tell Parent that we mounted
+  componentDidMount(){
     this.props.rendeDetails.registration(this.props.rendeDetails.row, this.props.rendeDetails.col, this);
   }
 
   setPiece = (val) => {
-    console.log(this);
     this.setState({
         piece: val,
         hasPiece:  true,
@@ -31,12 +37,17 @@ class Piece extends Component {
     return this.state.hasPiece;
   }
 
+  setBackGround(background){
+    this.setState({
+      color: background,
+    });  
+  }
+
   render(){
-    let color = this.state.background ? "blackBoard": "whiteBoard";
     let hasPiece = this.state.hasPiece;
     let pieceColor = (this.state.piece === pieceVal.WHITE) ? "whitePiece": "blackPiece";
     return (
-      <div className={`flex-item ${color}`} onClick={e => this.props.rendeDetails.action(e, this.props.rendeDetails.row, this.props.rendeDetails.col, this)}>
+      <div className={`flex-item ${this.state.color}`} onClick={e => this.props.rendeDetails.action(e, this.props.rendeDetails.row, this.props.rendeDetails.col, this)}>
         {hasPiece && <div className={`circle ${pieceColor}`}></div>}
       </div>
     );

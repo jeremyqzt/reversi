@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import {_, pieceVal} from '../components/Piece';
 
 class reversiLogic{
@@ -62,17 +63,14 @@ class reversiLogic{
 
 	getAvailableMoves(moves, turn){
 		let toTest = null;
-		let start = false;
-		let flipped = [];
 		let wouldBeFlippedPieces = {};
 
 		for (let move = 0; move < moves.length; move++) {
 			toTest = moves[move];
 			let toTestKey = reversiLogic.keyFromObj(toTest);
-			start = false;
 			for (let a = -1; a <=1; a++) { //Computer the 8 directions for the move
 				for (let b = -1; b <=1; b++) {
-					if (a != 0 || b != 0) {
+					if (a !== 0 || b !== 0) {
 						let evalResult = this.computeDirectionalUntilRepeat(toTest.row, toTest.col, a, b, turn);
 
 						if (evalResult.length > 0) {
@@ -271,3 +269,5 @@ class reversiLogic{
 		return grid;
 	}
 }
+
+export default reversiLogic;

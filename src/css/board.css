@@ -54,10 +54,15 @@
   justify-content: center;
   align-items: center;
   margin: 0px;
+  border: 1px solid black;
 }
 
 .flex-item:hover{
   border: 1px solid #fcba03;
+}
+
+.highlighted{
+  background-color: #fcba03;
 }
 
 .flex-item:after {

@@ -13,6 +13,7 @@ class Board extends Component {
         this.state = {
             grid: grid,
         }
+        this.pieceOutstanding = 64;
       }
 
       handleClick = (e, i, j, piece) => {
@@ -23,8 +24,23 @@ class Board extends Component {
         }
       }
 
+      
       registerPiece = (i, j, obj) => {
         this.gridRef[i][j] = obj;
+        this.pieceOutstanding -= 1;
+
+        if (this.pieceOutstanding === 0){
+          this.reversiGame = new reversiLogic();
+          let availMoves = this.reversiGame.getPossibleMovesAndFlip();
+          for (let key in availMoves){
+            let row = parseInt(key.charAt(1));
+            let col = parseInt(key.charAt(3));
+            this.gridRef[row][col].setBackGround("highlighted");
+            console.log(`${row}, ${col}`);
+          }
+        }
+
+
       }
 
       initBoard = (x,y) =>{
