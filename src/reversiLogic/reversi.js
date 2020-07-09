@@ -26,7 +26,7 @@ class reversiLogic{
 		if (moveKey in this.wouldBeFlippedPieces){
 			this.grid[move.row][move.col] = this.turn;
 		} else {
-			return;
+			return null;
 		}
 
 		let toFlip = [...this.wouldBeFlippedPieces[moveKey]];

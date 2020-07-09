@@ -12,12 +12,14 @@ class Piece extends Component {
   constructor(props) {
     super(props);
     let color = this.props.rendeDetails.background ? "blackBoard": "whiteBoard";
+    let pieceColor = this.props.rendeDetails.piece === pieceVal.WHITE ? "whitePiece": "blackPiece";
 
     this.state = {
         color: color,
         originalColor: color,
         hasPiece: this.props.rendeDetails.hasPiece,
         piece: this.props.rendeDetails.piece,
+        pieceColor: pieceColor,
     };
   }
 
@@ -26,10 +28,16 @@ class Piece extends Component {
     this.props.rendeDetails.registration(this.props.rendeDetails.row, this.props.rendeDetails.col, this);
   }
 
+  getOriginalColor = () =>{
+    return this.state.originalColor;
+  }
+
   setPiece = (val) => {
+    let pieceColor = (val === pieceVal.WHITE) ? "whitePiece": "blackPiece";
     this.setState({
         piece: val,
         hasPiece:  true,
+        pieceColor: pieceColor,
     });
   }
 
@@ -43,12 +51,12 @@ class Piece extends Component {
     });  
   }
 
+
   render(){
     let hasPiece = this.state.hasPiece;
-    let pieceColor = (this.state.piece === pieceVal.WHITE) ? "whitePiece": "blackPiece";
     return (
       <div className={`flex-item ${this.state.color}`} onClick={e => this.props.rendeDetails.action(e, this.props.rendeDetails.row, this.props.rendeDetails.col, this)}>
-        {hasPiece && <div className={`circle ${pieceColor}`}></div>}
+        {hasPiece && <div className={`circle ${this.state.pieceColor}`}></div>}
       </div>
     );
   };

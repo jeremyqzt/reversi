@@ -63,6 +63,20 @@
 
 .highlighted{
   background-color: #fcba03;
+  animation: 1s infinite alternate ease-out breathing;
+}
+
+@keyframes breathing{
+  from
+  {
+      background-color: hsl(44, 98%, 50%);
+      opacity: 1;
+  }
+  to
+  {
+    background-color: hsl(44, 98%, 50%);
+    opacity: 0.6;
+  }
 }
 
 .flex-item:after {

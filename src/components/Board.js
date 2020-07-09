@@ -10,6 +10,9 @@ class Board extends Component {
         super(props);
         this.gridRef = [];
         let grid = this.initBoard(8,8);
+        this.highlighted = [];
+        this.availMoves = {};
+        this.reversiGame = new reversiLogic();
         this.state = {
             grid: grid,
         }
@@ -17,10 +20,46 @@ class Board extends Component {
       }
 
       handleClick = (e, i, j, piece) => {
-        //console.log(e.target)
-        //console.log(`${i} ${j}`);
-        if (!piece.hasPieceAlready()){
-          piece.setPiece(pieceVal.BLACK);
+        let toRender = this.reversiGame.getTurn();
+        let move = {
+          row: i,
+          col: j,
+        }
+        if (this.reversiGame.makeMove(move) !== null){
+          this.gridRef[i][j].setPiece(toRender);
+          this.flipBulkPieces(this.availMoves[`R${i}C${j}`], toRender);
+          this.removeHighlight();
+          this.computeAvailAndMark();
+        }
+      }
+
+      flipBulkPieces = (toFlip, flipTo)=>{
+        for (let i = 0; i < toFlip.length; i++){
+          let [row, col] = [toFlip[i].row, toFlip[i].col];
+          this.gridRef[row][col].setPiece(flipTo);
+        }
+      }
+
+      removeHighlight = () =>{
+        for (let i = 0 ;i < this.highlighted.length; i++){
+          let square = this.highlighted[i];
+          let origColor =  this.gridRef[square.row][square.col].getOriginalColor();
+          this.gridRef[square.row][square.col].setBackGround(origColor);
+        }
+      }
+
+      computeAvailAndMark = () => {
+        this.availMoves = this.reversiGame.getPossibleMovesAndFlip();
+        for (let key in this.availMoves){
+          let row = parseInt(key.charAt(1));
+          let col = parseInt(key.charAt(3));
+          this.gridRef[row][col].setBackGround("highlighted");
+          this.highlighted.push(
+            {
+              row: row,
+              col: col,
+            }
+          )
         }
       }
 
@@ -30,14 +69,7 @@ class Board extends Component {
         this.pieceOutstanding -= 1;
 
         if (this.pieceOutstanding === 0){
-          this.reversiGame = new reversiLogic();
-          let availMoves = this.reversiGame.getPossibleMovesAndFlip();
-          for (let key in availMoves){
-            let row = parseInt(key.charAt(1));
-            let col = parseInt(key.charAt(3));
-            this.gridRef[row][col].setBackGround("highlighted");
-            console.log(`${row}, ${col}`);
-          }
+          this.computeAvailAndMark();
         }
 
 
