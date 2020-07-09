@@ -152,9 +152,9 @@ class reversiLogic{
 			curCol = filled[i].col;
 			for (let z = curRow - 1; z <= (curRow + 1); z++) {
 				for (let x = curCol - 1; x <= (curCol + 1); x++){
-					if (!this._isPiecePresent(z, x) &&
-						!reversiLogic._isCoordinateDup(adj, z, x) &&
-						reversiLogic._isCordValid(z, x)) {
+					if (!reversiLogic._isCoordinateDup(adj, z, x) &&
+						reversiLogic._isCordValid(z, x) &&
+						!this._isPiecePresent(z, x)) {
 						adj.push(
 							{
 								row: z,
@@ -182,9 +182,9 @@ class reversiLogic{
 
 		for (let z = i - 1; z <= (i + 1) && z <= 7; z++) {
 			for (let x = j - 1; x <= (j + 1) && x <= 7; x++){
-				if (!this._isPiecePresent(z, x) &&
-					!reversiLogic._isCoordinateDup(this.extremisPieces, z, x) &&
-					reversiLogic._isCordValid(z, x)) {
+				if (!reversiLogic._isCoordinateDup(this.extremisPieces, z, x) &&
+					reversiLogic._isCordValid(z, x) &&
+					!this._isPiecePresent(z, x)) {
 						this.extremisPieces.push(
 							{
 								row: z,
