@@ -6,6 +6,7 @@ import JwtUtils from '../utils/jwtUtils.js';
 import reversiLogic from '../reversiLogic/reversi';
 
 import '../css/board.css';
+import { pieceVal } from './Piece';
 
 class Game extends Component {
     constructor(props){
@@ -29,7 +30,7 @@ class Game extends Component {
     handleMoveAction = () =>{
         let turn = this.reversiGame.reversi.getTurn();
         let pieceCount = this.reversiGame.reversi.getPieceCount();
-        this.setTurn(turn);
+        this.setTurn(turn === pieceVal.BLACK);
         this.setCount(pieceCount);
     }
 

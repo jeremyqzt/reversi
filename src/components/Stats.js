@@ -10,7 +10,7 @@ class Stats extends Component {
             black: 2,
             empty: 60,
             moves: 0,
-            turn: "⚪ White",
+            turn: "⚫ Black",
         }
         this.props.updateDetails.turn(this.setTurn);
         this.props.updateDetails.count(this.setPieceCount);
