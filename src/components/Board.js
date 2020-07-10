@@ -32,6 +32,7 @@ class Board extends Component {
           this.computeAvailAndMark();
           this.updateStats();
         }
+        console.log(this.reversiGame.getOver())
       }
 
       flipBulkPieces = (toFlip, flipTo)=>{

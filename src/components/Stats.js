@@ -14,7 +14,6 @@ class Stats extends Component {
         }
         this.props.updateDetails.turn(this.setTurn);
         this.props.updateDetails.count(this.setPieceCount);
-
     }
 
     setPieceCount = (inCount) => {

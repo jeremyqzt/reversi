@@ -7,6 +7,7 @@ class reversiLogic{
 		this.extremisPieces = this.initExtremisPiece();
 		this.turn = pieceVal.BLACK;
 		this.wouldBeFlippedPieces = this.getAvailableMoves(this.extremisPieces, this.turn);
+		this.over = false;
 	}
 
 	getGrid(){
@@ -19,6 +20,10 @@ class reversiLogic{
 
 	getTurn(){
 		return this.turn;
+	}
+
+	getOver(){
+		return this.over;
 	}
 
 	getPieceCount(){
@@ -39,6 +44,10 @@ class reversiLogic{
 	}
 
 	makeMove(move){
+		if (this.over){
+			return null;
+		}
+
 		let moveKey = reversiLogic.keyFromObj(move);
 		if (moveKey in this.wouldBeFlippedPieces){
 			this.grid[move.row][move.col] = this.turn;
@@ -57,6 +66,9 @@ class reversiLogic{
 		if (Object.keys(nextWouldbeFlipped).length === 0){
 			normalNext = this.turn;
 			this.wouldBeFlippedPieces = this.getAvailableMoves(this.extremisPieces, normalNext);
+			if (Object.keys(this.wouldBeFlippedPieces).length === 0){
+				this.over = true;
+			}
 		} else {
 			this.wouldBeFlippedPieces = nextWouldbeFlipped;
 		}
