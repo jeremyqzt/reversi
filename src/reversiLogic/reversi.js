@@ -21,6 +21,23 @@ class reversiLogic{
 		return this.turn;
 	}
 
+	getPieceCount(){
+		let blk = 0;
+		let wht = 0;
+
+		for (let i = 0; i < this.grid.length; i++) {
+			for (let j = 0; j < this.grid[i].length; j++) {
+				if (this.grid[i][j] === pieceVal.BLACK) {
+					blk += 1;
+				}
+				else if(this.grid[i][j] === pieceVal.WHITE){
+					wht += 1
+				}
+			}
+		}
+		return {black: blk, white: wht};
+	}
+
 	makeMove(move){
 		let moveKey = reversiLogic.keyFromObj(move);
 		if (moveKey in this.wouldBeFlippedPieces){

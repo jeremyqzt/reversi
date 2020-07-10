@@ -12,6 +12,7 @@ class Board extends Component {
         this.highlighted = [];
         this.availMoves = {};
         this.reversiGame = this.props.gameDetails.reversi; //new reversiLogic();
+        this.updateStats = this.props.gameDetails.moveAct;
         this.state = {
             grid: grid,
         }
@@ -29,6 +30,7 @@ class Board extends Component {
           this.flipBulkPieces(this.availMoves[`R${i}C${j}`], toRender);
           this.removeHighlight();
           this.computeAvailAndMark();
+          this.updateStats();
         }
       }
 

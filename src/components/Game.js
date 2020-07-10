@@ -10,10 +10,35 @@ import '../css/board.css';
 class Game extends Component {
     constructor(props){
         super(props);
+        this.handleMoveAction = this.handleMoveAction.bind(this);
+        this.handleTurn = this.handleTurn.bind(this);
+        this.handleCount = this.handleCount.bind(this);
+
         this.reversiGame = {
             reversi: new reversiLogic(),
+            moveAct: this.handleMoveAction,
+        }
+
+        this.statsMan = {
+            turn: this.handleTurn,
+            count: this.handleCount,
         }
         //JwtUtils.checkTokenPresent();
+    }
+
+    handleMoveAction = () =>{
+        let turn = this.reversiGame.reversi.getTurn();
+        let pieceCount = this.reversiGame.reversi.getPieceCount();
+        this.setTurn(turn);
+        this.setCount(pieceCount);
+    }
+
+    handleTurn = (func) =>{
+        this.setTurn = func;
+    }
+
+    handleCount = (func) =>{
+        this.setCount = func;
     }
 
     render(){
@@ -26,7 +51,7 @@ class Game extends Component {
                 <div className="container">
                     <div className = "row">
                         <Board gameDetails={this.reversiGame}/>
-                        <Stats gameDetails={this.reversiGame}/>
+                        <Stats updateDetails={this.statsMan}/>
                     </div>
                 </div>
             </div>
