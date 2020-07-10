@@ -3,12 +3,16 @@ import Board from './Board';
 import Nav from './Nav';
 import Stats from './Stats';
 import JwtUtils from '../utils/jwtUtils.js';
+import reversiLogic from '../reversiLogic/reversi';
 
 import '../css/board.css';
 
 class Game extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
+        this.reversiGame = {
+            reversi: new reversiLogic(),
+        }
         //JwtUtils.checkTokenPresent();
     }
 
@@ -21,8 +25,8 @@ class Game extends Component {
                 </div>
                 <div className="container">
                     <div className = "row">
-                        <Board />
-                        <Stats />
+                        <Board gameDetails={this.reversiGame}/>
+                        <Stats gameDetails={this.reversiGame}/>
                     </div>
                 </div>
             </div>

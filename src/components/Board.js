@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Piece, pieceVal} from './Piece';
-import reversiLogic from '../reversiLogic/reversi';
 
 import '../css/board.css';
 
@@ -12,7 +11,7 @@ class Board extends Component {
         let grid = this.initBoard(8,8);
         this.highlighted = [];
         this.availMoves = {};
-        this.reversiGame = new reversiLogic();
+        this.reversiGame = this.props.gameDetails.reversi; //new reversiLogic();
         this.state = {
             grid: grid,
         }
