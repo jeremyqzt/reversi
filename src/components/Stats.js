@@ -11,9 +11,12 @@ class Stats extends Component {
             empty: 60,
             moves: 0,
             turn: "⚫ Black",
+            opponent: "🤖 Beep-Boop",
         }
         this.props.updateDetails.turn(this.setTurn);
         this.props.updateDetails.count(this.setPieceCount);
+        this.props.updateDetails.opp(this.setOpp);
+
     }
 
     setPieceCount = (inCount) => {
@@ -31,6 +34,12 @@ class Stats extends Component {
         this.setState({
             moves: this.state.moves + 1,
             turn: (blackTurn) ? "⚫ Black" :"⚪ White",
+        });
+      }
+
+      setOpp = (opp) => {
+        this.setState({
+            opponent: opp,
         });
       }
 
@@ -57,7 +66,7 @@ class Stats extends Component {
                 <div className="row">
                     <div className="col-12">
                         <h2 className="text-center">Current Opponent</h2>
-                        <p className="text-center"><span role="img" aria-label="pawn">♟️</span> Yanqi Li</p>
+                        <p className="text-center">{this.state.opponent}</p>
                     </div>
                 </div>
             </div>

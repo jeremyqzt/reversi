@@ -14,6 +14,7 @@ class Game extends Component {
         this.handleMoveAction = this.handleMoveAction.bind(this);
         this.handleTurn = this.handleTurn.bind(this);
         this.handleCount = this.handleCount.bind(this);
+        this.handleOpp = this.handleOpp.bind(this);
 
         this.reversiGame = {
             reversi: new reversiLogic(),
@@ -23,6 +24,7 @@ class Game extends Component {
         this.statsMan = {
             turn: this.handleTurn,
             count: this.handleCount,
+            opp: this.handleOpp,
         }
         //JwtUtils.checkTokenPresent();
     }
@@ -40,6 +42,10 @@ class Game extends Component {
 
     handleCount = (func) =>{
         this.setCount = func;
+    }
+
+    handleOpp = (func) =>{
+        this.setOpp = func;
     }
 
     render(){

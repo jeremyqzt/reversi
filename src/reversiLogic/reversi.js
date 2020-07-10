@@ -43,6 +43,52 @@ class reversiLogic{
 		return {black: blk, white: wht};
 	}
 
+
+	makeMoveServer(move){
+		
+
+		/*
+		if (this.over){
+			return null;
+		}
+
+		let moveKey = reversiLogic.keyFromObj(move);
+		if (moveKey in this.wouldBeFlippedPieces){
+			this.grid[move.row][move.col] = this.turn;
+		} else {
+			return null;
+		}
+
+		let toFlip = [...this.wouldBeFlippedPieces[moveKey]];
+
+		this.flipPieces(toFlip);
+		this.recomputeExtremePiece(move.row, move.col);
+		let normalNext = reversiLogic.oppsitePiece(this.turn);
+		let nextWouldbeFlipped = this.getAvailableMoves(this.extremisPieces, normalNext);
+
+		//Cannot move, flip normalNext to current again.
+		if (Object.keys(nextWouldbeFlipped).length === 0){
+			normalNext = this.turn;
+			this.wouldBeFlippedPieces = this.getAvailableMoves(this.extremisPieces, normalNext);
+			if (Object.keys(this.wouldBeFlippedPieces).length === 0){
+				this.over = true;
+			}
+		} else {
+			this.wouldBeFlippedPieces = nextWouldbeFlipped;
+		}
+
+		let retObj = {
+			thisTurn: this.turn,
+			nextTurn: normalNext,
+			wouldbeFlipped: [...toFlip],
+		};
+
+		this.turn = normalNext;
+
+		return retObj;
+		*/
+	}
+
 	makeMove(move){
 		if (this.over){
 			return null;

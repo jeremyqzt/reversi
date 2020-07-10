@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
 import '../css/login.css';
 import JwtUtils from '../utils/jwtUtils.js';
+import serverComm from '../utils/serverComm.js';
 
 class LoginPage extends Component {
   constructor() {
@@ -21,7 +21,7 @@ class LoginPage extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     // eslint-disable-next-line
-    const {signup, login, email, password, passwordConfirm} = this.state;
+    const {signup, _, email, password, passwordConfirm} = this.state;
 
     if (password.length < 8) {
       let err = "Password too short!";
@@ -41,32 +41,28 @@ class LoginPage extends Component {
   }
 
   tryLoginOrSignUp(signup, email, password){
-    let postLocat = (signup) ? "/auth/user/create/" : "auth/token/obtain/";
+    let postLocat = (signup) ? "auth/user/create/" : "auth/token/obtain/";
+    let data = {
+      "username": email,
+      "email": email,
+      "password": password
+    };
 
-    const instance = axios.create({baseURL: 'http://127.0.0.1:8000'})
-    instance.post(postLocat, 
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        "username": email,
-        "email": email,
-        "password": password
-      })
+    serverComm.post(data, postLocat)
+    .then(result =>{return result.json()})
     .then((result) => {
       if (!signup){
-        let token = result.data;
-        JwtUtils.storeToken(token);
+        JwtUtils.storeToken(result);
         window.location.href = '/home';
       } else {
         this.tryLoginOrSignUp(!signup, email, password);
       }
     })
     .catch((result)=> {
-      let err = "User already present!";
+      let err = "Login Error!";
       this.setState({
         login: err,
-      });    
+      });
     });
   }
 
