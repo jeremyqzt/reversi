@@ -1,7 +1,7 @@
 #from game.models import Game
 from rest_framework import permissions, views, response, status
 from .customGameSerializer import gameSerializer
-from .gameLogic import gameLogic
+from .reversi import gridLocation
 import json
 
 class gameViewSet(views.APIView):
@@ -17,6 +17,7 @@ class gameViewSet(views.APIView):
         gid = serializer.getGidFromUser(username)
         if "room" in gid:
             gid = gid["room"]
+        else:
             return response.Response({"error": "No Room"}, status=status.HTTP_404_NOT_FOUND)
 
         game = serializer.getGameFromGid(gid)
@@ -30,5 +31,17 @@ class gameViewSet(views.APIView):
             ret["over"] = game.over
         return response.Response({"game": ret}, status=status.HTTP_200_OK)
     def post(self, request):
-        pass
- 
+        if (not "row" in request.data) or (not "col" in request.data):
+            return Response(None, status=status.HTTP_404_NOT_FOUND)
+        username = str(request.user)
+        row = int(request.data["row"])
+        col = int(request.data["col"])
+        move = gridLocation(row, col)
+        serializer = gameSerializer()
+        gid = serializer.getGidFromUser(username)
+        if "room" in gid:
+            gid = gid["room"]
+        else:
+            return response.Response({"error": "No Room"}, status=status.HTTP_404_NOT_FOUND)
+        ret = serializer.makeMoveWithGid(gid, move)
+        return response.Response({"game": ret}, status=status.HTTP_200_OK) 
