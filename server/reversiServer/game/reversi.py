@@ -1,5 +1,6 @@
 import enum
 import json
+from .reversiQSet import reversiQSet
 
 class GridState(enum.IntEnum):
     EMPTY = 0
@@ -53,22 +54,6 @@ class gridLocation():
 
     def __str__(self):
         return ("R%dC%d" % (self.row, self.col))
-    
-
-class reversiSerializer:
-    def __init__(self, model):
-        self.model = model
-    def serialize
-    
-
-class reversiModel:
-    def __init__(this, grid, turn, move):
-        this.grid = grid
-        this.turn = turn
-        this.move = move
-
-        t = { "grid": this.grid }
-        print(json.dumps(t))
 
 class reversi:
     def __init__(self, grid = None, turn = None, moveId = 0):
@@ -88,15 +73,16 @@ class reversi:
 
         self.extremisPieces = self.computeExtremePieces()
         self.avail = self.computeAvailable(self.turn)
+        self.over = False
 
-        #'''
+        '''
         print(self.avail)
         print(self)
 
         self.makeMove(gridLocation(3,2))
         print(self.avail)
         print(self)
-        '''
+        #
         self.makeMove(gridLocation(2,2))
         print(self.avail)
         print(self)       
@@ -122,11 +108,14 @@ class reversi:
         print(self) 
         '''
     def makeMove(self, move):
+        if self.over:
+            return self.getCurrentQset()
+
         if (not self.grid[move.row][move.col] == GridState.EMPTY):
-            return -1
+            return self.getCurrentQset()
 
         if str(move) in self.avail:
-            return -1
+            return self.getCurrentQset()
 
         self.grid[move.row][move.col] = self.turn
 
@@ -140,8 +129,13 @@ class reversi:
             self.avail = newAvail
         else:
             self.avail = self.computeAvailable(self.turn)
+            if self.avail == {}:
+                self.over = True
 
-        return reversiModel(self.grid, self.turn, self.moveId + 1)
+        return reversiQSet(self.grid, self.turn, self.moveId + 1, self.over)
+
+    def getCurrentQset(self):
+        return reversiQSet(self.grid, self.turn, self.moveId, self.over)
 
     def computeAvailable(self, color):
         ret = {}
@@ -261,5 +255,3 @@ class reversi:
     def __initPiece(self, grid):
         grid[3][3] = grid[4][4] = GridState.WHITE
         grid[3][4] = grid[4][3] = GridState.BLACK
-
-test = reversi()

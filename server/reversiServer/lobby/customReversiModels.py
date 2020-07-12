@@ -58,12 +58,16 @@ class LobbyModel:
             return None
         return data
 
-    def storeState(self, gid, gameData, user):
+    def storeStateNoUser(self, gid, gameData):
         dbId = LobbyModel.getDbInst(gid)
         payload = {}
         payload["newState"] = json.dumps(gameData)
         server = "%s/%s/%s" % (self.availDb[dbId], "gameState", gid)
         r = requests.post(url = server, data = payload)
+        return r
+
+    def storeState(self, gid, gameData, user):
+        r = self.storeStateNoUser(gid, gameData)
         if r.status_code == 200:
             r = self.storePlayerRoom(user, gid)
         else:

@@ -1,4 +1,4 @@
-from .customLobbyModels import LobbyModel
+from .customReversiModels import LobbyModel
 
 class LobbyCreateSerializer:
     def __init__(self):
