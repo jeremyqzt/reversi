@@ -47,6 +47,6 @@ class gameSerializer():
                 game.makeMove(move)
         else:
             return None #No such room...
-        ret = game.getCurrentQset()
-        model.storeStateNoUser(gid, ret)
+        ret = game.getCurrentQset().getDict()
+        model.storeStateNoUser(gid, ret.update(existingRoom))
         return ret

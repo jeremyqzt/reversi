@@ -31,8 +31,8 @@ class gameViewSet(views.APIView):
             ret["over"] = game.over
         return response.Response({"game": ret}, status=status.HTTP_200_OK)
     def post(self, request):
-        if (not "row" in request.data) or (not "col" in request.data):
-            return Response(None, status=status.HTTP_404_NOT_FOUND)
+        #if (not "row" in request.data) or (not "col" in request.data):
+        #    return Response(None, status=status.HTTP_404_NOT_FOUND)
         username = str(request.user)
         row = int(request.data["row"])
         col = int(request.data["col"])

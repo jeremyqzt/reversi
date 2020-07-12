@@ -7,11 +7,14 @@ class reversiQSet:
         self.move = move
         self.over = over
 
-    def __str__(self):
+    def getDict(self):
         t = {
             "grid": self.grid,
             "turn": self.turn,
             "move": self.move,
             "over": self.over
             }
-        return json.dumps(t)
+        return t
+
+    def __str__(self):
+        return json.dumps(self.getDict())
