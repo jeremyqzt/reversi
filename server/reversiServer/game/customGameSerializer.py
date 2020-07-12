@@ -38,15 +38,16 @@ class gameSerializer():
         model = self.Meta.model()
         #Must have a room (because lobby)
         existingRoom = model.getState(gid)
-        game = None
+        game, ret = (None, None)
         if(existingRoom != None):
             if (not "grid" in existingRoom):
                 game = reversi()
             else:
                 game = reversi(existingRoom["grid"], existingRoom["turn"], existingRoom["move"], existingRoom["over"])
-                game.makeMove(move)
         else:
             return None #No such room...
-        ret = game.getCurrentQset().getDict()
-        model.storeStateNoUser(gid, ret.update(existingRoom))
+
+        ret = game.makeMove(move).getDict()
+        existingRoom.update(ret)
+        model.storeStateNoUser(gid, existingRoom)
         return ret

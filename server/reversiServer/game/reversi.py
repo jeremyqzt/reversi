@@ -59,19 +59,21 @@ class reversi:
     def __init__(self, grid = None, turn = None, moveId = 0, over = False):
         if(grid == None):
             self.grid = self.__initBoard(8,8)
+            self.__initPiece(self.grid)
         else:
             self.grid = grid
+            for i in range(0, len(self.grid)):
+                for j in range(0, len(self.grid[i])):
+                    self.grid[i][j] = GridState(self.grid[i][j])
 
         if turn == None:
             self.turn = GridState.BLACK
         else:
-            self.turn = turn
+            self.turn = GridState(turn)
 
         self.over = over
 
         self.moveId = moveId
-        
-        self.__initPiece(self.grid)
 
         self.extremisPieces = self.computeExtremePieces()
         self.avail = self.computeAvailable(self.turn)
@@ -109,6 +111,9 @@ class reversi:
         print(self) 
         '''
     def makeMove(self, move):
+        print(self.avail)
+        print(self)
+        print(self.turn.value)
         if self.over:
             return self.getCurrentQset()
 
