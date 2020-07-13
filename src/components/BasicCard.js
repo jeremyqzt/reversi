@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import '../css/board.css';
 
-class AiCard extends Component {
+class BasicCard extends Component {
     render(){
         return (
             <div className="card text-center h-100">
@@ -13,15 +13,11 @@ class AiCard extends Component {
                         <h5 className="card-title">{this.props.renderDetails.smallTitle}</h5>
                         <p className="card-text">{this.props.renderDetails.description}</p>
                         <div className="row">
-                            <div className="col-4">
-                                <a className="btn btn-outline-info w-100" href={`${this.props.renderDetails.hrefEasy}`}>{this.props.renderDetails.navMsgEasy}</a>
+                            <div className="col-3"></div>
+                            <div className="col-6">
+                                <a className="btn btn-outline-dark w-100" href={`${this.props.renderDetails.href}`}>{this.props.renderDetails.navMsg}</a>
                             </div>
-                            <div className="col-4">
-                                <a className="btn btn-outline-warning w-100" href={`${this.props.renderDetails.hrefMed}`}>{this.props.renderDetails.navMsgMed}</a>
-                            </div>
-                            <div className="col-4">
-                                <a className="btn btn-outline-danger w-100" href={`${this.props.renderDetails.hrefHard}`}>{this.props.renderDetails.navMsgHard}</a>
-                            </div>
+                            <div className="col-3"></div>
                         </div>
                     </div>
                 </div>
@@ -31,4 +27,4 @@ class AiCard extends Component {
       };
 }
 
-export default AiCard;
+export default BasicCard;
