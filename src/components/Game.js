@@ -26,6 +26,12 @@ class Game extends Component {
             count: this.handleCount,
             opp: this.handleOpp,
         }
+
+        this.aiDiff = 0;
+        if (this.props.location.search.length > 0){
+            this.aiDiff = parseInt(this.props.location.search.substr(-1));
+            this.aiDiff =  (isNaN(this.aiDiff) || this.aiDiff > 3) ? 1 : this.aiDiff;
+        }
         //JwtUtils.checkTokenPresent();
     }
 

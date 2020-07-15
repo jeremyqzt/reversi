@@ -13,11 +13,11 @@ class Home extends Component {
             bigTitle: "1️⃣ Single Player",
             smallTitle: "🤖 Against the AI.",
             description: "Play Reversi Against a Computer Player.",
-            hrefEasy: "/",
+            hrefEasy: "/board?ai=1",
             navMsgEasy: "🍂 EZ",
-            hrefMed: "/",
+            hrefMed: "/board?ai=2",
             navMsgMed: "🌱 Okay",
-            hrefHard: "/",
+            hrefHard: "/board?ai=3",
             navMsgHard: "🌲 !!!!",
         };
 

@@ -199,6 +199,8 @@ class reversiLogic{
 					break;
 				case 2:
 					break;
+				default:
+					break;
 			}
 		}
 	}

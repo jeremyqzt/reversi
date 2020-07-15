@@ -1,11 +1,12 @@
+// eslint-disable-next-line
 import {_, pieceVal} from '../components/Piece';
+
 import reversiLogic from './reversi';
 
 class MinMaxAlgo {
 	static async getMinMaxMove(gameSituation, depth, turn) {
 		let curGame = new reversiLogic(gameSituation, turn);
 		let avail = curGame.getPossibleMovesAndFlip();
-		let gameCpy = null;
 		let maxOrMin = 64;
 
 		//AI always uses white...
@@ -19,16 +20,16 @@ class MinMaxAlgo {
 
 		if (depth > 0) {
 			for (let key in avail) {
-				gameCpy = curGame.board.getDuplicateGrid(); //Arrays are mutable and passed as reference, must rebuild
-				nextState = new reversiLogic(gameSituation, turn);
+				let gameCpy = curGame.board.getDuplicateGrid(); //Arrays are mutable and passed as reference, must rebuild
+				nextState = new reversiLogic(gameCpy, turn);
 				nextState.makeMove(avail[key]);
 				nextFavour = await MinMaxAlgo.getMinMaxMove(nextState.getDuplicateGrid(), (depth - 1), nextState.getTurn()).score;
 
 				//Assuming white maximizes and black minimizes
-				if (turn == pieceVal.WHITE && nextFavour > maxOrMin) {
+				if (turn === pieceVal.WHITE && nextFavour > maxOrMin) {
 					maxOrMin = nextFavour;
 					moveIdx = key;
-				} else if (turn == pieceVal.BLACK && nextFavour < maxOrMin) {
+				} else if (turn === pieceVal.BLACK && nextFavour < maxOrMin) {
 					maxOrMin = nextFavour;
 					moveIdx = key;
 				}
