@@ -1,7 +1,5 @@
 // eslint-disable-next-line
 import {_, pieceVal} from '../components/Piece';
-import {GreedyAI, RandomAI} from './dumbAIs';
-import MinMaxAlgo from './minMaxAI';
 
 class reversiLogic{
 	constructor(grid = null, turn = null){
@@ -150,59 +148,6 @@ class reversiLogic{
 		this.turn = normalNext;
 
 		return retObj;
-	}
-
-	//Make AI move means:
-	//Make your move, (tell me in the move paramter)
-	//AI will move after you (The AI may recursively call this method)
-	makeAIMove(move, AiDiff, AiTurn){
-		if (this.over){
-			return null;
-		}
-
-		let moveKey = reversiLogic.keyFromObj(move);
-		if (moveKey in this.wouldBeFlippedPieces){
-			this.grid[move.row][move.col] = this.turn;
-		} else {
-			return null;
-		}
-
-		let toFlip = [...this.wouldBeFlippedPieces[moveKey]];
-
-		this.flipPieces(toFlip);
-		this.recomputeExtremePiece(move.row, move.col);
-		let normalNext = reversiLogic.oppsitePiece(this.turn);
-		let nextWouldbeFlipped = this.getAvailableMoves(this.extremisPieces, normalNext);
-
-		//Cannot move, flip normalNext to current again.
-		if (Object.keys(nextWouldbeFlipped).length === 0){
-			normalNext = this.turn;
-			this.wouldBeFlippedPieces = this.getAvailableMoves(this.extremisPieces, normalNext);
-			if (Object.keys(this.wouldBeFlippedPieces).length === 0){
-				this.over = true;
-			}
-		} else {
-			this.wouldBeFlippedPieces = nextWouldbeFlipped;
-		}
-
-		this.turn = normalNext;
-		let AiMove = null;
-		if (AiTurn === this.turn){
-			switch(AiDiff){
-				case 0:
-					AiMove = RandomAI.getRandomMove(nextWouldbeFlipped);
-					this.makeAIMove(AiMove, AiDiff, AiTurn);
-					break;
-				case 1:
-					AiMove = GreedyAI.getGreedyMove(nextWouldbeFlipped);
-					this.makeAIMove(AiMove, AiDiff, AiTurn);
-					break;
-				case 2:
-					break;
-				default:
-					break;
-			}
-		}
 	}
 
 	flipPieces(toFlip){
@@ -378,6 +323,16 @@ class reversiLogic{
 
 	static keyFromObj(obj){
 		return `R${obj.row}C${obj.col}`;
+	}
+
+	static objFromKey(key){
+		let row = parseInt(key.charAt(1));
+		let col = parseInt(key.charAt(3));
+
+		return {
+			row: row,
+			col: col,
+		};
 	}
 
 	static _isCoordinateDup(arr, i, j) {

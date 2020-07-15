@@ -15,10 +15,17 @@ class Game extends Component {
         this.handleTurn = this.handleTurn.bind(this);
         this.handleCount = this.handleCount.bind(this);
         this.handleOpp = this.handleOpp.bind(this);
+        
+        this.aiDiff = 0;
+        if (this.props.location.search.length > 0){
+            this.aiDiff = parseInt(this.props.location.search.substr(-1));
+            this.aiDiff =  (isNaN(this.aiDiff) || this.aiDiff > 3) ? 1 : this.aiDiff;
+        }
 
         this.reversiGame = {
             reversi: new reversiLogic(),
             moveAct: this.handleMoveAction,
+            aiDiff: this.aiDiff,
         }
 
         this.statsMan = {
@@ -27,11 +34,6 @@ class Game extends Component {
             opp: this.handleOpp,
         }
 
-        this.aiDiff = 0;
-        if (this.props.location.search.length > 0){
-            this.aiDiff = parseInt(this.props.location.search.substr(-1));
-            this.aiDiff =  (isNaN(this.aiDiff) || this.aiDiff > 3) ? 1 : this.aiDiff;
-        }
         //JwtUtils.checkTokenPresent();
     }
 

@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import {Piece, pieceVal} from './Piece';
+import {GreedyAI, RandomAI} from '../reversiLogic/dumbAIs';
+import MinMaxAlgo from '../reversiLogic/minMaxAI';
 
 import '../css/board.css';
+import reversiLogic from '../reversiLogic/reversi';
 
 
 class Board extends Component {
@@ -13,6 +16,7 @@ class Board extends Component {
         this.availMoves = {};
         this.reversiGame = this.props.gameDetails.reversi; //new reversiLogic();
         this.updateStats = this.props.gameDetails.moveAct;
+        this.aiDiff = this.props.gameDetails.aiDiff;
         this.state = {
             grid: grid,
         }
@@ -21,24 +25,75 @@ class Board extends Component {
 
       handleClick = (e, i, j, piece) => {
         let toRender = this.reversiGame.getTurn();
+
+        //Human always plays blk, return if not your turn
+        if (this.aiDiff !== 0 && toRender != pieceVal.BLACK){
+          return;
+        }
+
         let move = {
           row: i,
           col: j,
         }
         if (this.reversiGame.makeMove(move) !== null){
-          this.gridRef[i][j].setPiece(toRender);
-          this.flipBulkPieces(this.availMoves[`R${i}C${j}`], toRender);
+          this.postMoveActions(move, `R${i}C${j}`, toRender);
           this.removeHighlight();
-          this.computeAvailAndMark();
           this.updateStats();
         }
-        console.log(this.reversiGame.getOver());
+  
+        if (this.aiDiff !== 0){
+          this.getAiMove();
+        } else {
+          this.postMoveHumanHelp();
+        }
+
+        //console.log(this.reversiGame.getOver());
       }
 
-      flipBulkPieces = (toFlip, flipTo)=>{
+      postMoveHumanHelp(){
+        this.getAvailAndMark();
+        this.updateStats();
+      }
+
+      async postMoveActions(move, idx, toRender){
+        this.gridRef[move.row][move.col].setPiece(toRender);
+        await this.flipBulkPieces(this.availMoves[idx], toRender);
+      }
+
+      async getAiMove(){
+        let aiTurn = pieceVal.WHITE;
+        let aiMove = null;
+        this.getAvail();
+        while (aiTurn === this.reversiGame.getTurn() && this.reversiGame.getOver() === false){
+          switch(this.aiDiff){
+            case 1:
+              aiMove = RandomAI.getRandomMove(this.availMoves);
+              break;
+            case 2:
+              aiMove = GreedyAI.getGreedyMove(this.availMoves);
+              break;
+            case 3:
+              break;
+            default:
+              break;
+          }
+          await new Promise(r => setTimeout(r, 1000));
+          //Actually make the move
+          let moveObj = reversiLogic.objFromKey(aiMove);
+          this.reversiGame.makeMove(moveObj);
+          this.postMoveActions(moveObj, aiMove, aiTurn);
+          this.getAvail();
+        }
+        //Once done, help human again
+        this.postMoveHumanHelp();
+
+      }
+
+      async flipBulkPieces(toFlip, flipTo){
         for (let i = 0; i < toFlip.length; i++){
           let [row, col] = [toFlip[i].row, toFlip[i].col];
           this.gridRef[row][col].setPiece(flipTo);
+          await new Promise(r => setTimeout(r, 300));
         }
       }
 
@@ -50,7 +105,11 @@ class Board extends Component {
         }
       }
 
-      computeAvailAndMark = () => {
+      getAvail = () => {
+        this.availMoves = this.reversiGame.getPossibleMovesAndFlip();
+      }
+
+      getAvailAndMark = () => {
         this.availMoves = this.reversiGame.getPossibleMovesAndFlip();
         for (let key in this.availMoves){
           let row = parseInt(key.charAt(1));
@@ -71,7 +130,7 @@ class Board extends Component {
         this.pieceOutstanding -= 1;
 
         if (this.pieceOutstanding === 0){
-          this.computeAvailAndMark();
+          this.getAvailAndMark();
         }
 
 
