@@ -1,60 +1,62 @@
+import {_, pieceVal} from '../components/Piece';
+import reversiLogic from './reversi';
+
 class MinMaxAlgo {
-	static getMinMaxMove(gameSituation, depth, turn) {
-		var curGame = new Reversi(null, null, gameSituation, turn);
-		var avail = curGame.avail;
-		var gameCpy = null;
-		var maxOrMin = 64;
-	
-		if(turn == PieceEnum.black) {
+	static async getMinMaxMove(gameSituation, depth, turn) {
+		let curGame = new reversiLogic(gameSituation, turn);
+		let avail = curGame.getPossibleMovesAndFlip();
+		let gameCpy = null;
+		let maxOrMin = 64;
+
+		//AI always uses white...
+		if(turn === pieceVal.WHITE) {
 			maxOrMin = -64;
 		}
-		var nextFavour = 0;
-		var MoveIdx = 0;
-		var nextState = null;
 
-		var moveScores = [];
+		let nextFavour = 0;
+		let moveIdx = null;
+		let nextState = null;
 
 		if (depth > 0) {
-			for (var i = 0; (i < avail.length) && (avail.length > 0); i++) {
-				//console.log(avail);
-				gameCpy = curGame.board.getStrippedPieces(); //Arrays are mutable and passed as reference, must rebuild
-				//console.log(gameCpy);
-				nextState = new Reversi(null, null, gameCpy, turn);
-				nextState.board.makeMove(nextState.avail[i][0], nextState.avail[i][1], turn);
-				nextState.board.flipPieces(nextState.wouldBeFlippedPieces[i]);
-				nextFavour = MinMaxAlgo.getMinMaxMove(nextState.board.getStrippedPieces(), (depth - 1), nextState.getflipTurn())[0];
-				if (turn == PieceEnum.white && nextFavour < maxOrMin) {
+			for (let key in avail) {
+				gameCpy = curGame.board.getDuplicateGrid(); //Arrays are mutable and passed as reference, must rebuild
+				nextState = new reversiLogic(gameSituation, turn);
+				nextState.makeMove(avail[key]);
+				nextFavour = await MinMaxAlgo.getMinMaxMove(nextState.getDuplicateGrid(), (depth - 1), nextState.getTurn()).score;
+
+				//Assuming white maximizes and black minimizes
+				if (turn == pieceVal.WHITE && nextFavour > maxOrMin) {
 					maxOrMin = nextFavour;
-					MoveIdx = i;
-				} else if (turn == PieceEnum.black && nextFavour > maxOrMin) {
+					moveIdx = key;
+				} else if (turn == pieceVal.BLACK && nextFavour < maxOrMin) {
 					maxOrMin = nextFavour;
-					MoveIdx = i;
+					moveIdx = key;
 				}
-				//console.log("Starting Next Cycle of: " + depth);
-				moveScores[i] = nextFavour;
 			}
 		} else {
-			//console.log("Depth: " + depth + " Returning: " + MinMaxAlgo.computeBoardGoodness(gameSituation));
-			return [MinMaxAlgo.computeBoardGoodness(gameSituation)];
+			//bottom level move, only really care about score...
+			return {
+					score: MinMaxAlgo.computeBoardGoodness(gameSituation),
+				};
 		}
 
-		//console.log("Depth: " + depth);
-		//console.log(moveScores);
-		//console.log("Depth: " + depth + " Returning: " + maxOrMin);
-		return [maxOrMin, avail[MoveIdx]];
+		return {
+				score: maxOrMin,
+				move: avail[moveIdx],
+			};
 	}
 
 	static computeBoardGoodness(board) {
-		var favourability = 0
-		//We take black as +ve and white as -ve in this calculation
+		let favourability = 0
+		//We take black as -ve and white as +ve in this calculation
 		for (var i = 0; i < board.length; i++) {
 			for (var j = 0; j < board[i].length; j++){
-				if (board[i][j] == null) {
+				if (board[i][j] === pieceVal.EMPTY) {
 					continue;
-				} else if (board[i][j].type == PieceEnum.white) {
-					favourability--;
-				} else {
+				} else if (board[i][j].type === pieceVal.WHITE) {
 					favourability++;
+				} else {
+					favourability--;
 				}
 			}
 		}
@@ -62,3 +64,5 @@ class MinMaxAlgo {
 		return favourability;
 	}
 }
+
+export default MinMaxAlgo;

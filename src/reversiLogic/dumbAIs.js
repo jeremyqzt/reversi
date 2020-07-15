@@ -1,21 +1,24 @@
 class GreedyAI {
-	static getGreedyMove(moves, flips) {
+	static getGreedyMove(moves) {
 		var best = 0;
-		var retIdx = -1;
-		for (var i = 0; i < moves.length; i++) {
-			if (flips[i].length > best) {
-				best = flips[i].length;
-				retIdx = i;
+		var ret = null;
+		for (var move in moves) {
+			if (moves[move].length > best) {
+				best = moves[move].length;
+				ret = move;
 			}
 		}
-
-		return moves[retIdx];
+		return ret;
 	}
 }
 
 class RandomAI {
 	static getRandomMove(moves) {
-		var idx = Math.floor(Math.random() * moves.length);
-		return moves[idx];
+		return Object.keys(moves)[Math.floor(Math.random()*Object.keys(moves).length)];
 	}
+}
+
+export {
+	GreedyAI,
+	RandomAI
 }
