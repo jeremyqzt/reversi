@@ -6,11 +6,11 @@ class reversiLogic{
 		this.grid = grid;
 		if (grid === null){
 			this.grid = reversiLogic._initBoard();
-			this.extremisPieces = this.initExtremisPiece();
 		} else {
 			this.grid = grid;
-			this.extremisPieces = this.recomputeExtremePiece();
+			//this.extremisPieces = this.recomputeExtremePiece();
 		}
+		this.extremisPieces = this.initExtremisPiece();
 
 		this.turn = turn;
 		if (turn === null){

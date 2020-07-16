@@ -17,13 +17,16 @@ class MinMaxAlgo {
 		let nextFavour = 0;
 		let moveIdx = null;
 		let nextState = null;
+		let nextTurn = pieceVal.WHITE;
 
 		if (depth > 0) {
 			for (let key in avail) {
-				let gameCpy = curGame.board.getDuplicateGrid(); //Arrays are mutable and passed as reference, must rebuild
+				let gameCpy = curGame.getDuplicateGrid(); //Arrays are mutable and passed as reference, must rebuild
 				nextState = new reversiLogic(gameCpy, turn);
 				nextState.makeMove(avail[key]);
-				nextFavour = await MinMaxAlgo.getMinMaxMove(nextState.getDuplicateGrid(), (depth - 1), nextState.getTurn()).score;
+				nextFavour = await MinMaxAlgo.getMinMaxMove(nextState.getDuplicateGrid(), (depth - 1), nextState.getTurn())//.score;
+				nextFavour = nextFavour.score;
+				nextTurn = nextState.getTurn();
 
 				//Assuming white maximizes and black minimizes
 				if (turn === pieceVal.WHITE && nextFavour > maxOrMin) {
@@ -43,7 +46,7 @@ class MinMaxAlgo {
 
 		return {
 				score: maxOrMin,
-				move: avail[moveIdx],
+				move: moveIdx,
 			};
 	}
 

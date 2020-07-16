@@ -29,7 +29,7 @@ class Board extends Component {
         let toRender = this.reversiGame.getTurn();
 
         //Human always plays blk, return if not your turn
-        if (this.aiDiff !== 0 && toRender != pieceVal.BLACK){
+        if (this.aiDiff !== 0 && toRender !== pieceVal.BLACK){
           return;
         }
 
@@ -39,8 +39,8 @@ class Board extends Component {
         }
         if (this.reversiGame.makeMove(move) !== null){
           this.removeHighlight();
-          await this.postMoveActions(move, `R${i}C${j}`, toRender);
           this.updateStats();
+          await this.postMoveActions(move, `R${i}C${j}`, toRender);
         }
   
         if (this.aiDiff !== 0){
@@ -65,6 +65,7 @@ class Board extends Component {
       async getAiMove(){
         let aiTurn = pieceVal.WHITE;
         let aiMove = null;
+        let minMaxStat = null
         this.getAvail();
         while (aiTurn === this.reversiGame.getTurn() && this.reversiGame.getOver() === false){
           switch(this.aiDiff){
@@ -75,15 +76,18 @@ class Board extends Component {
               aiMove = GreedyAI.getGreedyMove(this.availMoves);
               break;
             case 3:
+              minMaxStat = await MinMaxAlgo.getMinMaxMove(this.reversiGame.getDuplicateGrid(), 5, aiTurn);
+              aiMove = minMaxStat.move;
               break;
             default:
               break;
           }
-          await new Promise(r => setTimeout(r, 1000));
+          await new Promise(r => setTimeout(r, 300));
           //Actually make the move
+          console.log(minMaxStat.score);
           let moveObj = reversiLogic.objFromKey(aiMove);
           this.reversiGame.makeMove(moveObj);
-          this.postMoveActions(moveObj, aiMove, aiTurn);
+          await this.postMoveActions(moveObj, aiMove, aiTurn);
           this.getAvail();
         }
         //Once done, help human again
