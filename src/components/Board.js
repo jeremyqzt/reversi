@@ -71,20 +71,23 @@ class Board extends Component {
           switch(this.aiDiff){
             case 1:
               aiMove = RandomAI.getRandomMove(this.availMoves);
+              await new Promise(r => setTimeout(r, 100));
               break;
             case 2:
               aiMove = GreedyAI.getGreedyMove(this.availMoves);
+              await new Promise(r => setTimeout(r, 300));
               break;
             case 3:
-              minMaxStat = await MinMaxAlgo.getMinMaxMove(this.reversiGame.getDuplicateGrid(), 5, aiTurn);
+              minMaxStat = await MinMaxAlgo.getMinMaxMove(this.reversiGame.getDuplicateGrid(), 4, aiTurn);
               aiMove = minMaxStat.move;
+              //console.log(minMaxStat.score);
               break;
             default:
               break;
           }
-          await new Promise(r => setTimeout(r, 300));
+
           //Actually make the move
-          console.log(minMaxStat.score);
+
           let moveObj = reversiLogic.objFromKey(aiMove);
           this.reversiGame.makeMove(moveObj);
           await this.postMoveActions(moveObj, aiMove, aiTurn);
