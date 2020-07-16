@@ -25,7 +25,7 @@ class Home extends Component {
             bigTitle: "2️⃣ Local Multiplayer",
             smallTitle: "🎎 Against a Friend.",
             description: "Play Reversi Against Someone Sitting Next to You.",
-            href: "/",
+            href: "/board",
             navMsg: "Get Started!",
         };
 

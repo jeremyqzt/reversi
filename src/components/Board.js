@@ -10,6 +10,7 @@ import reversiLogic from '../reversiLogic/reversi';
 class Board extends Component {
       constructor(props) {
         super(props);
+        this.handleClick = this.handleClick.bind(this);
         this.gridRef = [];
         let grid = this.initBoard(8,8);
         this.highlighted = [];
@@ -21,9 +22,10 @@ class Board extends Component {
             grid: grid,
         }
         this.pieceOutstanding = 64;
+
       }
 
-      handleClick = (e, i, j, piece) => {
+      async handleClick(e, i, j, piece){
         let toRender = this.reversiGame.getTurn();
 
         //Human always plays blk, return if not your turn
@@ -36,8 +38,8 @@ class Board extends Component {
           col: j,
         }
         if (this.reversiGame.makeMove(move) !== null){
-          this.postMoveActions(move, `R${i}C${j}`, toRender);
           this.removeHighlight();
+          await this.postMoveActions(move, `R${i}C${j}`, toRender);
           this.updateStats();
         }
   
