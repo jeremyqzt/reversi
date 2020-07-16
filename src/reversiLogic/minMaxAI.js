@@ -17,7 +17,6 @@ class MinMaxAlgo {
 		let nextFavour = 0;
 		let moveIdx = null;
 		let nextState = null;
-		let nextTurn = pieceVal.WHITE;
 
 		if (depth > 0) {
 			for (let key in avail) {
@@ -26,13 +25,12 @@ class MinMaxAlgo {
 				nextState.makeMove(avail[key]);
 				nextFavour = await MinMaxAlgo.getMinMaxMove(nextState.getDuplicateGrid(), (depth - 1), nextState.getTurn())//.score;
 				nextFavour = nextFavour.score;
-				nextTurn = nextState.getTurn();
 
 				//Assuming white maximizes and black minimizes
-				if (turn === pieceVal.WHITE && nextFavour > maxOrMin) {
+				if (turn === pieceVal.WHITE && nextFavour >= maxOrMin) {
 					maxOrMin = nextFavour;
 					moveIdx = key;
-				} else if (turn === pieceVal.BLACK && nextFavour < maxOrMin) {
+				} else if (turn === pieceVal.BLACK && nextFavour <= maxOrMin) {
 					maxOrMin = nextFavour;
 					moveIdx = key;
 				}
@@ -57,9 +55,9 @@ class MinMaxAlgo {
 			for (var j = 0; j < board[i].length; j++){
 				if (board[i][j] === pieceVal.EMPTY) {
 					continue;
-				} else if (board[i][j].type === pieceVal.WHITE) {
+				} else if (board[i][j] === pieceVal.WHITE) {
 					favourability++;
-				} else {
+				} else if (board[i][j] === pieceVal.BLACK){
 					favourability--;
 				}
 			}
