@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import JwtUtils from '../utils/jwtUtils.js';
+import serverComm from '../utils/serverComm.js';
 
 import '../css/board.css';
 
@@ -55,21 +54,15 @@ class CreateLobbyCard extends Component {
         event.preventDefault();
         let postLocat = "lobby/room/";
 
-        const instance = axios.create({baseURL: 'http://127.0.0.1:8000'})
-        const token = `JWT ${JwtUtils.getAccessToken()}`;
-        instance.post(postLocat, {
+        let data = {
             gid: this.state.room,
             join: false,
-        },
-        {
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept' : 'application/json',
-              'Authorization': token,
-            },
-        })
+        };
+        serverComm.post(data, postLocat)
+        .then(result => {return result.json();})
         .then((result) => {
             this.resetState();
+            this.handleLobbyUpdate();
         })
         .catch((result)=> {
             console.log(result);
@@ -80,20 +73,13 @@ class CreateLobbyCard extends Component {
         event.preventDefault();
         let postLocat = "lobby/room/";
         let roomVal = document.getElementById('room').value;
-
-        const instance = axios.create({baseURL: 'http://127.0.0.1:8000'})
-        const token = `JWT ${JwtUtils.getAccessToken()}`;
-        instance.post(postLocat, {
+        let data = {
             gid: roomVal,
             join: true,
-        },
-        {
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept' : 'application/json',
-              'Authorization': token,
-            },
-        })
+        };
+
+        serverComm.post(data, postLocat)
+        .then(result =>{return result.json()})
         .then((result) => {
             this.handleLobbyUpdate();
         })
@@ -104,32 +90,19 @@ class CreateLobbyCard extends Component {
 
     handleLobbyUpdate = () => {
         let roomLocat = "lobby/room/";
-
-        const instance = axios.create({baseURL: 'http://127.0.0.1:8000'})
-        const token = `JWT ${JwtUtils.getAccessToken()}`;
-        console.log(token);
-        instance.get(roomLocat,
-            {
-                //params: {
-                //    gid: this.state.room,
-                //},
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept' : 'application/json',
-                    'Authorization': token,
-                },
-            })
+        let data = {};
+        serverComm.get(data, roomLocat)
+        .then(result =>{return result.json()})
         .then((result) => {
-            console.log(result)
-            if (Object.keys(result.data).length !== 0){
-                this.setPlayers(result.data.users, result.data.room);
+            if (Object.keys(result).length !== 0){
+                this.setPlayers(result.users, result.room);
             } else {
                 this.resetState();
             }
         })
         .catch((result)=> {
             console.log(result);
-        });     
+        });
     }
 
     resetState(){
@@ -144,17 +117,8 @@ class CreateLobbyCard extends Component {
     handleCreate = (event) => {
         event.preventDefault();
         let postLocat = "lobby/createroom/";
-
-        const instance = axios.create({baseURL: 'http://127.0.0.1:8000'})
-        const token = `JWT ${JwtUtils.getAccessToken()}`;
-        instance.post(postLocat, {},
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept' : 'application/json',
-              'Authorization': token,
-            },
-          })
+        serverComm.post({}, postLocat)
+        .then(result =>{return result.json()})
         .then((result) => {
             this.handleLobbyUpdate();
         })
