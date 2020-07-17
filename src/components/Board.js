@@ -18,6 +18,7 @@ class Board extends Component {
         this.reversiGame = this.props.gameDetails.reversi; //new reversiLogic();
         this.updateStats = this.props.gameDetails.moveAct;
         this.aiDiff = this.props.gameDetails.aiDiff;
+        this.human = this.props.gameDetails.human;
         this.state = {
             grid: grid,
         }

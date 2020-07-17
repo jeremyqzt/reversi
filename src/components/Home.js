@@ -13,11 +13,11 @@ class Home extends Component {
             bigTitle: "1️⃣ Single Player",
             smallTitle: "🤖 Against the AI.",
             description: "Play Reversi Against a Computer Player.",
-            hrefEasy: "/board?ai=1",
+            hrefEasy: "/board?mode=1",
             navMsgEasy: "🍂 EZ",
-            hrefMed: "/board?ai=2",
+            hrefMed: "/board?mode=2",
             navMsgMed: "🌱 Okay",
-            hrefHard: "/board?ai=3",
+            hrefHard: "/board?mode=3",
             navMsgHard: "🌲 !!!!",
         };
 
@@ -25,7 +25,7 @@ class Home extends Component {
             bigTitle: "2️⃣ Local Multiplayer",
             smallTitle: "🎎 Against a Friend.",
             description: "Play Reversi Against Someone Sitting Next to You.",
-            href: "/board",
+            href: "/board?mode=0",
             navMsg: "Get Started!",
         };
 

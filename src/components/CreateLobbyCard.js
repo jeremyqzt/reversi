@@ -175,7 +175,7 @@ class CreateLobbyCard extends Component {
                         <div className="row">
                             <div className="col-3"></div>
                             <div className="col-6">
-                                <button href="/" onClick={this.handleCreate}  className="btn btn-outline-dark w-100" disabled={this.state.inLobby && this.state.compMounted}>Create</button>
+                                <button onClick={this.handleCreate}  className="btn btn-outline-dark w-100" disabled={this.state.inLobby && this.state.compMounted}>Create</button>
                             </div>
                             <div className="col-3"></div>
                         </div>
@@ -204,10 +204,10 @@ class CreateLobbyCard extends Component {
                         <div className="row">
                             <div className="col-1"></div>
                             <div className="col-5">
-                                <button href="/" className="btn btn-outline-danger w-100" onClick={this.handleLeave} disabled={!this.state.inLobby && this.state.compMounted}>Leave</button>
+                                <button className="btn btn-outline-danger w-100" onClick={this.handleLeave} disabled={!this.state.inLobby && this.state.compMounted}>Leave</button>
                             </div>
                             <div className="col-5">
-                                <button href="/" className="btn btn-outline-success w-100" disabled={!this.state.inLobby && this.state.compMounted}>Start</button>
+                                <button href="/board?mode=0" className="btn btn-outline-success w-100" disabled={!this.state.inLobby && this.state.compMounted}>Start</button>
                             </div>
                             <div className="col-1"></div>
                         </div>
