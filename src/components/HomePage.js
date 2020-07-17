@@ -7,7 +7,7 @@ import AiCard from './AiCard';
 import '../css/board.css';
 import '../css/home.css';
 
-class Home extends Component {
+class HomePage extends Component {
     render(){
         let aiRenderDetails = {
             bigTitle: "1️⃣ Single Player",
@@ -33,7 +33,7 @@ class Home extends Component {
             bigTitle: "📖 Reversi Rules",
             smallTitle: "",
             description: "Read up on Game Rules.",
-            href: "/",
+            href: "/rules",
             navMsg: "Show Me",
         };
 
@@ -86,4 +86,4 @@ class Home extends Component {
       };
 }
 
-export default Home;
+export default HomePage;

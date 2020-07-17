@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import './index.css';
-import LoginPage from './components/Login';
-import Game from './components/Game';
-import Home from './components/Home';
+import LoginPage from './components/LoginPage';
+import GamePage from './components/GamePage';
+import HomePage from './components/HomePage';
+import RulesPage from './components/RulesPage';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -12,8 +13,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Switch>
-        <Route path="/board" component={Game} />
-        <Route path="/home" component={Home} />
+        <Route path="/board" component={GamePage} />
+        <Route path="/home" component={HomePage} />
+        <Route path="/rules" component={RulesPage} />
         <Route path="/" component={LoginPage} />
       </Switch>
     </Router>

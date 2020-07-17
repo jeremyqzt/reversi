@@ -60,7 +60,7 @@ class Game extends Component {
 
     render(){
         return (
-            <div>           
+            <div>
                 <Nav />
                 <div className="container mt-4 mb-4">
                     <h1 className="text-center noSelect"><span role="img" aria-label="blackCircle">⚫</span>Reversi Game Room<span role="img" aria-label="whiteCircle">⚪</span></h1>
