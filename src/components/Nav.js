@@ -23,7 +23,7 @@ class Nav extends Component {
                         <a className="nav-link" href="/home">Home</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="/board">Game</a>
+                        <a className="nav-link" href="/rules">Rules</a>
                     </li>
                     <li className="nav-item">
                         <a className="nav-link" href="/">Account</a>

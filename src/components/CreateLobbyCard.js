@@ -90,8 +90,7 @@ class CreateLobbyCard extends Component {
 
     handleLobbyUpdate = () => {
         let roomLocat = "lobby/room/";
-        let data = {};
-        serverComm.get(data, roomLocat)
+        serverComm.get(roomLocat)
         .then(result =>{return result.json()})
         .then((result) => {
             if (Object.keys(result).length !== 0){

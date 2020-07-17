@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import Board from './Board';
 import Nav from './Nav';
 import Stats from './Stats';
-import JwtUtils from '../utils/jwtUtils.js';
 import reversiLogic from '../reversiLogic/reversi';
-
+import JwtUtils from '../utils/jwtUtils';
 import '../css/board.css';
 import { pieceVal } from './Piece';
 
 class Game extends Component {
     constructor(props){
         super(props);
+        JwtUtils.checkTokenPresent();
         this.handleMoveAction = this.handleMoveAction.bind(this);
         this.handleTurn = this.handleTurn.bind(this);
         this.handleCount = this.handleCount.bind(this);
@@ -22,7 +22,6 @@ class Game extends Component {
             this.aiDiff = parseInt(this.props.location.search.substr(-1));
             this.aiDiff =  (isNaN(this.aiDiff) || this.aiDiff > 5) ? 1 : this.aiDiff;
         }
-        console.log(this.aiDiff)
 
         this.reversiGame = {
             reversi: new reversiLogic(),
@@ -36,7 +35,7 @@ class Game extends Component {
             opp: this.handleOpp,
         }
 
-        //JwtUtils.checkTokenPresent();
+        JwtUtils.checkTokenPresent();
     }
 
     handleMoveAction = () =>{

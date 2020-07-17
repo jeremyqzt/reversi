@@ -3,11 +3,16 @@ import Nav from './Nav';
 import CreateLobbyCard from './CreateLobbyCard';
 import BasicCard from './BasicCard';
 import AiCard from './AiCard';
+import JwtUtils from '../utils/jwtUtils';
 
 import '../css/board.css';
 import '../css/home.css';
 
 class HomePage extends Component {
+    constructor(props){
+        super(props)
+        JwtUtils.checkTokenPresent();
+    }
     render(){
         let aiRenderDetails = {
             bigTitle: "1️⃣ Single Player",
