@@ -5,7 +5,7 @@ import MinMaxAlgo from '../reversiLogic/minMaxAI';
 
 import '../css/board.css';
 import reversiLogic from '../reversiLogic/reversi';
-
+import serverComm from '../utils/serverComm.js';
 
 class Board extends Component {
       constructor(props) {
@@ -17,8 +17,7 @@ class Board extends Component {
         this.availMoves = {};
         this.reversiGame = this.props.gameDetails.reversi; //new reversiLogic();
         this.updateStats = this.props.gameDetails.moveAct;
-        this.aiDiff = this.props.gameDetails.aiDiff;
-        this.human = this.props.gameDetails.human;
+        this.mode = this.props.gameDetails.aiDiff;
         this.state = {
             grid: grid,
         }
@@ -30,7 +29,7 @@ class Board extends Component {
         let toRender = this.reversiGame.getTurn();
 
         //Human always plays blk, return if not your turn
-        if (this.aiDiff !== 0 && toRender !== pieceVal.BLACK){
+        if (this.mode !== 0 && toRender !== pieceVal.BLACK){
           return;
         }
 
@@ -44,13 +43,27 @@ class Board extends Component {
           await this.postMoveActions(move, `R${i}C${j}`, toRender);
         }
   
-        if (this.aiDiff !== 0){
+        if (this.mode !== 0 && this.mode !== 5){ //1-3 is AI
           this.getAiMove();
-        } else {
+        } else if (this.mode === 0){ //0 is 2 player, LAN
           this.postMoveHumanHelp();
+        } else if(this.mode === 5){ //5 is 2 player
+          this.makeServerMove(move);
         }
 
         //console.log(this.reversiGame.getOver());
+      }
+
+      makeServerMove(data){
+        let postLocat = "api/game/"
+        serverComm.post(data, postLocat)
+        .then(result =>{return result.json()})
+        .then((result) => {
+          console.log(result)
+        })
+        .catch((result)=> {
+          console.log("Err")
+        });
       }
 
       postMoveHumanHelp(){
@@ -69,7 +82,7 @@ class Board extends Component {
         let minMaxStat = null
         this.getAvail();
         while (aiTurn === this.reversiGame.getTurn() && this.reversiGame.getOver() === false){
-          switch(this.aiDiff){
+          switch(this.mode){
             case 1:
               aiMove = RandomAI.getRandomMove(this.availMoves);
               await new Promise(r => setTimeout(r, 100));

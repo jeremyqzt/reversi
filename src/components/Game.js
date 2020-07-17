@@ -20,8 +20,9 @@ class Game extends Component {
 
         if (this.props.location.search.length > 0){
             this.aiDiff = parseInt(this.props.location.search.substr(-1));
-            this.aiDiff =  (isNaN(this.aiDiff) || this.aiDiff > 3) ? 1 : this.aiDiff;
+            this.aiDiff =  (isNaN(this.aiDiff) || this.aiDiff > 5) ? 1 : this.aiDiff;
         }
+        console.log(this.aiDiff)
 
         this.reversiGame = {
             reversi: new reversiLogic(),
