@@ -19,17 +19,17 @@ class AccountsPage extends Component {
             <div>           
                 <Nav />
                 <div className="container mt-1 mb-3">
-                    <div className="row mt-4 fade-in to-be-animated" style={{animationDelay: "0.5s"}}>
+                    <div className="row mt-4 fade-in to-be-animated" style={{animationDelay: "1.0s"}}>
                         <div className="col-12 mt-1">
                             <ChangePassword />
                         </div>
                     </div>
-                    <div className="row mt-4 fade-in to-be-animated" style={{animationDelay: "1s"}}>
+                    <div className="row mt-4 fade-in to-be-animated" style={{animationDelay: "0.75s"}}>
                         <div className="col-12 mt-1">
                             <DeleteAccountCard />
                         </div>
                     </div>
-                    <div className="row mt-4 fade-in to-be-animated" style={{animationDelay: "1.5s"}}>
+                    <div className="row mt-4 fade-in to-be-animated" style={{animationDelay: "0.5s"}}>
                         <div className="col-12 mt-1">
                             <AccountPrivacyCard />
                         </div>

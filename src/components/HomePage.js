@@ -47,7 +47,7 @@ class HomePage extends Component {
             bigTitle: "🔒 Account Management",
             smallTitle: "",
             description: "Make Edits to Your Account.",
-            href: "/",
+            href: "/account",
             navMsg: "Make Edits",
         };
 

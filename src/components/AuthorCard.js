@@ -16,7 +16,7 @@ class AuthorCard extends Component {
                         className="fa fa-mail"></i> <a href={`${this.props.renderDetails.email}`}>E-mail</a> or <a
                         href={`${this.props.renderDetails.linkedInUrl}`} target="_blank" rel="noopener noreferrer">LinkedIn</a>.</p>
                     <div className="text-right">
-                      <a href={`${this.props.renderDetails.gitUrl}`} rel="noopener noreferrer" target="_blank" className="btn btn-outline-dark">Github</a>
+                      {(this.props.renderDetails.gitUrl.length !== 0) && <a href={`${this.props.renderDetails.gitUrl}`} rel="noopener noreferrer" target="_blank" className="btn btn-outline-dark">Github</a>}
                     </div>
                   </div>
                 </div>

@@ -26,14 +26,51 @@ class AboutPage extends Component {
         email: "mailto:nizhangan123@hotmail.com",
         imgUrl: "https://avatars3.githubusercontent.com/u/8797475?s=400&u=2503bce7af39559e19574963188ec2644ca92d85&v=4",
       };
+      let yanqi = {
+        firstName: "Yanqi",
+        lastName:"L.",
+        linkedInUrl: "https://www.linkedin.com/in/yanqilee/",
+        gitUrl: "https://github.com/yanqilee",
+        email: "mailto:yanqilee@hotmail.com",
+        imgUrl: "https://avatars0.githubusercontent.com/u/8241930?s=400&u=fd10ebb904055e240145a9082f6bc3dd410af874&v=4",
+      };
+      let loob = {
+        firstName: "Louis",
+        lastName:"L.",
+        linkedInUrl: "https://www.linkedin.com/in/louis-la-osh/",
+        gitUrl: "",
+        email: "lsg000@outlook.com",
+        imgUrl: "https://media-exp1.licdn.com/dms/image/C5603AQGv16IfxKedeA/profile-displayphoto-shrink_800_800/0?e=1600300800&v=beta&t=cD8W1zLgptTEOT1lNZbqHkC3eIjjsDnHtQ65i5h7BQs",
+      };
       return (
         <div>
             <Nav />
             <div className="container">
-                <h2>Authors</h2>
-                <div className="row">
+              <h3 className="mt-4 fade-in to-be-animated" style={{animationDelay: "1s"}}><span role="img" aria-label="aboot">🧭</span> About This Site</h3>
+              <div className="row fade-in to-be-animated" style={{animationDelay: "1s"}}>
+                <div className="col-12">
+                  <p className="text-left">This website is made as a hobby project.
+                  The code is completely available at our <a href="https://github.com/jeremyqzt/reversi" rel="noopener noreferrer" target="_blank" >Github</a>. 
+                  The frontend is coded in ReactJS, backend is Django and there are 3 NodeJS based in-memory databases for storing the game states.
+                  </p>
+                  <p className="text-left"> AI Games and LAN games are completely implemented using frontend JavaScript. Multiplayer games submit moves to the server
+                  and the servers check the moves by maintaining its own internal game - this implies that the server is playing the same game as the client and
+                  the client always sends synchronization requests. We are unsure if this works 100% but are fairly confident, if there is a flaw, please fix it for 
+                  us or tell us about it!
+                  </p>
+                  <p className="text-left">If there are other bugs, please also feel free to either fix it yourself or contact one of the authors.</p>
+                </div>
+              </div>
+                <h3 className="mt-4 fade-in to-be-animated" style={{animationDelay: "0.75s"}}>
+                  <span role="img" aria-label="factory">🏭</span> Bug Manufacturers
+                </h3>
+                <div className="row fade-in to-be-animated" style={{animationDelay: "0.75s"}}>
                     <AuthorCard renderDetails={jeremy} />
                     <AuthorCard renderDetails={ben} />
+                </div>
+                <div className="row fade-in to-be-animated" style={{animationDelay: "0.5s"}}>
+                    <AuthorCard renderDetails={yanqi} />
+                    <AuthorCard renderDetails={loob} />
                 </div>
             </div>
         </div>
