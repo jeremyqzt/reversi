@@ -16,7 +16,8 @@ class CreateReversiUser(APIView):
             if user:
                 json = serializer.data
                 return Response(json, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        error = {"detail": "User Exists Already!"}
+        return Response(error, status=status.HTTP_400_BAD_REQUEST)
 
 class ManageReversiUser(APIView):
     def delete(self, request, format='json'):

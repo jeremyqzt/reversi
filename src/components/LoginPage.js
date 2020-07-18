@@ -49,7 +49,12 @@ class LoginPage extends Component {
     };
 
     serverComm.post(data, postLocat)
-    .then(result =>{return result.json()})
+    .then(result =>{
+      if (result.status >= 200 && result.status < 300){
+        return result.json()
+      }
+      return Promise.reject(result.json());
+    })
     .then((result) => {
       if (!signup){
         JwtUtils.storeToken(result);
@@ -59,10 +64,11 @@ class LoginPage extends Component {
       }
     })
     .catch((result)=> {
-      let err = "Login Error!";
-      this.setState({
-        login: err,
-      });
+      result.then((result) =>{
+        this.setState({
+          login: result.detail,
+        });
+      })
     });
   }
 

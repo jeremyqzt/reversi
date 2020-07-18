@@ -1,6 +1,7 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 from .models import ReversiUser
+from django.core.exceptions import ValidationError
 
 class ReversiTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -40,7 +41,7 @@ class ReversiUserSerializer(serializers.ModelSerializer):
         return instance.delete()
 
     def user_ok(self, email):
-        try: 
+        try:
             self.Meta.model.objects.get(email=email)
         except:
             return True
