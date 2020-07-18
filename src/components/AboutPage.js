@@ -46,8 +46,8 @@ class AboutPage extends Component {
         <div>
             <Nav />
             <div className="container">
-              <h3 className="mt-4 fade-in to-be-animated" style={{animationDelay: "1s"}}><span role="img" aria-label="aboot">🧭</span> About This Site</h3>
-              <div className="row fade-in to-be-animated" style={{animationDelay: "1s"}}>
+              <h3 className="mt-4 fade-in to-be-animated" style={{animationDelay: "0.25s"}}><span role="img" aria-label="aboot">🧭</span> About This Site</h3>
+              <div className="row fade-in to-be-animated" style={{animationDelay: "0.25s"}}>
                 <div className="col-12">
                   <p className="text-left">This website is made as a hobby project.
                   The code is completely available at our <a href="https://github.com/jeremyqzt/reversi" rel="noopener noreferrer" target="_blank" >Github</a>. 
@@ -61,10 +61,10 @@ class AboutPage extends Component {
                   <p className="text-left">If there are other bugs, please also feel free to either fix it yourself or contact one of the authors.</p>
                 </div>
               </div>
-                <h3 className="mt-4 fade-in to-be-animated" style={{animationDelay: "0.75s"}}>
+              <h3 className="mt-4 fade-in to-be-animated" style={{animationDelay: "0.5s"}}>
                   <span role="img" aria-label="factory">🏭</span> Bug Manufacturers
                 </h3>
-                <div className="row fade-in to-be-animated" style={{animationDelay: "0.75s"}}>
+                <div className="row fade-in to-be-animated" style={{animationDelay: "0.5s"}}>
                     <AuthorCard renderDetails={jeremy} />
                     <AuthorCard renderDetails={ben} />
                 </div>
@@ -72,6 +72,21 @@ class AboutPage extends Component {
                     <AuthorCard renderDetails={yanqi} />
                     <AuthorCard renderDetails={loob} />
                 </div>
+              <h3 className="mt-4 fade-in to-be-animated" style={{animationDelay: "1s"}}><span role="img" aria-label="zound">🔈</span> Sound Credits</h3>
+              <div className="row fade-in to-be-animated" style={{animationDelay: "1s"}}>
+                <div className="col-12">
+                  <p className="text-left">Checker Board Sound <a href="https://freesound.org/people/mh2o/sounds/351518/" rel="noopener noreferrer" target="_blank" >(Link)</a> Under CC0 1.0 License <a href="https://creativecommons.org/publicdomain/zero/1.0/" rel="noopener noreferrer" target="_blank" >(Link)</a></p>
+                  <p className="text-left">Error Sound <a href="https://freesound.org/s/142608/" rel="noopener noreferrer" target="_blank" >(Link)</a> Under CC BY 3.0 License <a href="https://creativecommons.org/licenses/by/3.0/" rel="noopener noreferrer" target="_blank" >(Link)</a></p>
+                  <p className="text-left">Click Sound <a href="https://freesound.org/people/cabled_mess/sounds/370962/" rel="noopener noreferrer" target="_blank" >(Link)</a> Under CC0 1.0 License <a href="https://creativecommons.org/publicdomain/zero/1.0/" rel="noopener noreferrer" target="_blank" >(Link)</a></p>
+                  <p className="text-left">Beep Sound <a href="https://freesound.org/people/janhgm/sounds/237990/" rel="noopener noreferrer" target="_blank" >(Link)</a> Under CC BY 3.0 License <a href="https://creativecommons.org/licenses/by/3.0/" rel="noopener noreferrer" target="_blank" >(Link)</a></p>
+                </div>
+              </div>
+              <h3 className="mt-4 fade-in to-be-animated" style={{animationDelay: "1s"}}><span role="img" aria-label="cod">🔈</span> Coding Credits</h3>
+              <div className="row fade-in to-be-animated" style={{animationDelay: "1s"}}>
+                <div className="col-12">
+                  <p className="text-left">The Following Tutorial Was Used To Create the Authentication API On This Website <a href="https://hackernoon.com/110percent-complete-jwt-authentication-with-django-and-react-2020-iejq34ta" rel="noopener noreferrer" target="_blank" >(Link)</a></p>
+                </div>
+              </div>
             </div>
         </div>
       );
