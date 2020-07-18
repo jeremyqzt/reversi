@@ -26,7 +26,7 @@ class Nav extends Component {
                         <a className="nav-link" href="/rules">Rules</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="/">Account</a>
+                        <a className="nav-link" href="/account">Account</a>
                     </li>
                     <li className="nav-item">
                         <a className="nav-link" href="/about">About</a>

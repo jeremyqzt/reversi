@@ -17,7 +17,7 @@ class AboutPage extends Component {
         gitUrl: "https://github.com/jeremyqzt",
         email: "mailto:jq357@hotmail.com",
         imgUrl: "https://avatars3.githubusercontent.com/u/6643065?s=400&v=4",
-      }
+      };
       let ben = {
         firstName: "Ben",
         lastName:"N.",
@@ -25,7 +25,7 @@ class AboutPage extends Component {
         gitUrl: "https://github.com/benbennza1",
         email: "mailto:nizhangan123@hotmail.com",
         imgUrl: "https://avatars3.githubusercontent.com/u/8797475?s=400&u=2503bce7af39559e19574963188ec2644ca92d85&v=4",
-      }
+      };
       return (
         <div>
             <Nav />
