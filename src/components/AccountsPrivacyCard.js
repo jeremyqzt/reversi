@@ -12,6 +12,11 @@ class AccountPrivacyCard extends Component {
                     <p className="card-text">
                         Share your E-mail with anyone else<br />
                         Send you any E-mail - your E-mail is only ever used as a username<br />
+                        Track you in any way - the only cookie is used for your authentication<br />
+                    </p>
+                    <h5 className="card-title">You can choose to:</h5>
+                    <p className="card-text">
+                        Permanent delete your account from out servers - it is removed and not simply deactivated
                     </p>
                 </div>
             </div>
