@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import '../css/board.css';
 import '../css/alerts.css';
+import serverComm from '../utils/serverComm.js';
+import JwtUtils from '../utils/jwtUtils.js';
 
 class DeleteAccountCard extends Component {
     constructor(props){
@@ -8,24 +10,58 @@ class DeleteAccountCard extends Component {
         this.handleDelete = this.handleDelete.bind(this);
         this.showAlert = this.showAlert.bind(this);
         this.hideAlert = this.hideAlert.bind(this);
+        this.showSucc = this.showSucc.bind(this);
+        this.goHome = this.goHome.bind(this);
 
         this.state = {
             value: "",
             show: false,
+            errMsg: "",
         }
     }
 
     handleDelete = () =>{
         let deleteMe = this.state.value.trim();
+        let postLocat = "auth/user/delete/"
         if (deleteMe === "DELETE ACCOUNT"){
-            this.hideAlert();
+            serverComm.delete({}, postLocat)
+            .then((result) => {
+                if (result.status >= 200 && result.status < 300){
+                    return result.json();
+                }
+                return Promise.reject(result.json());
+            }).then((result) => {
+                this.showSucc();
+                JwtUtils.deleteToken();
+                this.goHome();
+            }).catch((result) => {
+                result.then((result) => {
+                    this.showAlert("Deletion Failed, Please Try Again Later.");
+                })
+            });
         } else {
-            this.showAlert();
+            this.showAlert("Please double check that 'DELETE ACCOUNT' was entered correctly.");
         }
+    }
+
+    goHome() {
+        setTimeout(function () {
+            window.location.href = '/';
+        }, 3000);
     }
 
     handleChange = event => {
         this.setState({value: event.target.value});
+    }
+
+    showSucc = () => {
+        this.setState(
+            {
+                value: "",
+                show: false,
+                doneShow: true,
+            }
+        );    
     }
 
     hideAlert = () =>{
@@ -33,13 +69,15 @@ class DeleteAccountCard extends Component {
             {
                 value: "",
                 show: false,
+                doneShow: false,
             }
         );
     }
 
-    showAlert = () =>{
+    showAlert = (msg) =>{
         this.setState(
             {
+                errMsg: msg,
                 show: true,
             }
         );
@@ -68,7 +106,17 @@ class DeleteAccountCard extends Component {
                         <div className="col-1"></div>
                         <div className="alert col-10">
                             <span className="closebtn" onClick={this.hideAlert}>&times;</span> 
-                            <strong>Error!</strong> Please double check that 'DELETE ACCOUNT' was entered correctly.
+                            <strong>Error!</strong> {this.state.errMsg}
+                        </div>
+                        <div className="col-1"></div>
+                    </div>
+                    }
+                    {this.state.doneShow &&
+                    <div className="row mt-3">
+                        <div className="col-1"></div>
+                        <div className="alert-success col-10">
+                            <span className="closebtn" onClick={this.hideAlert}>&times;</span> 
+                            <strong>Success!</strong> Account Deleted, You Will be Redirected in 3 Seconds.
                         </div>
                         <div className="col-1"></div>
                     </div>

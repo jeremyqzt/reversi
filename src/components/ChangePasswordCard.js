@@ -7,20 +7,29 @@ class ChangePassword extends Component {
     constructor(props){
         super(props)
         this.handlePassChange = this.handlePassChange.bind(this);
-        this.showAlert = this.showAlert.bind(this);
-        this.hideAlert = this.hideAlert.bind(this);
+        this.showErr = this.showErr.bind(this);
+        this.showSucc = this.showSucc.bind(this);
+        this.hideBoth = this.hideBoth.bind(this);
+        this.resetFields = this.resetFields.bind(this);
 
         this.state = {
             oldP: "",
+            errMsg: "",
             newP1: "",
             newP2: "",
-            show: false,
+            showErr: false,
+            showSucc: false,
+
         }
     }
 
     handlePassChange = () =>{
-        if (this.state.newP1 !== this.state.newP2 || this.state.newP1.length < 8){
-            this.showAlert();
+        if (this.state.newP1 !== this.state.newP2) { //|| || this.state.oldP.length < 8){
+            this.showErr("New Password Mismatch!");
+        } else if (this.state.newP1.length < 8 ){
+            this.showErr("New Password Must Must Be Atleast 8 Characters Long!");
+        } else if (this.state.oldP.length < 8){
+            this.showErr("Old Password is Incorrect!");
         } else {
             let data = {
                 password: this.state.newP1,
@@ -28,16 +37,20 @@ class ChangePassword extends Component {
             }
             let postLocat = "auth/user/update/"
             serverComm.put(data, postLocat).then((resp) => {
-                return resp.json();
+                if (resp.status >= 200 && resp.status < 300){
+                    return resp.json();
+                }
+                return Promise.reject(resp.json())
             }).then((resp) => {
-
+                this.showSucc();
+                this.resetFields();
             }).catch((resp) => {
-                console.log(resp);
+                resp.then((resp) => {
+                    this.showErr(resp.detail);
+                    this.resetFields();
+                });
             });
-                
-            this.hideAlert();
         }
-        console.log(this.state);
     }
 
     handleChange = (event) => {
@@ -48,22 +61,44 @@ class ChangePassword extends Component {
         );
     }
 
-    hideAlert = () =>{
+    showErr = (msg) =>{
         this.setState(
             {
-                value: "",
-                show: false,
+                errMsg: msg,
+                showSucc: false,
+                showErr: true,
             }
         );
     }
 
-    showAlert = () =>{
+    showSucc = () =>{
         this.setState(
             {
-                show: true,
+                showSucc: true,
+                showErr: false,
             }
         );
     }
+
+    hideBoth = () =>{
+        this.setState(
+            {
+                showSucc: false,
+                showErr: false,
+            }
+        );
+    }
+
+    resetFields = () => {
+        this.setState(
+            {
+                oldP: "",
+                newP1: "",
+                newP2: "",
+            }
+        );
+    }
+
     render(){
         return (
             <div className="card text-center h-100">
@@ -87,12 +122,22 @@ class ChangePassword extends Component {
                             </div>
                             </div>
                     </div>
-                    {this.state.show &&
+                    {this.state.showErr &&
                     <div className="row mt-3">
                         <div className="col-1"></div>
                         <div className="alert col-10">
-                            <span className="closebtn" onClick={this.hideAlert}>&times;</span> 
-                            <strong>Error!</strong> Please double check that new passwords match.
+                            <span className="closebtn" onClick={this.hideBoth}>&times;</span> 
+                            <strong>Error!</strong> {this.state.errMsg}
+                        </div>
+                        <div className="col-1"></div>
+                    </div>
+                    }
+                    {this.state.showSucc &&
+                    <div className="row mt-3">
+                        <div className="col-1"></div>
+                        <div className="alert-success col-10">
+                            <span className="closebtn" onClick={this.hideBoth}>&times;</span> 
+                            <strong>Success!</strong> You Password has been changed!
                         </div>
                         <div className="col-1"></div>
                     </div>

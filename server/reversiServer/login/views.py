@@ -21,13 +21,16 @@ class CreateReversiUser(APIView):
 
 class ManageReversiUser(APIView):
     def delete(self, request, format='json'):
-        print(request.data)
-        print(request.user)
+        data = {"username": request.user}
+        serializer = ReversiUserSerializer(data=data)
+        serializer.delete(data)
         return Response({}, status=status.HTTP_200_OK)
 
     def put(self, request, format='json'):
         data = request.data 
         data["username"] = request.user
         serializer = ReversiUserSerializer(data=data)
-        instance = serializer.update(data)
-        return Response({}, status=status.HTTP_200_OK)
+        if (None != serializer.update(data)):
+            return Response({}, status=status.HTTP_200_OK)
+        
+        return Response({"detail": "Incorrect Old Password!"}, status=status.HTTP_401_UNAUTHORIZED)
