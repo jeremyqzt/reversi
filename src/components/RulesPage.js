@@ -7,9 +7,6 @@ class RulesPage extends Component {
       return (
         <div>
             <Nav />
-            <div className="container mt-4 mb-4">
-                <h1 className="text-center noSelect">Reversi Game Rules</h1>
-            </div>
             <div className="container">
                 <Rules />
             </div>
