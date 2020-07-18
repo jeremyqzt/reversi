@@ -15,11 +15,13 @@ class Stats extends Component {
             lastMove: "No Moves Made Yet!",
             opponent: "🤖 Beep-Boop",
         }
+    }
+
+    componentDidMount = () => {
         this.props.updateDetails.turn(this.setTurn);
         this.props.updateDetails.count(this.setPieceCount);
         this.props.updateDetails.opp(this.setOpp);
         this.props.updateDetails.lastMove(this.setLastMove);
-
     }
 
     setPieceCount = (inCount) => {
@@ -47,7 +49,6 @@ class Stats extends Component {
       }
 
       setLastMove = (mov) =>{
-          console.log(mov);
         let move = "No Moves Made Yet!";
         if (mov !== null){
             move = (mov.by === pieceVal.BLACK)? "⚫": "⚪";

@@ -40,6 +40,22 @@ class Game extends Component {
         JwtUtils.checkTokenPresent();
     }
 
+    getOppStr = (diff) => {
+        switch (diff){
+            case 0:
+                return "🎎 Playing Against a Local Friend"
+            case 1:
+                return "🍂 The T-800"
+            case 2:
+                return "🌱 The T-1000"
+            case 3:
+                return "🌲 The T-3000"
+            case 5:
+                return "🧍 Against Someone..."
+            default:
+                return "WTF Something Went Wront!"
+            }
+    }
     handleMoveAction = () =>{
         let turn = this.reversiGame.reversi.getTurn();
         let pieceCount = this.reversiGame.reversi.getPieceCount();
@@ -62,6 +78,7 @@ class Game extends Component {
 
     handleOpp = (func) =>{
         this.setOpp = func;
+        func(this.getOppStr(this.aiDiff));
     }
 
     render(){
