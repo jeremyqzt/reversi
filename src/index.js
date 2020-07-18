@@ -6,7 +6,7 @@ import LoginPage from './components/LoginPage';
 import GamePage from './components/GamePage';
 import HomePage from './components/HomePage';
 import RulesPage from './components/RulesPage';
-import AuthorPage from './components/AuthorPage';
+import AboutPage from './components/AboutPage';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -17,7 +17,7 @@ ReactDOM.render(
         <Route path="/board" component={GamePage} />
         <Route path="/home" component={HomePage} />
         <Route path="/rules" component={RulesPage} />
-        <Route path="/authors" component={AuthorPage} />
+        <Route path="/about" component={AboutPage} />
         <Route path="/" component={LoginPage} />
       </Switch>
     </Router>

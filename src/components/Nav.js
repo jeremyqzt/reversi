@@ -29,7 +29,7 @@ class Nav extends Component {
                         <a className="nav-link" href="/">Account</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="/">About</a>
+                        <a className="nav-link" href="/about">About</a>
                     </li>
                     </ul>
                     <button className="btn btn-outline-light my-2 my-sm-0" onClick={this.__handleLogout}>Log Off</button>

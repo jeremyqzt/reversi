@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import AuthorCard from './AuthorCard';
 import Nav from "./Nav"
+import JwtUtils from '../utils/jwtUtils';
 
-class AuthorPage extends Component {
+class AboutPage extends Component {
+  constructor(props){
+    super(props)
+    JwtUtils.checkTokenPresent();
+  }
+
     render(){
       let jeremy = {
         firstName: "Jeremy",
@@ -35,4 +41,4 @@ class AuthorPage extends Component {
     };
   }
 
-export default AuthorPage;
+export default AboutPage;

@@ -13,6 +13,7 @@ class HomePage extends Component {
         super(props)
         JwtUtils.checkTokenPresent();
     }
+
     render(){
         let aiRenderDetails = {
             bigTitle: "1️⃣ Single Player",
@@ -54,7 +55,7 @@ class HomePage extends Component {
             bigTitle: "📇 Contact Us",
             smallTitle: "",
             description: "See Any Bugs? Contact Us.",
-            href: "/",
+            href: "/about",
             navMsg: "Contact",
         };
         return (
