@@ -26,6 +26,19 @@ class ReversiUserSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+    def update(self, validated_data):
+        instance = self.Meta.model.objects.get(email=validated_data["username"])
+        if instance.check_password(validated_data["oldP"]):
+            instance.set_password(validated_data["password"])
+            instance.save()
+        else:
+            return None
+        return instance
+
+    def delete(self, validated_data):
+        instance = self.Meta.model.objects.get(email=validated_data["username"])
+        return instance.delete()
+
     def user_ok(self, email):
         try: 
             self.Meta.model.objects.get(email=email)

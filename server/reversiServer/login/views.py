@@ -17,3 +17,16 @@ class CreateReversiUser(APIView):
                 json = serializer.data
                 return Response(json, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ManageReversiUser(APIView):
+    def delete(self, request, format='json'):
+        print(request.data)
+        print(request.user)
+        return Response({}, status=status.HTTP_200_OK)
+
+    def put(self, request, format='json'):
+        data = request.data 
+        data["username"] = request.user
+        serializer = ReversiUserSerializer(data=data)
+        instance = serializer.update(data)
+        return Response({}, status=status.HTTP_200_OK)

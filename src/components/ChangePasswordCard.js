@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import '../css/board.css';
 import '../css/alerts.css';
+import serverComm from '../utils/serverComm.js';
 
 class ChangePassword extends Component {
     constructor(props){
         super(props)
-        this.handleDelete = this.handleDelete.bind(this);
+        this.handlePassChange = this.handlePassChange.bind(this);
         this.showAlert = this.showAlert.bind(this);
         this.hideAlert = this.hideAlert.bind(this);
 
@@ -17,7 +18,25 @@ class ChangePassword extends Component {
         }
     }
 
-    handleDelete = () =>{
+    handlePassChange = () =>{
+        if (this.state.newP1 !== this.state.newP2 || this.state.newP1.length < 8){
+            this.showAlert();
+        } else {
+            let data = {
+                password: this.state.newP1,
+                oldP: this.state.oldP,
+            }
+            let postLocat = "auth/user/update/"
+            serverComm.put(data, postLocat).then((resp) => {
+                return resp.json();
+            }).then((resp) => {
+
+            }).catch((resp) => {
+                console.log(resp);
+            });
+                
+            this.hideAlert();
+        }
         console.log(this.state);
     }
 
@@ -64,7 +83,7 @@ class ChangePassword extends Component {
                             <div className="input-group mb-10 col-4">
                             <input type="password" className="form-control" id="newP2" value={this.state.newP2} onChange={this.handleChange} placeholder="Re-enter New Password" aria-label="remove" />
                             <div className="input-group-append">
-                                <button className="btn btn-outline-dark" onClick={this.handleDelete} type="button">Change</button>
+                                <button className="btn btn-outline-dark" onClick={this.handlePassChange} type="button">Change</button>
                             </div>
                             </div>
                     </div>
@@ -73,7 +92,7 @@ class ChangePassword extends Component {
                         <div className="col-1"></div>
                         <div className="alert col-10">
                             <span className="closebtn" onClick={this.hideAlert}>&times;</span> 
-                            <strong>Error!</strong> Please double check that 'DELETE ACCOUNT' was entered correctly.
+                            <strong>Error!</strong> Please double check that new passwords match.
                         </div>
                         <div className="col-1"></div>
                     </div>
