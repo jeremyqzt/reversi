@@ -40,6 +40,15 @@ class LoginPage extends Component {
     this.tryLoginOrSignUp(signup, email, password);
   }
 
+  getTempToken = () => {
+    let postLocat = "auth/token/temp/";
+    serverComm.post({}, postLocat).then((result) => {return result.json()})
+    .then((result) => {
+      JwtUtils.storeToken(result);
+      window.location.href = '/home';
+    });
+  }
+
   tryLoginOrSignUp(signup, email, password){
     let postLocat = (signup) ? "auth/user/create/" : "auth/token/obtain/";
     let data = {
@@ -47,7 +56,6 @@ class LoginPage extends Component {
       "email": email,
       "password": password
     };
-
     serverComm.post(data, postLocat)
     .then(result =>{
       if (result.status >= 200 && result.status < 300){
@@ -106,7 +114,6 @@ class LoginPage extends Component {
                         <label className="custom-control-label" htmlFor="signup">Create This Account</label>
                     </div>
                 </div>
-                <a href="/">Continue As Guest</a>
             </form>
           </div>
       </div>

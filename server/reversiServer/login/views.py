@@ -3,7 +3,17 @@ from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializer import ReversiTokenObtainPairSerializer, ReversiUserSerializer
+from .serializer import ReversiTempTokenObtainPairSerializer, ReversiUserSerializer
+
+
+class TempPassView(APIView):
+    permission_classes = [permissions.AllowAny]
+    authentication_classes = []
+    def post(self, request, format='json'):
+        serializer = ReversiTempTokenObtainPairSerializer(data=request.data)
+        tok = str(serializer.get_token())
+        json = {"access": tok}
+        return Response(json, status=status.HTTP_200_OK)
 
 class CreateReversiUser(APIView):
     permission_classes = [permissions.AllowAny]

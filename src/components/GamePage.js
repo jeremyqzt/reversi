@@ -15,7 +15,8 @@ class Game extends Component {
         this.handleTurn = this.handleTurn.bind(this);
         this.handleCount = this.handleCount.bind(this);
         this.handleOpp = this.handleOpp.bind(this);
-        
+        this.lastMove = this.lastMove.bind(this);
+
         this.aiDiff = 0;
 
         if (this.props.location.search.length > 0){
@@ -33,6 +34,7 @@ class Game extends Component {
             turn: this.handleTurn,
             count: this.handleCount,
             opp: this.handleOpp,
+            lastMove: this.lastMove,
         }
 
         JwtUtils.checkTokenPresent();
@@ -41,8 +43,13 @@ class Game extends Component {
     handleMoveAction = () =>{
         let turn = this.reversiGame.reversi.getTurn();
         let pieceCount = this.reversiGame.reversi.getPieceCount();
-        this.setTurn(turn === pieceVal.BLACK);
+        this.setTurn(turn === pieceVal.BLACK, this.reversiGame.reversi.getMadeMoves());
+        this.setLastMove(this.reversiGame.reversi.getLastMove());
         this.setCount(pieceCount);
+    }
+
+    lastMove = (func)=> {
+        this.setLastMove = func;
     }
 
     handleTurn = (func) =>{

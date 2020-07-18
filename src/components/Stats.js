@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import '../css/board.css';
+import { pieceVal } from './Piece';
 
 class Stats extends Component {
     constructor(props) {
@@ -11,11 +12,13 @@ class Stats extends Component {
             empty: 60,
             moves: 0,
             turn: "⚫ Black",
+            lastMove: "No Moves Made Yet!",
             opponent: "🤖 Beep-Boop",
         }
         this.props.updateDetails.turn(this.setTurn);
         this.props.updateDetails.count(this.setPieceCount);
         this.props.updateDetails.opp(this.setOpp);
+        this.props.updateDetails.lastMove(this.setLastMove);
 
     }
 
@@ -30,9 +33,9 @@ class Stats extends Component {
         });
       }
     
-      setTurn = (blackTurn) => {
+      setTurn = (blackTurn, moves) => {
         this.setState({
-            moves: this.state.moves + 1,
+            moves: moves,
             turn: (blackTurn) ? "⚫ Black" :"⚪ White",
         });
       }
@@ -40,6 +43,18 @@ class Stats extends Component {
       setOpp = (opp) => {
         this.setState({
             opponent: opp,
+        });
+      }
+
+      setLastMove = (mov) =>{
+          console.log(mov);
+        let move = "No Moves Made Yet!";
+        if (mov !== null){
+            move = (mov.by === pieceVal.BLACK)? "⚫": "⚪";
+        }
+        move = `${move} Placed a Piece at Row ${mov.row + 1} Column ${mov.col + 1}, Capturing ${mov.count} Pieces!`
+        this.setState({
+            lastMove: move
         });
       }
 
@@ -67,6 +82,12 @@ class Stats extends Component {
                     <div className="col-12">
                         <h2 className="text-center">Current Opponent</h2>
                         <p className="text-center">{this.state.opponent}</p>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-12">
+                        <h2 className="text-center">Last Move</h2>
+                        <p className="text-center">{this.state.lastMove}</p>
                     </div>
                 </div>
             </div>

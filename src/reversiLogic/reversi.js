@@ -19,6 +19,16 @@ class reversiLogic{
 
 		this.wouldBeFlippedPieces = this.getAvailableMoves(this.extremisPieces, this.turn);
 		this.over = false;
+		this.madeMoves = 0;
+		this.lastMove = null;
+	}
+
+	getLastMove(){
+		return this.lastMove;
+	}
+
+	getMadeMoves(){
+		return this.madeMoves;
 	}
 
 	getGrid(){
@@ -144,6 +154,14 @@ class reversiLogic{
 			nextTurn: normalNext,
 			wouldbeFlipped: [...toFlip],
 		};
+
+		this.lastMove = {
+			by: this.turn,
+			row: move.row,
+			col: move.col,
+			count: retObj.wouldbeFlipped.length,
+		}
+		this.madeMoves += 1;
 
 		this.turn = normalNext;
 
