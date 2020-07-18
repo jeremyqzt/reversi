@@ -3,6 +3,7 @@ import '../css/board.css';
 import '../css/alerts.css';
 import serverComm from '../utils/serverComm.js';
 import JwtUtils from '../utils/jwtUtils.js';
+import beepSound from '../sound/beep.wav';
 
 class DeleteAccountCard extends Component {
     constructor(props){
@@ -12,6 +13,7 @@ class DeleteAccountCard extends Component {
         this.hideAlert = this.hideAlert.bind(this);
         this.showSucc = this.showSucc.bind(this);
         this.goHome = this.goHome.bind(this);
+        this.placeBeepSound = this.placeBeepSound.bind(this);
 
         this.state = {
             value: "",
@@ -44,10 +46,17 @@ class DeleteAccountCard extends Component {
         }
     }
 
-    goHome() {
-        setTimeout(function () {
-            window.location.href = '/';
-        }, 3000);
+    placeBeepSound =()=>{
+        var beep = new Audio (beepSound);
+        beep.play();
+    }
+
+    async goHome() {
+        for (let i = 0; i < 3; i++){
+            this.placeBeepSound();
+            await new Promise(r => setTimeout(r, 1000));
+        }
+        window.location.href = '/';
     }
 
     handleChange = event => {
@@ -82,6 +91,7 @@ class DeleteAccountCard extends Component {
             }
         );
     }
+
     render(){
         return (
             <div className="card text-center h-100">

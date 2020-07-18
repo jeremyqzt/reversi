@@ -7,10 +7,16 @@ import '../css/board.css';
 import reversiLogic from '../reversiLogic/reversi';
 import serverComm from '../utils/serverComm.js';
 
+import boardClickSound from '../sound/move.wav';
+import clickSound from '../sound/click.wav';
+
 class Board extends Component {
       constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+        this.placePieceSound = this.placePieceSound.bind(this);
+        this.placeClickSound = this.placeClickSound.bind(this);
+
         this.gridRef = [];
         let grid = this.initBoard(8,8);
         this.highlighted = [];
@@ -40,17 +46,18 @@ class Board extends Component {
         if (this.reversiGame.makeMove(move) !== null){
           this.removeHighlight();
           this.updateStats();
+          this.placePieceSound();
           await this.postMoveActions(move, `R${i}C${j}`, toRender);
         }
   
         if (this.mode !== 0 && this.mode !== 5){ //1-3 is AI
+          await new Promise(r => setTimeout(r, 500));
           this.getAiMove();
         } else if (this.mode === 0){ //0 is 2 player, LAN
           this.postMoveHumanHelp();
         } else if(this.mode === 5){ //5 is 2 player
           this.makeServerMove(move);
         }
-
         //console.log(this.reversiGame.getOver());
       }
 
@@ -99,10 +106,9 @@ class Board extends Component {
             default:
               break;
           }
-
           //Actually make the move
-
           let moveObj = reversiLogic.objFromKey(aiMove);
+          this.placePieceSound();
           this.reversiGame.makeMove(moveObj);
           await this.postMoveActions(moveObj, aiMove, aiTurn);
           this.getAvail();
@@ -116,7 +122,8 @@ class Board extends Component {
         for (let i = 0; i < toFlip.length; i++){
           let [row, col] = [toFlip[i].row, toFlip[i].col];
           this.gridRef[row][col].setPiece(flipTo);
-          await new Promise(r => setTimeout(r, 300));
+          this.placeClickSound();
+          await new Promise(r => setTimeout(r, 150));
         }
       }
 
@@ -196,6 +203,16 @@ class Board extends Component {
         this.setState({
             squareValue: val,
         });
+      }
+
+      placePieceSound =()=>{
+        var boardClick = new Audio (boardClickSound);
+        boardClick.play();
+      }
+
+      placeClickSound =()=>{
+        var click = new Audio (clickSound);
+        click.play();
       }
     
       render(){
