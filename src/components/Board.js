@@ -16,6 +16,7 @@ class Board extends Component {
         this.handleClick = this.handleClick.bind(this);
         this.placePieceSound = this.placePieceSound.bind(this);
         this.placeClickSound = this.placeClickSound.bind(this);
+        this.getServerMoveLoop = this.getServerMoveLoop.bind(this);
 
         this.gridRef = [];
         let grid = this.initBoard(8,8);
@@ -28,7 +29,12 @@ class Board extends Component {
             grid: grid,
         }
         this.pieceOutstanding = 64;
+      }
 
+      componentDidMount = () =>{
+        if (this.mode === 5){
+          this.getServerMoveLoop(); //Actually not a loop, its recursive;
+        }
       }
 
       async handleClick(e, i, j, piece){
@@ -61,8 +67,23 @@ class Board extends Component {
         //console.log(this.reversiGame.getOver());
       }
 
+      async getServerMoveLoop(){
+        let postLocat = "api/game?turn=1&over=1&grid=1"
+        serverComm.get(postLocat)
+        .then(result =>{return result.json()})
+        .then((result) => {
+          console.log(result)
+        })
+        .catch((result)=> {
+          console.log(result)
+        });
+
+        await new Promise(r => setTimeout(r, 1500)); //I guess try for 2 ticks/sec
+        this.getServerMoveLoop();
+      }
+
       makeServerMove(data){
-        let postLocat = "api/game/"
+        let postLocat = "api/game"
         serverComm.post(data, postLocat)
         .then(result =>{return result.json()})
         .then((result) => {

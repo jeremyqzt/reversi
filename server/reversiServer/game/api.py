@@ -23,6 +23,10 @@ class gameViewSet(views.APIView):
         game = serializer.getGameFromGid(gid)
         ret = {}
         ret["move"] = game.move
+        ret["users"] = game.additional["users"]
+        ret["room"] = game.additional["room"]
+        ret["you"] = username
+
         if getGrid:
             ret["grid"] = game.grid
         if getTurn:

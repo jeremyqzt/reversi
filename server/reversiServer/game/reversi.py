@@ -56,7 +56,9 @@ class gridLocation():
         return ("R%dC%d" % (self.row, self.col))
 
 class reversi:
-    def __init__(self, grid = None, turn = None, moveId = 0, over = False):
+    def __init__(self, grid = None, turn = None, moveId = 0, over = False, additionalMeta = {}):
+        self.additionalMeta = additionalMeta
+
         if(grid == None):
             self.grid = self.__initBoard(8,8)
             self.__initPiece(self.grid)
@@ -111,9 +113,6 @@ class reversi:
         print(self) 
         '''
     def makeMove(self, move):
-        print(self.avail)
-        print(self)
-        print(self.turn.value)
         if self.over:
             return self.getCurrentQset()
 
@@ -138,10 +137,11 @@ class reversi:
             if self.avail == {}:
                 self.over = True
 
-        return reversiQSet(self.grid, self.turn, self.moveId + 1, self.over)
+        return reversiQSet(self.grid, self.turn, self.moveId + 1, self.over, self.additionalMeta)
 
     def getCurrentQset(self):
-        return reversiQSet(self.grid, self.turn, self.moveId, self.over)
+        #print(reversiQSet(self.grid, self.turn, self.moveId, self.over))
+        return reversiQSet(self.grid, self.turn, self.moveId, self.over, self.additionalMeta)
 
     def computeAvailable(self, color):
         ret = {}

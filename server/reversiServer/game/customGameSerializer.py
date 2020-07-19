@@ -25,9 +25,12 @@ class gameSerializer():
 
         #Must have a room (because lobby)
         existingRoom = model.getState(gid)
+        game = None
         if(existingRoom != None):
             if (not "grid" in existingRoom):
                 game = reversi()
+            else:
+                game = reversi(existingRoom["grid"], existingRoom["turn"], existingRoom["move"], existingRoom["over"], existingRoom)
         else:
             return None #No such room...
         

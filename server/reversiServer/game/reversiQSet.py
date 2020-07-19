@@ -1,11 +1,12 @@
 import json
 
 class reversiQSet:
-    def __init__(self, grid, turn, move, over = False):
+    def __init__(self, grid, turn, move, over = False, additional = {}):
         self.grid = grid
         self.turn = turn
         self.move = move
         self.over = over
+        self.additional = additional
 
     def getDict(self):
         t = {
@@ -14,6 +15,7 @@ class reversiQSet:
             "move": self.move,
             "over": self.over
             }
+        t.update(self.additional)
         return t
 
     def __str__(self):
