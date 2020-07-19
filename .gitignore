@@ -10,7 +10,7 @@
 
 # production
 /build
-
+/server/reversiServer/build/
 # misc
 .DS_Store
 .env.local
