@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && rm -rf server/reversiServer/build/ &&   cp build/index.html server/reversiServer/templates && mv build server/reversiServer",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
