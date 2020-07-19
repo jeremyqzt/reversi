@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import './index.css';
 import LoginPage from './components/LoginPage';
 import GamePage from './components/GamePage';
 import HomePage from './components/HomePage';
@@ -11,6 +10,7 @@ import AccountPage from './components/AccountPage';
 
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
