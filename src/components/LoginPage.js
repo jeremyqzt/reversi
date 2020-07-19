@@ -72,6 +72,7 @@ class LoginPage extends Component {
       }
     })
     .catch((result)=> {
+      console.log(result)
       result.then((result) =>{
         this.setState({
           login: result.detail,

@@ -81,7 +81,7 @@ class AboutPage extends Component {
                   <p className="text-left">Beep Sound <a href="https://freesound.org/people/janhgm/sounds/237990/" rel="noopener noreferrer" target="_blank" >(Link)</a> Under CC BY 3.0 License <a href="https://creativecommons.org/licenses/by/3.0/" rel="noopener noreferrer" target="_blank" >(Link)</a></p>
                 </div>
               </div>
-              <h3 className="mt-4 fade-in to-be-animated" style={{animationDelay: "1s"}}><span role="img" aria-label="cod">🔈</span> Coding Credits</h3>
+              <h3 className="mt-4 fade-in to-be-animated" style={{animationDelay: "1s"}}><span role="img" aria-label="cod">📇</span> Coding Credits</h3>
               <div className="row fade-in to-be-animated" style={{animationDelay: "1s"}}>
                 <div className="col-12">
                   <p className="text-left">The Following Tutorial Was Used To Create the Authentication API On This Website <a href="https://hackernoon.com/110percent-complete-jwt-authentication-with-django-and-react-2020-iejq34ta" rel="noopener noreferrer" target="_blank" >(Link)</a></p>
