@@ -125,6 +125,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "build"),
+    os.path.join(BASE_DIR, "build", "static"),
+)
 
 AUTH_USER_MODEL = "login.ReversiUser"
 REST_FRAMEWORK = {
@@ -134,6 +139,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ]
 }
 
 SIMPLE_JWT = {
@@ -153,4 +161,5 @@ SIMPLE_JWT = {
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
+    'http://localhost:8000',
 ]
