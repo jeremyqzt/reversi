@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6c2fb9b6.chunk.css",
+    "main.js": "/static/js/main.5f0dfd62.chunk.js",
+    "main.js.map": "/static/js/main.5f0dfd62.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.0d242dbb.js",
+    "runtime-main.js.map": "/static/js/runtime-main.0d242dbb.js.map",
+    "static/css/2.af3c1da9.chunk.css": "/static/css/2.af3c1da9.chunk.css",
+    "static/js/2.012de314.chunk.js": "/static/js/2.012de314.chunk.js",
+    "static/js/2.012de314.chunk.js.map": "/static/js/2.012de314.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.cb30d5d57bbb7f8bdc9edc2d6161d6c0.js": "/precache-manifest.cb30d5d57bbb7f8bdc9edc2d6161d6c0.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.af3c1da9.chunk.css.map": "/static/css/2.af3c1da9.chunk.css.map",
+    "static/css/main.6c2fb9b6.chunk.css.map": "/static/css/main.6c2fb9b6.chunk.css.map",
+    "static/js/2.012de314.chunk.js.LICENSE.txt": "/static/js/2.012de314.chunk.js.LICENSE.txt",
+    "static/media/beep.wav": "/static/media/beep.5fccdcca.wav",
+    "static/media/click.wav": "/static/media/click.27243d86.wav",
+    "static/media/move.wav": "/static/media/move.ac353055.wav"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.0d242dbb.js",
+    "static/css/2.af3c1da9.chunk.css",
+    "static/js/2.012de314.chunk.js",
+    "static/css/main.6c2fb9b6.chunk.css",
+    "static/js/main.5f0dfd62.chunk.js"
+  ]
+}
