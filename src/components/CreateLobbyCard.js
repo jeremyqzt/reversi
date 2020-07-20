@@ -170,7 +170,7 @@ class CreateLobbyCard extends Component {
                                 <button className="btn btn-outline-danger w-100" onClick={this.handleLeave} disabled={!this.state.inLobby && this.state.compMounted}>Leave</button>
                             </div>
                             <div className="col-5">
-                                <button href="/board?mode=0" className="btn btn-outline-success w-100" disabled={!this.state.inLobby && this.state.compMounted}>Start</button>
+                                <a href="/board?mode=5" className="btn btn-outline-success w-100" disabled={!this.state.inLobby && this.state.compMounted}>Start</a>
                             </div>
                             <div className="col-1"></div>
                         </div>
