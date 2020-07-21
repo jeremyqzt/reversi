@@ -56,7 +56,7 @@ class gridLocation():
         return ("R%dC%d" % (self.row, self.col))
 
 class reversi:
-    def __init__(self, grid = None, turn = None, moveId = 0, over = False, additionalMeta = {}):
+    def __init__(self, grid = None, turn = None, moveId = 0, over = False, additionalMeta = {}, lastMove = "", lastFlipped = []):
         self.additionalMeta = additionalMeta
 
         if(grid == None):
@@ -79,8 +79,8 @@ class reversi:
 
         self.extremisPieces = self.computeExtremePieces()
         self.avail = self.computeAvailable(self.turn)
-        self.lastMove = ""
-        self.lastFlipped = []
+        self.lastMove = lastMove
+        self.lastFlipped = lastFlipped
 
         '''
         print(self.avail)

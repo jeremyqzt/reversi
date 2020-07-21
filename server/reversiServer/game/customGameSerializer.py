@@ -30,7 +30,7 @@ class gameSerializer():
             if (not "grid" in existingRoom):
                 game = reversi()
             else:
-                game = reversi(existingRoom["grid"], existingRoom["turn"], existingRoom["move"], existingRoom["over"], existingRoom)
+                game = reversi(existingRoom["grid"], existingRoom["turn"], existingRoom["move"], existingRoom["over"], existingRoom, existingRoom["last"], existingRoom["turned"])
         else:
             return None #No such room...
         
@@ -46,7 +46,7 @@ class gameSerializer():
             if (not "grid" in existingRoom):
                 game = reversi()
             else:
-                game = reversi(existingRoom["grid"], existingRoom["turn"], existingRoom["move"], existingRoom["over"])
+                game = reversi(existingRoom["grid"], existingRoom["turn"], existingRoom["move"], existingRoom["over"], {}, existingRoom["last"], existingRoom["turned"])
         else:
             return None #No such room...
 

@@ -26,6 +26,8 @@ class gameViewSet(views.APIView):
         ret["users"] = game.additional["users"]
         ret["room"] = game.additional["room"]
         ret["you"] = username
+        ret["lastMove"] = game.last
+        ret["lastFlip"] = game.turned
 
         if getGrid:
             ret["grid"] = game.grid
