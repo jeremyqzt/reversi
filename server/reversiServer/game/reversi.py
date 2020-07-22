@@ -179,20 +179,17 @@ class reversi:
         if not self.__isMoveWithinBoard(newMove) or not self.__isMoveWithinBoard(newMoveNext):
             return []
 
-            
         if (self.grid[newMove.row][newMove.col] == GridState.getOther(color)):
             if (self.grid[newMoveNext.row][newMoveNext.col] == color):
                 return [gridLocation(newMove.row, newMove.col)]
                 
-        
         ret = [] 
         while (self.grid[newMove.row][newMove.col] == GridState.getOther(color)):
             ret.append(gridLocation(newMove.row, newMove.col))
             newMove += directionOffset
-
-        # at end, if we're outside, return empty
-        if not self.__isMoveWithinBoard(newMove):
-            return []
+            # at end, if we're outside, return empty
+            if not self.__isMoveWithinBoard(newMove):
+                return []
 
         #Hit a one of ours
         if (self.grid[newMove.row][newMove.col] == color):
@@ -204,9 +201,9 @@ class reversi:
         return self.__isMoveWithinBoard(move) and self.grid[move.row][move.col] != GridState.EMPTY
         
     def __isMoveWithinBoard(self, move):
-        if (move.row < 0 and move.row > 7):
+        if (move.row < 0 or move.row > 7):
             return False
-        if (move.col < 0 and move.col > 7):
+        if (move.col < 0 or move.col > 7):
             return False
         return True
 
