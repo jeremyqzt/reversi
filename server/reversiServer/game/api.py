@@ -28,6 +28,7 @@ class gameViewSet(views.APIView):
         ret["you"] = username
         ret["lastMove"] = game.last
         ret["lastFlip"] = game.turned
+        ret["lastTurn"] = game.lastTurn
 
         if getGrid:
             ret["grid"] = game.grid
@@ -35,6 +36,7 @@ class gameViewSet(views.APIView):
             ret["turn"] = game.turn
         if getGameOver:
             ret["over"] = game.over
+
         return response.Response({"game": ret}, status=status.HTTP_200_OK)
     def post(self, request):
         #if (not "row" in request.data) or (not "col" in request.data):

@@ -28,6 +28,8 @@ class Board extends Component {
         this.state = {
             grid: grid,
         }
+
+        this.moveId = 0;
         this.pieceOutstanding = 64;
       }
 
@@ -72,14 +74,41 @@ class Board extends Component {
         serverComm.get(postLocat)
         .then(result =>{return result.json()})
         .then((result) => {
-          console.log(result)
+          console.log(result.game.lastTurn);
+          if (result.game.move === this.moveId + 1){
+            this.moveId = result.game.move;
+            let lastMove = result.game.lastMove;
+            //let lastFlipped = result.game.lastFlip;
+            let move = reversiLogic.objFromKey(lastMove);
+            //console.log(move);
+            if (this.reversiGame.makeMove(move) !== null){
+              this.removeHighlight();
+              this.updateStats();
+              this.placePieceSound();
+              this.postMoveActions(move, `R${move.row}C${move.col}`, result.game.lastTurn);
+            }
+          } else {
+            this.reRenderGrid();
+          }
         })
         .catch((result)=> {
-          console.log(result)
+          //console.log(result.game.move)
         });
 
         await new Promise(r => setTimeout(r, 1500)); //I guess try for 2 ticks/sec
         this.getServerMoveLoop();
+      }
+
+      reRenderGrid(grid){
+        for (let i = 0; i < grid.length; i++){
+          for (let j = 0; j < grid[i].length; j++){
+            if (grid[i][j] === pieceVal.BLACK){
+              this.gridRef[i][j].setPiece(pieceVal.BLACK);
+            } else if (grid[i][j] === pieceVal.WHITE){
+              this.gridRef[i][j].setPiece(pieceVal.WHITE);
+            }
+          }
+        }
       }
 
       makeServerMove(data){
@@ -87,7 +116,7 @@ class Board extends Component {
         serverComm.post(data, postLocat)
         .then(result =>{return result.json()})
         .then((result) => {
-          console.log(result)
+          this.moveId += 1;
         })
         .catch((result)=> {
           console.log("Err")

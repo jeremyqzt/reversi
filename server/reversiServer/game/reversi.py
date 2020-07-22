@@ -56,7 +56,7 @@ class gridLocation():
         return ("R%dC%d" % (self.row, self.col))
 
 class reversi:
-    def __init__(self, grid = None, turn = None, moveId = 0, over = False, additionalMeta = {}, lastMove = "", lastFlipped = []):
+    def __init__(self, grid = None, turn = None, moveId = 0, lastTurn = GridState.BLACK, over = False, additionalMeta = {}, lastMove = "", lastFlipped = []):
         self.additionalMeta = additionalMeta
 
         if(grid == None):
@@ -74,7 +74,7 @@ class reversi:
             self.turn = GridState(turn)
 
         self.over = over
-
+        self.lastTurn = lastTurn
         self.moveId = moveId
 
         self.extremisPieces = self.computeExtremePieces()
@@ -82,38 +82,6 @@ class reversi:
         self.lastMove = lastMove
         self.lastFlipped = lastFlipped
 
-        '''
-        print(self.avail)
-        print(self)
-
-        self.makeMove(gridLocation(3,2))
-        print(self.avail)
-        print(self)
-        #
-        self.makeMove(gridLocation(2,2))
-        print(self.avail)
-        print(self)       
-
-        self.makeMove(gridLocation(1,2))
-        print(self.avail)
-        print(self)
-
-        self.makeMove(gridLocation(4,2))
-        print(self.avail)
-        print(self)    
-
-        self.makeMove(gridLocation(5,4))
-        print(self.avail)
-        print(self)    
-
-        self.makeMove(gridLocation(0,2))
-        print(self.avail)
-        print(self)
-
-        self.makeMove(gridLocation(3,1))
-        print(self.avail)
-        print(self) 
-        '''
     def makeMove(self, move):
         if self.over:
             return self.getCurrentQset()
@@ -125,10 +93,10 @@ class reversi:
             return self.getCurrentQset()
 
         self.grid[move.row][move.col] = self.turn
-
+        self.lastTurn = self.turn
+        print(self.lastTurn)
         self.lastMove = str(move)
         self.lastFlipped = [str(i) for i in self.avail[move]] 
-
 
         for i in self.avail[move]:
             self.grid[i.row][i.col] = self.turn
@@ -142,12 +110,10 @@ class reversi:
             self.avail = self.computeAvailable(self.turn)
             if self.avail == {}:
                 self.over = True
-
-        return reversiQSet(self.grid, self.turn, self.moveId + 1, self.lastMove, self.lastFlipped, self.over, self.additionalMeta)
+        return reversiQSet(self.grid, self.turn, self.moveId + 1, self.lastMove, self.lastTurn, self.lastFlipped, self.over, self.additionalMeta)
 
     def getCurrentQset(self):
-        #print(reversiQSet(self.grid, self.turn, self.moveId, self.over))
-        return reversiQSet(self.grid, self.turn, self.moveId, self.lastMove, self.lastFlipped, self.over,  self.additionalMeta)
+        return reversiQSet(self.grid, self.turn, self.moveId, self.lastMove, self.lastTurn, self.lastFlipped, self.over,  self.additionalMeta)
 
     def computeAvailable(self, color):
         ret = {}
@@ -232,7 +198,6 @@ class reversi:
         #Hit a one of ours
         if (self.grid[newMove.row][newMove.col] == color):
             return ret
-
         return []
 
 
