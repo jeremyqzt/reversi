@@ -43,14 +43,15 @@ class Board extends Component {
         let toRender = this.reversiGame.getTurn();
 
         //Human always plays blk, return if not your turn
-        if (this.mode !== 0 && toRender !== pieceVal.BLACK){
+        if ((this.mode === 1 || this.mode === 2 || this.mode === 3) && toRender !== pieceVal.BLACK){
           return;
         }
 
         let move = {
           row: i,
           col: j,
-        }
+        };
+
         if (this.reversiGame.makeMove(move) !== null){
           this.removeHighlight();
           this.updateStats();
@@ -74,21 +75,26 @@ class Board extends Component {
         serverComm.get(postLocat)
         .then(result =>{return result.json()})
         .then((result) => {
-          console.log(result.game.lastTurn);
+          //console.log(result.game);
           if (result.game.move === this.moveId + 1){
             this.moveId = result.game.move;
             let lastMove = result.game.lastMove;
-            //let lastFlipped = result.game.lastFlip;
             let move = reversiLogic.objFromKey(lastMove);
-            //console.log(move);
             if (this.reversiGame.makeMove(move) !== null){
               this.removeHighlight();
               this.updateStats();
               this.placePieceSound();
-              this.postMoveActions(move, `R${move.row}C${move.col}`, result.game.lastTurn);
+              this.serverMoved(move, `R${move.row}C${move.col}`, result.game.lastTurn);
             }
           } else {
-            this.reRenderGrid();
+            this.reRenderGrid(result.game.grid);
+            this.removeHighlight();
+            this.reversiGame.setGrid(result.game.grid);
+            this.reversiGame.setTurn(result.game.turn);
+            this.reversiGame.triggerRecompute();
+            console.log(this.reversiGame.grid)
+
+            this.postMoveHumanHelp();
           }
         })
         .catch((result)=> {
@@ -121,6 +127,11 @@ class Board extends Component {
         .catch((result)=> {
           console.log("Err")
         });
+      }
+
+      async serverMoved(move, idx, toRender){
+        await this.postMoveActions(move, idx, toRender);
+        this.postMoveHumanHelp();
       }
 
       postMoveHumanHelp(){
@@ -212,8 +223,6 @@ class Board extends Component {
         if (this.pieceOutstanding === 0){
           this.getAvailAndMark();
         }
-
-
       }
 
       initBoard = (x,y) =>{

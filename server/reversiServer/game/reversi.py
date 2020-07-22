@@ -94,7 +94,6 @@ class reversi:
 
         self.grid[move.row][move.col] = self.turn
         self.lastTurn = self.turn
-        print(self.lastTurn)
         self.lastMove = str(move)
         self.lastFlipped = [str(i) for i in self.avail[move]] 
 
