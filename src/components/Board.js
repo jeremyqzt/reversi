@@ -73,7 +73,7 @@ class Board extends Component {
       async getServerMoveLoop(){
         let postLocat = "api/game?turn=1&over=1&grid=1"
         serverComm.get(postLocat)
-        .then(result =>{return result.json()})
+        .then(result =>{return result.json();})
         .then((result) => {
           //console.log(result.game);
           if (result.game.move === this.moveId + 1){
@@ -86,7 +86,7 @@ class Board extends Component {
               this.placePieceSound();
               this.serverMoved(move, `R${move.row}C${move.col}`, result.game.lastTurn);
             }
-          } else {
+          } else if(result.game.move !== this.moveId){
             this.reRenderGrid(result.game.grid);
             this.removeHighlight();
             this.reversiGame.setGrid(result.game.grid);
@@ -100,7 +100,7 @@ class Board extends Component {
           //console.log(result.game.move)
         });
 
-        await new Promise(r => setTimeout(r, 1000)); //I guess try for 2 ticks/sec
+        await new Promise(r => setTimeout(r, 2000)); //I guess try for 2.0 sec
         this.getServerMoveLoop();
       }
 
