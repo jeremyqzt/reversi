@@ -124,6 +124,9 @@ class Board extends Component {
         .then(result =>{return result.json()})
         .then((result) => {
           this.moveId += 1;
+          if (result.game.moveId !== this.moveId){  //Move rejected
+            this.moveId = -1;
+          }
         })
         .catch((result)=> {
           //Aha, reset so board re-renders
