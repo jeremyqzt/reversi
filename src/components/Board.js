@@ -92,16 +92,15 @@ class Board extends Component {
             this.reversiGame.setGrid(result.game.grid);
             this.reversiGame.setTurn(result.game.turn);
             this.reversiGame.triggerRecompute();
-            console.log(this.reversiGame.grid)
-
             this.postMoveHumanHelp();
           }
         })
         .catch((result)=> {
+          this.moveId = -1;
           //console.log(result.game.move)
         });
 
-        await new Promise(r => setTimeout(r, 1500)); //I guess try for 2 ticks/sec
+        await new Promise(r => setTimeout(r, 1000)); //I guess try for 2 ticks/sec
         this.getServerMoveLoop();
       }
 
@@ -112,6 +111,8 @@ class Board extends Component {
               this.gridRef[i][j].setPiece(pieceVal.BLACK);
             } else if (grid[i][j] === pieceVal.WHITE){
               this.gridRef[i][j].setPiece(pieceVal.WHITE);
+            } else {
+              this.gridRef[i][j].removePiece();
             }
           }
         }
@@ -125,7 +126,8 @@ class Board extends Component {
           this.moveId += 1;
         })
         .catch((result)=> {
-          console.log("Err")
+          //Aha, reset so board re-renders
+          this.moveId = -1;
         });
       }
 

@@ -41,6 +41,14 @@ class Piece extends Component {
     });
   }
 
+  removePiece = () => {
+    this.setState({
+        piece: pieceVal.BLACK,
+        hasPiece:  false,
+        pieceColor: "blackPiece",
+    });
+  }
+
   hasPieceAlready = () => {
     return this.state.hasPiece;
   }
