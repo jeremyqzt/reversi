@@ -82,6 +82,9 @@ class reversi:
         self.lastMove = lastMove
         self.lastFlipped = lastFlipped
 
+    def getTurn(self):
+        return self.turn
+
     def makeMove(self, move):
         if self.over:
             return self.getCurrentQset()

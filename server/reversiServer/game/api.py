@@ -21,6 +21,9 @@ class gameViewSet(views.APIView):
             return response.Response({"error": "No Room"}, status=status.HTTP_404_NOT_FOUND)
 
         game = serializer.getGameFromGid(gid)
+        if ({} == game.additional):
+            return response.Response({"status": "Awaiting Start"}, status=status.HTTP_200_OK)
+
         ret = {}
         ret["move"] = game.move
         ret["users"] = game.additional["users"]
@@ -39,8 +42,8 @@ class gameViewSet(views.APIView):
 
         return response.Response({"game": ret}, status=status.HTTP_200_OK)
     def post(self, request):
-        #if (not "row" in request.data) or (not "col" in request.data):
-        #    return Response(None, status=status.HTTP_404_NOT_FOUND)
+        if (not "row" in request.data) or (not "col" in request.data):
+            return Response(None, status=status.HTTP_404_NOT_FOUND)
         username = str(request.user)
         row = int(request.data["row"])
         col = int(request.data["col"])
@@ -53,3 +56,15 @@ class gameViewSet(views.APIView):
             return response.Response({"error": "No Room"}, status=status.HTTP_404_NOT_FOUND)
         ret = serializer.makeMoveWithGid(gid, move, username)
         return response.Response({"game": ret}, status=status.HTTP_200_OK) 
+
+class gameStartView(views.APIView):
+    def post(self, request):
+        username = str(request.user)
+        serializer = gameSerializer()
+        gid = serializer.getGidFromUser(username)
+        if "room" in gid:
+            gid = gid["room"]
+        else:
+            return response.Response({"error": "No Room"}, status=status.HTTP_404_NOT_FOUND)
+        ret = serializer.startGame(gid, username)
+        return response.Response({}, status=status.HTTP_200_OK) 
