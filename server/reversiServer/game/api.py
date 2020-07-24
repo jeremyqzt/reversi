@@ -51,5 +51,5 @@ class gameViewSet(views.APIView):
             gid = gid["room"]
         else:
             return response.Response({"error": "No Room"}, status=status.HTTP_404_NOT_FOUND)
-        ret = serializer.makeMoveWithGid(gid, move)
+        ret = serializer.makeMoveWithGid(gid, move, username)
         return response.Response({"game": ret}, status=status.HTTP_200_OK) 

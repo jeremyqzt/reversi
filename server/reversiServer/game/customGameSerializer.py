@@ -1,6 +1,8 @@
 from lobby.customReversiModels import LobbyModel
 from .reversi import reversi, gridLocation
 from .reversiQSet import reversiQSet
+from . gameErrors import GameErrors
+
 class gameSerializer():
     def __init__(self):
         pass
@@ -37,7 +39,7 @@ class gameSerializer():
         ret = game.getCurrentQset()
         return ret
 
-    def makeMoveWithGid(self, gid, move):
+    def makeMoveWithGid(self, gid, move, maker):
         model = self.Meta.model()
         #Must have a room (because lobby)
         existingRoom = model.getState(gid)
@@ -49,9 +51,22 @@ class gameSerializer():
                 game = reversi(existingRoom["grid"], existingRoom["turn"], existingRoom["move"], existingRoom["lastTurn"], existingRoom["over"], {}, existingRoom["last"], existingRoom["turned"])
                 #game = reversi(existingRoom["grid"], existingRoom["turn"], existingRoom["move"], existingRoom["over"], {}, existingRoom["last"], existingRoom["turned"])
         else:
-            return None #No such room...
+            return {"error": "No Room", "errCode": GameErrors.NO_ROOM.value} #No such room...
 
-        ret = game.makeMove(move).getDict()
-        existingRoom.update(ret)
-        model.storeStateNoUser(gid, existingRoom)
+        # Black is 1, goes first, so idx = 0
+        # white 2, goes second, idx = 1
+        turnIdx = existingRoom["turn"] - 1
+        if (len(existingRoom["users"]) < 2):
+            return {"error": "Not Enough Players", "errCode": GameErrors.NOT_ENOUGH_PLAYER.value} #No such room...
+
+        if (not maker in existingRoom["users"]):
+            return {"error": "Not Such Player", "errCode": GameErrors.PLAYER_NOT_IN_GAME.value} #No such room...
+
+        #print(turnIdx)
+        #print(existingRoom["users"][turnIdx])
+        ret = None
+        if (maker == existingRoom["users"][turnIdx]):
+            ret = game.makeMove(move).getDict()
+            existingRoom.update(ret)
+            model.storeStateNoUser(gid, existingRoom)
         return ret
