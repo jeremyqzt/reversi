@@ -100,6 +100,11 @@ class Board extends Component {
           //console.log(result.game.move)
         });
 
+        while (document.hidden){
+          await new Promise(r => setTimeout(r, 1000));
+          console.log("Awaiting")
+        }
+          
         await new Promise(r => setTimeout(r, 2500)); //I guess try for 2.0 sec
         this.getServerMoveLoop();
       }
