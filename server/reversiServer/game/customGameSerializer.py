@@ -34,7 +34,7 @@ class gameSerializer():
             else:
                 game = reversi(existingRoom["grid"], existingRoom["turn"], existingRoom["move"], existingRoom["lastTurn"], existingRoom["over"], existingRoom, existingRoom["last"], existingRoom["turned"])
         else:
-            return None #No such room...
+            return {"error": "No Room", "errCode": GameErrors.NO_ROOM.value} #No such room...
         
         ret = game.getCurrentQset()
         return ret
@@ -49,7 +49,6 @@ class gameSerializer():
                 game = reversi()
             else:
                 game = reversi(existingRoom["grid"], existingRoom["turn"], existingRoom["move"], existingRoom["lastTurn"], existingRoom["over"], {}, existingRoom["last"], existingRoom["turned"])
-                #game = reversi(existingRoom["grid"], existingRoom["turn"], existingRoom["move"], existingRoom["over"], {}, existingRoom["last"], existingRoom["turned"])
         else:
             return {"error": "No Room", "errCode": GameErrors.NO_ROOM.value} #No such room...
 
@@ -64,7 +63,8 @@ class gameSerializer():
 
         #print(turnIdx)
         #print(existingRoom["users"][turnIdx])
-        ret = None
+        ret = {"error": "Not Your Turn", "errCode": GameErrors.NOT_YOUR_TURN.value} #No such room...
+
         if (maker == existingRoom["users"][turnIdx]):
             ret = game.makeMove(move).getDict()
             existingRoom.update(ret)
