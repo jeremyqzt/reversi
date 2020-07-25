@@ -17,6 +17,20 @@ class CreateLobbyCard extends Component {
         this.handleLobbyUpdate = this.handleLobbyUpdate.bind(this);
         this.handleCreate = this.handleCreate.bind(this);
         this.handleLeave = this.handleLeave.bind(this);
+        this.handleGameStart = this.handleGameStart.bind(this);
+
+    }
+
+    handleGameStart = () => {
+        let postLocat = "api/game/start/"
+        serverComm.post({}, postLocat)
+        .then(result => {return result.json();})
+        .then((result) => {
+            window.location.href = "/board?mode=5";
+        })
+        .catch((result)=> {
+            console.log(result);
+        });        
     }
 
     componentDidMount(){
@@ -170,7 +184,7 @@ class CreateLobbyCard extends Component {
                                 <button className="btn btn-outline-danger w-100" onClick={this.handleLeave} disabled={!this.state.inLobby && this.state.compMounted}>Leave</button>
                             </div>
                             <div className="col-5">
-                                <a href="/board?mode=5" className="btn btn-outline-success w-100" disabled={!this.state.inLobby && this.state.compMounted}>Start</a>
+                                <button onClick={this.handleGameStart} className="btn btn-outline-success w-100" disabled={!this.state.inLobby && this.state.compMounted}>Start</button>
                             </div>
                             <div className="col-1"></div>
                         </div>
