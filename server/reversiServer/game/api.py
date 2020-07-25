@@ -67,5 +67,4 @@ class gameStartView(views.APIView):
         else:
             return response.Response({"error": "No Room"}, status=status.HTTP_404_NOT_FOUND)
         ret = serializer.startGame(gid, username)
-        print("Game Started")
         return response.Response({}, status=status.HTTP_200_OK) 

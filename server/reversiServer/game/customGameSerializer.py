@@ -87,5 +87,11 @@ class gameSerializer():
 
         ret = game.getCurrentQset().getDict()
         existingRoom.update(ret)
+        if "started" in existingRoom:
+            if not maker in existingRoom["started"]:
+                existingRoom["started"].append(maker)
+        else:
+            existingRoom["started"] = [maker]
+
         model.storeStateNoUser(gid, existingRoom)
         return ret

@@ -29,4 +29,5 @@ class ReversiRoom(APIView):
         username = str(request.user)
         serializer = LobbySerializer()
         data = serializer.getEveryone(username)
+        data["you"] = username
         return Response(data, status=status.HTTP_200_OK)

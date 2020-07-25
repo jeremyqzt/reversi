@@ -107,9 +107,15 @@ class CreateLobbyCard extends Component {
         serverComm.get(roomLocat)
         .then(result =>{return result.json()})
         .then((result) => {
-            console.log(result)
             if (Object.keys(result).length !== 0){
                 this.setPlayers(result.users, result.room);
+                if(result.started){
+                    if (result.started.length < 2){
+                        if (!(result.started.includes(result.you))){
+                            this.handleGameStart();
+                        }
+                    }
+                }
             } else {
                 this.resetState();
             }
