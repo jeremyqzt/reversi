@@ -66,10 +66,13 @@ class LobbyModel:
         r = requests.post(url = server, data = payload)
         return r
 
-    def storeState(self, gid, gameData, user):
+    def storeState(self, gid, gameData, user, leaving):
         r = self.storeStateNoUser(gid, gameData)
         if r.status_code == 200:
-            r = self.storePlayerRoom(user, gid)
+            if leaving:
+                r = self.storePlayerRoom(user, "")
+            else:
+                r = self.storePlayerRoom(user, gid)
         else:
             return r.status_code
         return r
