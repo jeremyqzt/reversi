@@ -18,6 +18,7 @@ class CreateLobbyCard extends Component {
         this.handleCreate = this.handleCreate.bind(this);
         this.handleLeave = this.handleLeave.bind(this);
         this.handleGameStart = this.handleGameStart.bind(this);
+        this.runLobbyCheckLoop = this.runLobbyCheckLoop.bind(this);
 
     }
 
@@ -43,7 +44,17 @@ class CreateLobbyCard extends Component {
         });
         this.handleLobbyUpdate();
         // eslint-disable-next-line
-        var intervalID = setInterval(this.handleLobbyUpdate, 2500);
+        this.runLobbyCheckLoop();
+    }
+
+    async runLobbyCheckLoop(){
+        this.handleLobbyUpdate();
+
+        while (document.hidden){
+            await new Promise(r => setTimeout(r, 1000));
+        }
+
+        await new Promise(r => setTimeout(r, 2500));
     }
 
 
