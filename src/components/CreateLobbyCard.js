@@ -49,12 +49,8 @@ class CreateLobbyCard extends Component {
 
     async runLobbyCheckLoop(){
         this.handleLobbyUpdate();
-
-        while (document.hidden){
-            await new Promise(r => setTimeout(r, 1000));
-        }
-
         await new Promise(r => setTimeout(r, 2500));
+        this.runLobbyCheckLoop();
     }
 
 
@@ -118,6 +114,7 @@ class CreateLobbyCard extends Component {
         serverComm.get(roomLocat)
         .then(result =>{return result.json()})
         .then((result) => {
+            console.log(result)
             if (Object.keys(result).length > 1){
                 this.setPlayers(result.users, result.room);
                 if(result.started){

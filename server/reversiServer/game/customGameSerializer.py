@@ -55,7 +55,7 @@ class gameSerializer():
         # Black is 1, goes first, so idx = 0
         # white 2, goes second, idx = 1
         turnIdx = game.getTurn().value - 1
-        if (len(existingRoom["users"]) < 2 and False):
+        if (len(existingRoom["users"]) < 2):
             return {"error": "Not Enough Players", "errCode": GameErrors.NOT_ENOUGH_PLAYER.value}
 
         if (not maker in existingRoom["users"]):
@@ -65,8 +65,8 @@ class gameSerializer():
         #print(existingRoom["users"][turnIdx])
         ret = {"error": "Not Your Turn", "errCode": GameErrors.NOT_YOUR_TURN.value}
 
-        if (True):
-        #if (maker == existingRoom["users"][turnIdx]):
+        #if (True):
+        if (maker == existingRoom["users"][turnIdx]):
             ret = game.makeMove(move).getDict()
             existingRoom.update(ret)
             model.storeStateNoUser(gid, existingRoom)

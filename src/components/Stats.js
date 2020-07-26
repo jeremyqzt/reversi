@@ -41,11 +41,12 @@ class Stats extends Component {
       setWinner = (won, winner) => {
         let winningPiece = "⚫⚪ Its a Tie!"
         winningPiece = (winner === pieceVal.BLACK) ? "⚫ Black Has Won!" :"⚪ White Has Won!";
-
-        this.setState({
-            someoneWon: won,
-            winnerMsg: winningPiece,
-        });
+        if (won){
+            this.setState({
+                someoneWon: won,
+                winnerMsg: winningPiece,
+            });
+        }
       }
 
       setTurn = (blackTurn, moves) => {

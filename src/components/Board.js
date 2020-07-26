@@ -107,7 +107,6 @@ class Board extends Component {
             this.reversiGame.triggerRecompute();
           }
           this.updateStats();
-
           this.getAvail();
           let serverTurnIdx = result.game.turn - 1;
           let currentTurn = result.game.users[serverTurnIdx];
@@ -129,10 +128,11 @@ class Board extends Component {
         //console.log(this.reversiGame.getOver())
           
         await new Promise(r => setTimeout(r, 2500)); //I guess try for 2.0 sec
-        if (!this.over || this.overCounter < 3){
-          this.reversiGame.setServerOver();
+        if (!this.over){
           this.getServerMoveLoop();
+        } else if (this.overCounter < 3){
           this.overCounter += 1;
+          this.reversiGame.setServerOver();
         }
       }
 
