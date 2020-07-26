@@ -81,8 +81,8 @@ class Board extends Component {
           return Promise.reject(result.json());
         })
         .then((result) => {
-          console.log(result.game);
-          console.log(this.moveId);
+          //console.log(result.game);
+          //console.log(this.moveId);
           this.over = result.game.over;
           if (result.game.move === this.moveId + 1){
             this.moveId = result.game.move;
@@ -141,7 +141,7 @@ class Board extends Component {
         .then(result =>{return result.json()})
         .then((result) => {
           this.moveId += 1;
-          if (result.game.moveId !== this.moveId){  //Move rejected
+          if (result.game.move !== this.moveId){  //Move rejected
             this.moveId = -1;
           }
         })
