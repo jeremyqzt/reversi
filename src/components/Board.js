@@ -130,10 +130,8 @@ class Board extends Component {
         while (document.hidden){
           await new Promise(r => setTimeout(r, 1000));
         }
-
-        //console.log(this.reversiGame.getOver())
-          
-        await new Promise(r => setTimeout(r, 2500)); //I guess try for 2.0 sec
+         
+        await new Promise(r => setTimeout(r, 2000)); //I guess try for 2.0 sec
         if (!this.over){
           this.getServerMoveLoop();
         } else if (this.overCounter < 3){
