@@ -7,6 +7,7 @@ import HomePage from './components/HomePage';
 import RulesPage from './components/RulesPage';
 import AboutPage from './components/AboutPage';
 import AccountPage from './components/AccountPage';
+import LandingPage from './components/LandingPage';
 
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -21,7 +22,8 @@ ReactDOM.render(
         <Route path="/rules" component={RulesPage} />
         <Route path="/about" component={AboutPage} />
         <Route path="/account" component={AccountPage} />
-        <Route path="/" component={LoginPage} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/" component={LandingPage} />
       </Switch>
     </Router>
   </React.StrictMode>,
