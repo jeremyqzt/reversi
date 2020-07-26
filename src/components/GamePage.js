@@ -60,7 +60,10 @@ class Game extends Component {
         let turn = this.reversiGame.reversi.getTurn();
         let pieceCount = this.reversiGame.reversi.getPieceCount();
         this.setTurn(turn === pieceVal.BLACK, this.reversiGame.reversi.getMadeMoves());
-        this.setLastMove(this.reversiGame.reversi.getLastMove());
+        let lastMove = this.reversiGame.reversi.getLastMove();
+        if (lastMove !== null){
+            this.setLastMove(lastMove);
+        }
         this.setCount(pieceCount);
     }
 
