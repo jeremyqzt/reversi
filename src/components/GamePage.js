@@ -72,7 +72,7 @@ class Game extends Component {
         let pieceCount = this.reversiGame.reversi.getPieceCount();
 
         let gameOver = this.reversiGame.reversi.getOver();
-        console.log(gameOver)
+        //console.log(gameOver)
         //game is over
         let winner = pieceVal.EMPTY;
         if (gameOver){

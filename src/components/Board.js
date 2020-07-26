@@ -35,6 +35,7 @@ class Board extends Component {
         this.moveId = 0;
         this.pieceOutstanding = 64;
         this.overCounter = 0;
+        this.okayToMove = false;
       }
 
       componentDidMount = () =>{
@@ -45,6 +46,10 @@ class Board extends Component {
 
       async handleClick(e, i, j, piece){
         let toRender = this.reversiGame.getTurn();
+        
+        if (this.over || !this.okayToMove){
+          return;
+        }
 
         //Human always plays blk, return if not your turn
         if ((this.mode === 1 || this.mode === 2 || this.mode === 3) && toRender !== pieceVal.BLACK){
@@ -62,7 +67,6 @@ class Board extends Component {
           this.placePieceSound();
           await this.postMoveActions(move, `R${i}C${j}`, toRender);
         
-  
           if (this.mode !== 0 && this.mode !== 5){ //1-3 is AI
             await new Promise(r => setTimeout(r, 500));
             this.getAiMove();
@@ -85,6 +89,7 @@ class Board extends Component {
           return Promise.reject(result.json());
         })
         .then((result) => {
+          this.okayToMove = false;
           //console.log(result.game);
           this.reversiGame.setPlayers(result.game.users);
           //console.log(this.moveId);
@@ -112,6 +117,7 @@ class Board extends Component {
           let currentTurn = result.game.users[serverTurnIdx];
           if (currentTurn === result.game.you){
             this.postMoveHumanHelp();
+            this.okayToMove = true;
           } else {
             this.removeHighlight();
           }
@@ -132,6 +138,7 @@ class Board extends Component {
           this.getServerMoveLoop();
         } else if (this.overCounter < 3){
           this.overCounter += 1;
+          this.getServerMoveLoop();
           this.reversiGame.setServerOver();
         }
       }
