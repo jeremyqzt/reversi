@@ -5,6 +5,8 @@ import Stats from './Stats';
 import reversiLogic from '../reversiLogic/reversi';
 import JwtUtils from '../utils/jwtUtils';
 import '../css/board.css';
+import '../css/firework.css';
+
 import { pieceVal } from './Piece';
 
 class Game extends Component {
@@ -93,6 +95,10 @@ class Game extends Component {
         return (
             <div>
                 <Nav />
+                <div className="pyro">
+                    <div className="before"></div>
+                    <div className="after"></div>
+                </div>
                 <div className="container mt-4 mb-4">
                     <h1 className="text-center noSelect"><span role="img" aria-label="blackCircle">⚫</span>Reversi Game Room<span role="img" aria-label="whiteCircle">⚪</span></h1>
                 </div>

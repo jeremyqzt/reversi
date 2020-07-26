@@ -33,6 +33,10 @@
   justify-content: space-around;
 
 }
+.backgroundZ{
+  z-index: -1;
+}
+
 .circle {
   width: 65%;
   height: 65%;

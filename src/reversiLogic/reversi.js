@@ -83,6 +83,15 @@ class reversiLogic{
 	triggerRecompute(){
 		this.extremisPieces = this.initExtremisPiece();
 		this.wouldBeFlippedPieces = this.getAvailableMoves(this.extremisPieces, this.turn);
+		let remaining = 0;
+		for (let i = 0; i < this.grid.length; i++){
+			for (let j = 0; j < this.grid[i].length; j++){
+				if (this.grid[i][j] === pieceVal.EMPTY){
+					remaining += 1;
+				}
+			}
+		}
+		this.madeMoves = 60 - remaining;
 	}
 
 	getOver(){

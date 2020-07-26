@@ -4,6 +4,8 @@ import {GreedyAI, RandomAI} from '../reversiLogic/dumbAIs';
 import MinMaxAlgo from '../reversiLogic/minMaxAI';
 
 import '../css/board.css';
+import '../css/alerts.css';
+
 import reversiLogic from '../reversiLogic/reversi';
 import serverComm from '../utils/serverComm.js';
 
@@ -27,6 +29,7 @@ class Board extends Component {
         this.mode = this.props.gameDetails.aiDiff;
         this.state = {
             grid: grid,
+            over: true,
         };
 
         this.over = false;
@@ -308,9 +311,11 @@ class Board extends Component {
       render(){
       let grid = this.state.grid;
         return (
-          <div className = "col-8">
-            {grid}
-          </div>
+          <>
+            <div className = "col-8">
+              {grid}
+            </div>
+          </>
         );
       };
 }
