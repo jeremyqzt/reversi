@@ -81,7 +81,7 @@ class Board extends Component {
           return Promise.reject(result.json());
         })
         .then((result) => {
-          //console.log(result.game);
+          console.log(result.game);
           //console.log(this.moveId);
           this.over = result.game.over;
           if (result.game.move === this.moveId + 1){
@@ -101,6 +101,12 @@ class Board extends Component {
             this.reversiGame.setGrid(result.game.grid);
             this.reversiGame.setTurn(result.game.turn);
             this.reversiGame.triggerRecompute();
+          }
+
+          this.getAvail();
+          let serverTurnIdx = result.game.turn - 1;
+          let currentTurn = result.game.users[serverTurnIdx];
+          if (currentTurn === result.game.you){
             this.postMoveHumanHelp();
           }
         })
