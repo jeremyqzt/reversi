@@ -18,8 +18,12 @@ class Game extends Component {
         this.handleCount = this.handleCount.bind(this);
         this.handleOpp = this.handleOpp.bind(this);
         this.lastMove = this.lastMove.bind(this);
+        this.setWinner = this.setWinner.bind(this);
 
         this.aiDiff = 0;
+        this.state = {
+            gameOver: false,
+        };
 
         if (this.props.location.search.length > 0){
             this.aiDiff = parseInt(this.props.location.search.substr(-1));
@@ -37,6 +41,7 @@ class Game extends Component {
             count: this.handleCount,
             opp: this.handleOpp,
             lastMove: this.lastMove,
+            winner: this.setWinner,
         }
 
         JwtUtils.checkTokenPresent();
@@ -65,6 +70,21 @@ class Game extends Component {
     handleMoveAction = () =>{
         let turn = this.reversiGame.reversi.getTurn();
         let pieceCount = this.reversiGame.reversi.getPieceCount();
+
+        let gameOver = this.reversiGame.reversi.getOver();
+        //game is over
+        let winner = pieceVal.EMPTY;
+        if (gameOver){
+            if (pieceCount.white < pieceCount.black){
+                winner = pieceVal.BLACK;
+            } else if(pieceCount.white > pieceCount.black ){
+                winner = pieceVal.WHITE;
+            }
+        }
+        this.setState({
+            gameOver: gameOver,
+        });
+
         this.setTurn(turn === pieceVal.BLACK, this.reversiGame.reversi.getMadeMoves());
         let lastMove = this.reversiGame.reversi.getLastMove();
         if (lastMove !== null){
@@ -72,10 +92,15 @@ class Game extends Component {
         }
         this.setCount(pieceCount);
         this.setOpp(this.getOppStr(this.aiDiff));
+        this.setGameWinner(gameOver, winner);
     }
 
     lastMove = (func)=> {
         this.setLastMove = func;
+    }
+
+    setWinner = (func)=> {
+        this.setGameWinner = func;
     }
 
     handleTurn = (func) =>{
@@ -95,10 +120,10 @@ class Game extends Component {
         return (
             <div>
                 <Nav />
-                <div className="pyro">
+                {this.state.gameOver && <div className="pyro">
                     <div className="before"></div>
                     <div className="after"></div>
-                </div>
+                </div>}
                 <div className="container mt-4 mb-4">
                     <h1 className="text-center noSelect"><span role="img" aria-label="blackCircle">⚫</span>Reversi Game Room<span role="img" aria-label="whiteCircle">⚪</span></h1>
                 </div>

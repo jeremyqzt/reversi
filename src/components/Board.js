@@ -29,12 +29,12 @@ class Board extends Component {
         this.mode = this.props.gameDetails.aiDiff;
         this.state = {
             grid: grid,
-            over: true,
         };
 
         this.over = false;
         this.moveId = 0;
         this.pieceOutstanding = 64;
+        this.overCounter = 0;
       }
 
       componentDidMount = () =>{
@@ -85,9 +85,8 @@ class Board extends Component {
           return Promise.reject(result.json());
         })
         .then((result) => {
-          console.log(result.game);
+          //console.log(result.game);
           this.reversiGame.setPlayers(result.game.users);
-
           //console.log(this.moveId);
           this.over = result.game.over;
           if (result.game.move === this.moveId + 1){
@@ -96,7 +95,6 @@ class Board extends Component {
             let move = reversiLogic.objFromKey(lastMove);
             if (this.reversiGame.makeMove(move) !== null){
               this.removeHighlight();
-              this.updateStats();
               this.placePieceSound();
               this.serverMoved(move, `R${move.row}C${move.col}`, result.game.lastTurn);
             }
@@ -108,6 +106,7 @@ class Board extends Component {
             this.reversiGame.setTurn(result.game.turn);
             this.reversiGame.triggerRecompute();
           }
+          this.updateStats();
 
           this.getAvail();
           let serverTurnIdx = result.game.turn - 1;
@@ -126,10 +125,14 @@ class Board extends Component {
         while (document.hidden){
           await new Promise(r => setTimeout(r, 1000));
         }
+
+        //console.log(this.reversiGame.getOver())
           
         await new Promise(r => setTimeout(r, 2500)); //I guess try for 2.0 sec
-        if (!this.over){
+        if (!this.over || this.overCounter < 3){
+          this.reversiGame.setServerOver();
           this.getServerMoveLoop();
+          this.overCounter += 1;
         }
       }
 

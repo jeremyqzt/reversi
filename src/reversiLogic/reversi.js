@@ -115,6 +115,10 @@ class reversiLogic{
 		return {black: blk, white: wht};
 	}
 
+	setServerOver(){
+		this.over = true;
+	}
+
 	makeMove(move){
 		if (this.over){
 			return null;

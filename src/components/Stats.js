@@ -14,6 +14,8 @@ class Stats extends Component {
             turn: "⚫ Black",
             lastMove: "No Moves Made Yet!",
             opponent: "🤖 Beep-Boop",
+            someoneWon: false,
+            winnerMsg: "",
         }
     }
 
@@ -22,6 +24,7 @@ class Stats extends Component {
         this.props.updateDetails.count(this.setPieceCount);
         this.props.updateDetails.opp(this.setOpp);
         this.props.updateDetails.lastMove(this.setLastMove);
+        this.props.updateDetails.winner(this.setWinner);
     }
 
     setPieceCount = (inCount) => {
@@ -35,6 +38,16 @@ class Stats extends Component {
         });
       }
     
+      setWinner = (won, winner) => {
+        let winningPiece = "⚫⚪ Its a Tie!"
+        winningPiece = (winner === pieceVal.BLACK) ? "⚫ Black Has Won!" :"⚪ White Has Won!";
+
+        this.setState({
+            someoneWon: won,
+            winnerMsg: winningPiece,
+        });
+      }
+
       setTurn = (blackTurn, moves) => {
         this.setState({
             moves: moves,
@@ -62,14 +75,20 @@ class Stats extends Component {
     render(){
         return (
             <div className="col-4 w-100 noSelect">
-                <div className="row">
+                {!this.state.someoneWon && <div className="row">
                     <div className="col-12">
                         <h2 className="text-center">Current Turn</h2>
                         <p className="text-center">➡{this.state.turn} to Move</p>
                         <p className="text-center">{this.state.moves} Moves Made so Far!</p>
-
                     </div>
-                </div>
+                </div>}
+                {this.state.someoneWon && <div className="row">
+                    <div className="col-12">
+                        <h2 className="text-center"> <span role="img" aria-label="winner">👑</span>Winner</h2>
+                        <p className="text-center"> {this.state.winnerMsg} </p>
+                        <a href="/home" className="btn btn-outline-dark w-100"> Go Home </a>
+                    </div>
+                </div>}
                 <div className="row">
                     <div className="col-12">
                         <h2 className="text-center">Current Pieces</h2>
