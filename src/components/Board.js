@@ -27,8 +27,9 @@ class Board extends Component {
         this.mode = this.props.gameDetails.aiDiff;
         this.state = {
             grid: grid,
-        }
+        };
 
+        this.over = false;
         this.moveId = 0;
         this.pieceOutstanding = 64;
       }
@@ -73,9 +74,16 @@ class Board extends Component {
       async getServerMoveLoop(){
         let postLocat = "api/game?turn=1&over=1&grid=1"
         serverComm.get(postLocat)
-        .then(result =>{return result.json();})
+        .then(result =>{
+          if (result.status >= 200 && result.status < 300){
+            return result.json();
+          }
+          return Promise.reject(result.json());
+        })
         .then((result) => {
-          //console.log(result.game);
+          console.log(result.game);
+          console.log(this.moveId);
+          this.over = result.game.over;
           if (result.game.move === this.moveId + 1){
             this.moveId = result.game.move;
             let lastMove = result.game.lastMove;
@@ -87,6 +95,7 @@ class Board extends Component {
               this.serverMoved(move, `R${move.row}C${move.col}`, result.game.lastTurn);
             }
           } else if(result.game.move !== this.moveId){
+            this.moveId = result.game.move;
             this.reRenderGrid(result.game.grid);
             this.removeHighlight();
             this.reversiGame.setGrid(result.game.grid);
@@ -95,18 +104,21 @@ class Board extends Component {
             this.postMoveHumanHelp();
           }
         })
-        .catch((result)=> {
+        .catch((e)=> {
+          console.log(e);
+          console.log("Setting to -1")
           this.moveId = -1;
           //console.log(result.game.move)
         });
 
         while (document.hidden){
           await new Promise(r => setTimeout(r, 1000));
-          console.log("Awaiting")
         }
           
         await new Promise(r => setTimeout(r, 2500)); //I guess try for 2.0 sec
-        this.getServerMoveLoop();
+        if (!this.over){
+          this.getServerMoveLoop();
+        }
       }
 
       reRenderGrid(grid){
@@ -129,7 +141,6 @@ class Board extends Component {
         .then(result =>{return result.json()})
         .then((result) => {
           this.moveId += 1;
-          console.log(result.game)
           if (result.game.moveId !== this.moveId){  //Move rejected
             this.moveId = -1;
           }
@@ -142,7 +153,7 @@ class Board extends Component {
 
       async serverMoved(move, idx, toRender){
         await this.postMoveActions(move, idx, toRender);
-        this.postMoveHumanHelp();
+        //this.postMoveHumanHelp();
       }
 
       postMoveHumanHelp(){
