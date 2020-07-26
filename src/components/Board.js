@@ -92,7 +92,7 @@ class Board extends Component {
         })
         .then((result) => {
           this.okayToMove = false;
-          console.log(result.game.move)
+          //console.log(result.game.move)
           if (this.blockServerUpdate){
             this.blockServerUpdate = false;
             return;
@@ -178,7 +178,7 @@ class Board extends Component {
       }
 
       async serverMoved(move, idx, toRender){
-        await this.postMoveActions(move, idx, toRender);
+        this.postMoveActions(move, idx, toRender);
         //this.postMoveHumanHelp();
       }
 
@@ -188,8 +188,12 @@ class Board extends Component {
       }
 
       async postMoveActions(move, idx, toRender){
-        this.gridRef[move.row][move.col].setPiece(toRender);
-        await this.flipBulkPieces(this.availMoves[idx], toRender);
+        try {
+          this.gridRef[move.row][move.col].setPiece(toRender);
+          await this.flipBulkPieces(this.availMoves[idx], toRender);
+        } catch (e){
+          this.moveId = -1; //Re-render...
+        }
       }
 
       async getAiMove(){
