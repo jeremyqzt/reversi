@@ -35,7 +35,7 @@ class Board extends Component {
         this.moveId = 0;
         this.pieceOutstanding = 64;
         this.overCounter = 0;
-        this.okayToMove = false;
+        this.blockServerUpdate = false;
       }
 
       componentDidMount = () =>{
@@ -50,6 +50,8 @@ class Board extends Component {
         if (this.over || !this.okayToMove){
           return;
         }
+
+        this.blockServerUpdate = true;
 
         //Human always plays blk, return if not your turn
         if ((this.mode === 1 || this.mode === 2 || this.mode === 3) && toRender !== pieceVal.BLACK){
@@ -90,9 +92,13 @@ class Board extends Component {
         })
         .then((result) => {
           this.okayToMove = false;
+          console.log(result.game.move)
+          if (this.blockServerUpdate){
+            this.blockServerUpdate = false;
+            return;
+          }
           //console.log(result.game);
           this.reversiGame.setPlayers(result.game.users);
-          console.log(this.moveId);
           this.over = result.game.over;
           if (result.game.move === this.moveId + 1){
             this.moveId = result.game.move;
