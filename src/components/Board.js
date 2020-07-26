@@ -92,7 +92,7 @@ class Board extends Component {
           this.okayToMove = false;
           //console.log(result.game);
           this.reversiGame.setPlayers(result.game.users);
-          //console.log(this.moveId);
+          console.log(this.moveId);
           this.over = result.game.over;
           if (result.game.move === this.moveId + 1){
             this.moveId = result.game.move;
