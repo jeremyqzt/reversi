@@ -58,15 +58,16 @@ class Board extends Component {
           this.updateStats();
           this.placePieceSound();
           await this.postMoveActions(move, `R${i}C${j}`, toRender);
-        }
+        
   
-        if (this.mode !== 0 && this.mode !== 5){ //1-3 is AI
-          await new Promise(r => setTimeout(r, 500));
-          this.getAiMove();
-        } else if (this.mode === 0){ //0 is 2 player, LAN
-          this.postMoveHumanHelp();
-        } else if(this.mode === 5){ //5 is 2 player
-          this.makeServerMove(move);
+          if (this.mode !== 0 && this.mode !== 5){ //1-3 is AI
+            await new Promise(r => setTimeout(r, 500));
+            this.getAiMove();
+          } else if (this.mode === 0){ //0 is 2 player, LAN
+            this.postMoveHumanHelp();
+          } else if(this.mode === 5){ //5 is 2 player
+            this.makeServerMove(move);
+          }
         }
         //console.log(this.reversiGame.getOver());
       }
@@ -82,6 +83,8 @@ class Board extends Component {
         })
         .then((result) => {
           console.log(result.game);
+          this.reversiGame.setPlayers(result.game.users);
+
           //console.log(this.moveId);
           this.over = result.game.over;
           if (result.game.move === this.moveId + 1){
@@ -108,11 +111,11 @@ class Board extends Component {
           let currentTurn = result.game.users[serverTurnIdx];
           if (currentTurn === result.game.you){
             this.postMoveHumanHelp();
+          } else {
+            this.removeHighlight();
           }
         })
         .catch((e)=> {
-          console.log(e);
-          console.log("Setting to -1")
           this.moveId = -1;
           //console.log(result.game.move)
         });

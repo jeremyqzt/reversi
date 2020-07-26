@@ -21,6 +21,23 @@ class reversiLogic{
 		this.over = false;
 		this.madeMoves = 0;
 		this.lastMove = null;
+		this.playerArr = null;
+	}
+
+	setPlayers = (playerArr) => {
+		this.playerArr = playerArr;
+	}
+
+	getPlayers = () => {
+		if (this.playerArr === null){
+			return null;
+		}
+
+		if (this.playerArr.length === 2){
+			return `⚫ ${this.playerArr[0].split("@")[0]} Vs. ⚪ ${this.playerArr[1].split("@")[0]}`;
+		} else if (this.playerArr.length === 1){
+			return `Just ${this.playerArr[0].split("@")[0]} Here!`;
+		}
 	}
 
 	getLastMove(){

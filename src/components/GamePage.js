@@ -51,7 +51,11 @@ class Game extends Component {
             case 3:
                 return "🌲 The T-3000"
             case 5:
-                return "🧍 Against Someone..."
+                let pStr = this.reversiGame.reversi.getPlayers();
+                if (pStr === null){
+                    return "🧍 Against Someone..."
+                }
+                return pStr;
             default:
                 return "WTF Something Went Wront!"
             }
@@ -65,6 +69,7 @@ class Game extends Component {
             this.setLastMove(lastMove);
         }
         this.setCount(pieceCount);
+        this.setOpp(this.getOppStr(this.aiDiff));
     }
 
     lastMove = (func)=> {
@@ -81,7 +86,7 @@ class Game extends Component {
 
     handleOpp = (func) =>{
         this.setOpp = func;
-        func(this.getOppStr(this.aiDiff));
+        this.setOpp(this.getOppStr(this.aiDiff));
     }
 
     render(){
