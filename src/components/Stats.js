@@ -111,6 +111,18 @@ class Stats extends Component {
                         <p className="text-center">{this.state.lastMove}</p>
                     </div>
                 </div>
+                <div className="row">
+                    <div className="col-12">
+                        <h2 className="text-center">Time Remaining</h2>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-12">
+                        <div className="progress">
+                        <div className="progress-bar bg-info" role="progressbar" style={{width: "50%"}} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
       };

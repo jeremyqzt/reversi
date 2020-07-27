@@ -41,6 +41,8 @@ class Board extends Component {
       componentDidMount = () =>{
         if (this.mode === 5){
           this.getServerMoveLoop(); //Actually not a loop, its recursive;
+        } else {
+          this.okayToMove = true;
         }
       }
 
