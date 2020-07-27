@@ -10,7 +10,7 @@ class Nav extends Component {
 
     __logout(){
         JwtUtils.deleteToken();
-        window.location.href = '/';
+        window.location.href = '/login';
     }
 
     render(){

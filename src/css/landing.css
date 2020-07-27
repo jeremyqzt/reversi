@@ -3,6 +3,12 @@
     width: 100vw;
 }
 
+.darkBtn{
+    background-color: #505160;
+    color: lavender;
+    border-color: lavender;
+}
+
 .center{
     margin: auto;
 }
