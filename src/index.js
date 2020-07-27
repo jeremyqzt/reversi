@@ -12,6 +12,8 @@ import LandingPage from './components/LandingPage';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
+import './css/main.css';
+
 
 ReactDOM.render(
   <React.StrictMode>
