@@ -24,6 +24,7 @@ class Stats extends Component {
         this.timerCounter = 0;
         this.interval = null;
         this.elapsedMinute = 0;
+        this.secondaryTime = 0;
 
     }
 
@@ -33,7 +34,7 @@ class Stats extends Component {
         this.props.updateDetails.opp(this.setOpp);
         this.props.updateDetails.lastMove(this.setLastMove);
         this.props.updateDetails.winner(this.setWinner);
-        this.startInterval(pieceVal.BLACK);
+        //this.test();
     }
 
     setPieceCount = (inCount) => {
@@ -48,13 +49,29 @@ class Stats extends Component {
       }
       
       startInterval = (piece) =>{
-        this.interval = setInterval(this.timerFunc, 1667, piece);
+          //1667 is 1 second
+        this.secondaryTime = (piece === pieceVal.BLACK) ? this.state.blackTime: this.state.whiteTime;
+        this.secondaryTime = (60-Math.round(60*this.secondaryTime/100));
+        this.interval = setInterval(this.timerFunc, 300, piece);
+      }
+
+      async test(){
+          this.startInterval(pieceVal.BLACK);
+          await new Promise(r => setTimeout(r, 30000));
+          this.getElapsedTime();
+          this.startInterval(pieceVal.WHITE);
+          await new Promise(r => setTimeout(r, 30000)); 
+          this.getElapsedTime();
+          this.startInterval(pieceVal.BLACK);
+          await new Promise(r => setTimeout(r, 30000)); 
+          this.getElapsedTime();
+          this.startInterval(pieceVal.WHITE);
       }
 
       timerFunc = (piece) => {
         this.timerCounter += 1;
-        let secondHand = 100 - Math.round(100*this.timerCounter/60);
-        debugger;
+        this.secondaryTime += 1;
+        let secondHand = 100 - Math.round(100*this.secondaryTime/60);
         if (piece === pieceVal.BLACK){
             this.setState({
                 blackTime: secondHand,
@@ -65,25 +82,33 @@ class Stats extends Component {
             });
         }
 
-        if (this.timerCounter >= 100){
+        if (this.timerCounter >= 60){
             this.elapsedMinute += 1;
             this.timerCounter = 0;
+        }
+
+        if (this.secondaryTime >= 60){
+            this.secondaryTime = 0;
             if (piece === pieceVal.BLACK){
                 this.setState({
                     blackMinute: this.state.blackMinute - 1,
                 });
             } else {
                 this.setState({
-                    blackMinute: this.state.whiteMinute - 1,
+                    whiteMinute: this.state.whiteMinute - 1,
                 });
             }
         }
+        //console.log(this.elapsedMinute * 60 + this.timerCounter)
       }
 
       getElapsedTime = () =>{
         clearInterval(this.interval);
         this.interval = null;
-        return this.elapsedMinute * 60 + this.timerCounter;
+        let ret = this.elapsedMinute * 60 + this.timerCounter;
+        this.elapsedMinute = 0;
+        this.timerCounter = 0;
+        return ret;
       }
 
 
@@ -155,34 +180,33 @@ class Stats extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-12">
-                        <h2 className="text-center">Last Move</h2>
-                        <p className="text-center">{this.state.lastMove}</p>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-12">
-                        <h2 className="text-center">Time Remaining</h2>
-                    </div>
-                </div>
-                <div className="row">
+                    <div className="col-2"></div>
                     <div className="col-4">
                         <h6><span role="img" aria-label="blkCircle">⚫</span> {this.state.blackMinute} Min</h6>
                     </div>
-                    <div className="col-8">
+                    <div className="col-4">
                         <div className="progress">
                         <div className="progress-bar bg-info" role="progressbar" style={{width:`${this.state.blackTime}%`}} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
+                    <div className="col-2"></div>
                 </div>
                 <div className="row">
+                    <div className="col-2"></div>
                     <div className="col-4">
                         <h6><span role="img" aria-label="whiteCircle">⚪</span> {this.state.whiteMinute} Min</h6>
                     </div>
-                    <div className="col-8">
+                    <div className="col-4">
                         <div className="progress">
                         <div className="progress-bar bg-info" role="progressbar" style={{width:`${this.state.whiteTime}%`}} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
+                    </div>
+                    <div className="col-2"></div>
+                </div>
+                <div className="row">
+                    <div className="col-12">
+                        <h2 className="text-center">Last Move</h2>
+                        <p className="text-center">{this.state.lastMove}</p>
                     </div>
                 </div>
             </div>
