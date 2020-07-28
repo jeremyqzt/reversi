@@ -34,7 +34,7 @@ class Stats extends Component {
         this.props.updateDetails.opp(this.setOpp);
         this.props.updateDetails.lastMove(this.setLastMove);
         this.props.updateDetails.winner(this.setWinner);
-        //this.test();
+        this.test();
     }
 
     setPieceCount = (inCount) => {
@@ -49,21 +49,20 @@ class Stats extends Component {
       }
       
       startInterval = (piece) =>{
-          //1667 is 1 second
         this.secondaryTime = (piece === pieceVal.BLACK) ? this.state.blackTime: this.state.whiteTime;
         this.secondaryTime = (60-Math.round(60*this.secondaryTime/100));
-        this.interval = setInterval(this.timerFunc, 300, piece);
+        this.interval = setInterval(this.timerFunc, 1000, piece);
       }
 
       async test(){
           this.startInterval(pieceVal.BLACK);
-          await new Promise(r => setTimeout(r, 30000));
+          await new Promise(r => setTimeout(r, 70000));
           this.getElapsedTime();
           this.startInterval(pieceVal.WHITE);
-          await new Promise(r => setTimeout(r, 30000)); 
+          await new Promise(r => setTimeout(r, 70000)); 
           this.getElapsedTime();
           this.startInterval(pieceVal.BLACK);
-          await new Promise(r => setTimeout(r, 30000)); 
+          await new Promise(r => setTimeout(r, 200000)); 
           this.getElapsedTime();
           this.startInterval(pieceVal.WHITE);
       }
@@ -99,7 +98,7 @@ class Stats extends Component {
                 });
             }
         }
-        //console.log(this.elapsedMinute * 60 + this.timerCounter)
+        console.log(this.elapsedMinute * 60 + this.timerCounter)
       }
 
       getElapsedTime = () =>{
