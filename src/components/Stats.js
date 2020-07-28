@@ -70,11 +70,11 @@ class Stats extends Component {
             this.timerCounter = 0;
             if (piece === pieceVal.BLACK){
                 this.setState({
-                    blackMinute: blackMinute - 1,
+                    blackMinute: this.state.blackMinute - 1,
                 });
             } else {
                 this.setState({
-                    blackMinute: whiteMinute - 1,
+                    blackMinute: this.state.whiteMinute - 1,
                 });
             }
         }
