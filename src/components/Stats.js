@@ -16,7 +16,15 @@ class Stats extends Component {
             opponent: "🤖 Beep-Boop",
             someoneWon: false,
             winnerMsg: "",
-        }
+            whiteTime: 100,
+            blackTime: 100,
+            whiteMinute: 29,
+            blackMinute: 29,
+        };
+        this.timerCounter = 0;
+        this.interval = null;
+        this.elapsedMinute = 0;
+
     }
 
     componentDidMount = () => {
@@ -25,6 +33,7 @@ class Stats extends Component {
         this.props.updateDetails.opp(this.setOpp);
         this.props.updateDetails.lastMove(this.setLastMove);
         this.props.updateDetails.winner(this.setWinner);
+        this.startInterval(pieceVal.BLACK);
     }
 
     setPieceCount = (inCount) => {
@@ -37,7 +46,47 @@ class Stats extends Component {
             empty: empty,
         });
       }
-    
+      
+      startInterval = (piece) =>{
+        this.interval = setInterval(this.timerFunc, 1667, piece);
+      }
+
+      timerFunc = (piece) => {
+        this.timerCounter += 1;
+        let secondHand = 100 - Math.round(100*this.timerCounter/60);
+        debugger;
+        if (piece === pieceVal.BLACK){
+            this.setState({
+                blackTime: secondHand,
+            });
+        } else {
+            this.setState({
+                whiteTime: secondHand,
+            });
+        }
+
+        if (this.timerCounter >= 100){
+            this.elapsedMinute += 1;
+            this.timerCounter = 0;
+            if (piece === pieceVal.BLACK){
+                this.setState({
+                    blackMinute: blackMinute - 1,
+                });
+            } else {
+                this.setState({
+                    blackMinute: whiteMinute - 1,
+                });
+            }
+        }
+      }
+
+      getElapsedTime = () =>{
+        clearInterval(this.interval);
+        this.interval = null;
+        return this.elapsedMinute * 60 + this.timerCounter;
+      }
+
+
       setWinner = (won, winner) => {
         let winningPiece = "⚫⚪ Its a Tie!"
         winningPiece = (winner === pieceVal.BLACK) ? "⚫ Black Has Won!" :"⚪ White Has Won!";
@@ -117,9 +166,22 @@ class Stats extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-12">
+                    <div className="col-4">
+                        <h6><span role="img" aria-label="blkCircle">⚫</span> {this.state.blackMinute} Min</h6>
+                    </div>
+                    <div className="col-8">
                         <div className="progress">
-                        <div className="progress-bar bg-info" role="progressbar" style={{width: "50%"}} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div className="progress-bar bg-info" role="progressbar" style={{width:`${this.state.blackTime}%`}} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-4">
+                        <h6><span role="img" aria-label="whiteCircle">⚪</span> {this.state.whiteMinute} Min</h6>
+                    </div>
+                    <div className="col-8">
+                        <div className="progress">
+                        <div className="progress-bar bg-info" role="progressbar" style={{width:`${this.state.whiteTime}%`}} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                 </div>
