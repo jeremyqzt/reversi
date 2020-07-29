@@ -26,23 +26,35 @@ class Stats extends Component {
         this.elapsedMinute = 0;
         this.secondaryTime = 0;
         this.timerRunning = false;
+        this.cachedState = {};
+        this.storeCachedState();
 
+    }
+
+    storeCachedState = () => {
+        this.cachedState.blackTime = this.state.blackTime;
+        this.cachedState.whiteTime = this.state.whiteTime;
+        this.cachedState.whiteMinute = this.state.whiteMinute;
+        this.cachedState.blackMinute = this.state.blackMinute;
     }
 
     setTime = (blackTime, whiteTime) => {
         if (blackTime !== null){
-            this.setState({
-                blackMinute: blackTime.min,
-                blackTime: Math.round(blackTime.sec * 100/60),
-            });
+            this.cachedState.blackMinute = blackTime.min;
+            this.cachedState.blackTime = Math.round(blackTime.sec * 100/60);
         }
         
         if (whiteTime !== null){
-            this.setState({
-                whiteMinute: whiteTime.min,
-                whiteTime: Math.round(whiteTime.sec * 100/60),
-            });
+            this.cachedState.whiteMinute = whiteTime.min;
+            this.cachedState.whiteTime = Math.round(whiteTime.sec * 100/60);
         }
+
+        this.setState({
+            whiteMinute: this.cachedState.whiteMinute,
+            blackMinute: this.cachedState.blackMinute,
+            blackTime: this.cachedState.blackTime,
+            whiteTime: this.cachedState.whiteTime,
+        });
     }
     componentDidMount = () => {
         this.props.updateDetails.turn(this.setTurn);
@@ -53,8 +65,8 @@ class Stats extends Component {
         this.props.updateDetails.startTime(this.startInterval);
         this.props.updateDetails.endTime(this.getElapsedTime);
         this.props.updateDetails.setTime(this.setTime);
-        //this.setTime({min: 10, sec: 30}, {min: 15, sec: 45})
-        //this.test();
+        this.setTime({min: 10, sec: 30}, {min: 15, sec: 45})
+        this.test();
     }
 
     setPieceCount = (inCount) => {
@@ -72,7 +84,7 @@ class Stats extends Component {
         if (this.timerRunning === true){
             return;
         }
-        this.secondaryTime = (piece === pieceVal.BLACK) ? this.state.blackTime: this.state.whiteTime;
+        this.secondaryTime = (piece === pieceVal.BLACK) ? this.cachedState.blackTime: this.cachedState.whiteTime;
         this.secondaryTime = (60-Math.round(60*this.secondaryTime/100));
         this.interval = setInterval(this.timerFunc, 1000, piece);
         this.timerRunning = true;
@@ -135,6 +147,7 @@ class Stats extends Component {
         this.elapsedMinute = 0;
         this.timerCounter = 0;
         this.timerRunning = false;
+        this.storeCachedState();
         return ret;
       }
 
