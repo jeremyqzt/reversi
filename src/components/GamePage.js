@@ -24,6 +24,7 @@ class Game extends Component {
         this.setTimer = this.setTimer.bind(this);
         this.handleMoveStart = this.handleMoveStart.bind(this);
         this.incrementRegister = this.incrementRegister.bind(this);
+        this.handleTimeSet = this.handleTimeSet.bind(this);
 
         this.aiDiff = 0;
         this.state = {
@@ -40,7 +41,7 @@ class Game extends Component {
             reversi: new reversiLogic(),
             moveAct: this.handleMoveAction,
             moveStartAct: this.handleMoveStart,
-            setTime: this.setTimer,
+            setTime: this.handleTimeSet,
             moveEndAct: this.handleMoveEnd,
             aiDiff: this.aiDiff,
         };
@@ -88,6 +89,10 @@ class Game extends Component {
 
     handleMoveEnd = () => {
         return this.timerEnd();
+    }
+
+    handleTimeSet = (blk, white) => {
+        this.timerSet(blk, white);
     }
 
     handleMoveAction = () =>{

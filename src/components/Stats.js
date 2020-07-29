@@ -65,8 +65,8 @@ class Stats extends Component {
         this.props.updateDetails.startTime(this.startInterval);
         this.props.updateDetails.endTime(this.getElapsedTime);
         this.props.updateDetails.setTime(this.setTime);
-        this.setTime({min: 10, sec: 30}, {min: 15, sec: 45})
-        this.test();
+        //this.setTime({min: 10, sec: 30}, {min: 15, sec: 45})
+        //this.test();
     }
 
     setPieceCount = (inCount) => {

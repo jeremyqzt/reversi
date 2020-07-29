@@ -107,6 +107,8 @@ class Board extends Component {
           //console.log(result.game);
           this.reversiGame.setPlayers(result.game.users);
           this.over = result.game.over;
+          //Can only set timer if timer is stopped
+          //this.setTime({min: 10, sec: 30}, {min: 15, sec: 45});
           
           if (result.game.move === this.moveId + 1){
             this.moveId = result.game.move;
@@ -175,7 +177,6 @@ class Board extends Component {
       makeServerMove(data){
         let postLocat = "api/game"
         data.time = this.moveEndAct();
-        console.log(data.time);
         serverComm.post(data, postLocat)
         .then(result =>{return result.json()})
         .then((result) => {
