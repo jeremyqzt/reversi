@@ -8,10 +8,9 @@ urlpatterns = [
     path('user/update/', ManageReversiUser.as_view(), name="update_user"),
     path('user/delete/', ManageReversiUser.as_view(), name="delete_user"),
 
-    path('token/temp/', TempPassView.as_view(), name="temp_user"),
+    path('check/', TokenChecker.as_view(), name="verify_token"),
 
     path('token/obtain/', jwt_views.TokenObtainPairView.as_view(), name='token_create'),
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
-    path('token/check/', TokenChecker.as_view(), name="verify_token"),
 
 ]

@@ -15,10 +15,6 @@ class TempPassView(APIView):
         json = {"access": tok}
         return Response(json, status=status.HTTP_200_OK)
 
-class TokenChecker(APIView):
-    def post(self, request, format='json'):
-        return Response({}, status=status.HTTP_200_OK)
-
 class CreateReversiUser(APIView):
     permission_classes = [permissions.AllowAny]
     authentication_classes = []
@@ -48,3 +44,8 @@ class ManageReversiUser(APIView):
             return Response({}, status=status.HTTP_200_OK)
         
         return Response({"detail": "Incorrect Old Password!"}, status=status.HTTP_401_UNAUTHORIZED)
+
+class TokenChecker(APIView):
+    def get(self, request, format='json'):
+        print(request)
+        return Response({}, status=status.HTTP_200_OK)

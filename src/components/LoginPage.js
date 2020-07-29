@@ -29,9 +29,10 @@ class LoginPage extends Component {
     this.setState({
       checkingToken: true,
     });
-    let postLocat = "auth/token/check";
+    let postLocat = "auth/check/";
     serverComm.get(postLocat)
     .then((result) => {
+      console.log(result.status)
       if (result.status === 200){
         window.location.href = '/home';
       } else {
