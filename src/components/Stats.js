@@ -28,13 +28,32 @@ class Stats extends Component {
 
     }
 
+    setTime = (blackTime, whiteTime) => {
+        if (blackTime !== null){
+            this.setState({
+                blackMinute: blackTime.min,
+                blackTime: Math.round(blackTime.sec * 100/60),
+            });
+        }
+        
+        if (whiteTime !== null){
+            this.setState({
+                whiteMinute: whiteTime.min,
+                whiteTime: Math.round(whiteTime.sec * 100/60),
+            });
+        }
+    }
     componentDidMount = () => {
         this.props.updateDetails.turn(this.setTurn);
         this.props.updateDetails.count(this.setPieceCount);
         this.props.updateDetails.opp(this.setOpp);
         this.props.updateDetails.lastMove(this.setLastMove);
         this.props.updateDetails.winner(this.setWinner);
-        this.test();
+        this.props.updateDetails.startTime(this.startInterval);
+        this.props.updateDetails.endTime(this.getElapsedTime);
+        this.props.updateDetails.setTime(this.setTime);
+        //this.setTime({min: 10, sec: 30}, {min: 15, sec: 45})
+        //this.test();
     }
 
     setPieceCount = (inCount) => {
@@ -50,6 +69,7 @@ class Stats extends Component {
       
       startInterval = (piece) =>{
         this.secondaryTime = (piece === pieceVal.BLACK) ? this.state.blackTime: this.state.whiteTime;
+        console.log( this.state.blackTime)
         this.secondaryTime = (60-Math.round(60*this.secondaryTime/100));
         this.interval = setInterval(this.timerFunc, 1000, piece);
       }

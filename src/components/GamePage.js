@@ -19,10 +19,16 @@ class Game extends Component {
         this.handleOpp = this.handleOpp.bind(this);
         this.lastMove = this.lastMove.bind(this);
         this.setWinner = this.setWinner.bind(this);
+        this.startTimer = this.startTimer.bind(this);
+        this.endTimer = this.endTimer.bind(this);
+        this.setTimer = this.setTimer.bind(this);
+        this.handleMoveStart = this.handleMoveStart.bind(this);
+        this.incrementRegister = this.incrementRegister.bind(this);
 
         this.aiDiff = 0;
         this.state = {
             gameOver: false,
+            boardVisible: false,
         };
 
         if (this.props.location.search.length > 0){
@@ -33,8 +39,10 @@ class Game extends Component {
         this.reversiGame = {
             reversi: new reversiLogic(),
             moveAct: this.handleMoveAction,
+            moveStartAct: this.handleMoveStart,
+            moveEndAct: this.handleMoveEnd,
             aiDiff: this.aiDiff,
-        }
+        };
 
         this.statsMan = {
             turn: this.handleTurn,
@@ -42,7 +50,12 @@ class Game extends Component {
             opp: this.handleOpp,
             lastMove: this.lastMove,
             winner: this.setWinner,
-        }
+            startTime: this.startTimer,
+            endTime: this.endTimer,
+            setTime: this.setTimer,
+        };
+
+        this.statsRegisterCount = 0;
 
         JwtUtils.checkTokenPresent();
     }
@@ -67,6 +80,15 @@ class Game extends Component {
                 return "WTF Something Went Wront!"
             }
     }
+
+    handleMoveStart = (turn) => {
+        this.timerStart(turn);
+    }
+
+    handleMoveEnd = () => {
+        return this.timerEnd();
+    }
+
     handleMoveAction = () =>{
         let turn = this.reversiGame.reversi.getTurn();
         let pieceCount = this.reversiGame.reversi.getPieceCount();
@@ -97,25 +119,55 @@ class Game extends Component {
         this.setGameWinner(gameOver, winner);
     }
 
+    incrementRegister = () => {
+        this.statsRegisterCount += 1;
+        console.log(this.statsRegisterCount)
+        if (this.statsRegisterCount === 8){
+            this.setState({
+                boardVisible: true,
+            });
+        }
+    }
+
     lastMove = (func)=> {
         this.setLastMove = func;
+        this.incrementRegister();
     }
 
     setWinner = (func)=> {
         this.setGameWinner = func;
+        this.incrementRegister();
     }
 
     handleTurn = (func) =>{
         this.setTurn = func;
+        this.incrementRegister();
     }
 
     handleCount = (func) =>{
         this.setCount = func;
+        this.incrementRegister();
+    }
+
+    startTimer = (func) =>{
+        this.timerStart = func;
+        this.incrementRegister();
+    }
+
+    endTimer = (func) =>{
+        this.timerEnd = func;
+        this.incrementRegister();
+    }
+
+    setTimer = (func) =>{
+        this.timerSet = func;
+        this.incrementRegister();
     }
 
     handleOpp = (func) =>{
         this.setOpp = func;
         this.setOpp(this.getOppStr(this.aiDiff));
+        this.incrementRegister();
     }
 
     render(){
@@ -131,7 +183,7 @@ class Game extends Component {
                 </div>
                 <div className="container">
                     <div className = "row">
-                        <Board gameDetails={this.reversiGame}/>
+                        {(this.state.boardVisible) &&  <Board gameDetails={this.reversiGame}/>}
                         <Stats updateDetails={this.statsMan}/>
                     </div>
                 </div>
