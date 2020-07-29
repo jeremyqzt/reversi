@@ -25,6 +25,7 @@ class Stats extends Component {
         this.interval = null;
         this.elapsedMinute = 0;
         this.secondaryTime = 0;
+        this.timerRunning = false;
 
     }
 
@@ -68,10 +69,13 @@ class Stats extends Component {
       }
       
       startInterval = (piece) =>{
+        if (this.timerRunning === true){
+            return;
+        }
         this.secondaryTime = (piece === pieceVal.BLACK) ? this.state.blackTime: this.state.whiteTime;
-        console.log( this.state.blackTime)
         this.secondaryTime = (60-Math.round(60*this.secondaryTime/100));
         this.interval = setInterval(this.timerFunc, 1000, piece);
+        this.timerRunning = true;
       }
 
       async test(){
@@ -118,15 +122,19 @@ class Stats extends Component {
                 });
             }
         }
-        console.log(this.elapsedMinute * 60 + this.timerCounter)
+        //console.log(this.elapsedMinute * 60 + this.timerCounter)
       }
 
       getElapsedTime = () =>{
+        if (this.timerRunning === false){
+            return 0;
+        }
         clearInterval(this.interval);
         this.interval = null;
         let ret = this.elapsedMinute * 60 + this.timerCounter;
         this.elapsedMinute = 0;
         this.timerCounter = 0;
+        this.timerRunning = false;
         return ret;
       }
 

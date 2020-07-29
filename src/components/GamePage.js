@@ -40,6 +40,7 @@ class Game extends Component {
             reversi: new reversiLogic(),
             moveAct: this.handleMoveAction,
             moveStartAct: this.handleMoveStart,
+            setTime: this.setTimer,
             moveEndAct: this.handleMoveEnd,
             aiDiff: this.aiDiff,
         };
@@ -121,7 +122,6 @@ class Game extends Component {
 
     incrementRegister = () => {
         this.statsRegisterCount += 1;
-        console.log(this.statsRegisterCount)
         if (this.statsRegisterCount === 8){
             this.setState({
                 boardVisible: true,

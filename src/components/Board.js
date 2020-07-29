@@ -25,6 +25,11 @@ class Board extends Component {
         this.highlighted = [];
         this.availMoves = {};
         this.reversiGame = this.props.gameDetails.reversi; //new reversiLogic();
+        this.moveStartAct = this.props.gameDetails.moveStartAct;
+        this.moveEndAct = this.props.gameDetails.moveEndAct;
+        this.setTime = this.props.gameDetails.setTime;
+
+
         this.updateStats = this.props.gameDetails.moveAct;
         this.mode = this.props.gameDetails.aiDiff;
         this.state = {
@@ -102,10 +107,12 @@ class Board extends Component {
           //console.log(result.game);
           this.reversiGame.setPlayers(result.game.users);
           this.over = result.game.over;
+          
           if (result.game.move === this.moveId + 1){
             this.moveId = result.game.move;
             let lastMove = result.game.lastMove;
             let move = reversiLogic.objFromKey(lastMove);
+            this.moveEndAct();
             if (this.reversiGame.makeMove(move) !== null){
               this.removeHighlight();
               this.placePieceSound();
@@ -118,6 +125,7 @@ class Board extends Component {
             this.reversiGame.setGrid(result.game.grid);
             this.reversiGame.setTurn(result.game.turn);
             this.reversiGame.triggerRecompute();
+            this.moveEndAct();
           }
           this.updateStats();
           this.getAvail();
@@ -129,15 +137,16 @@ class Board extends Component {
           } else {
             this.removeHighlight();
           }
+          this.moveStartAct(result.game.turn);
         })
         .catch((e)=> {
           this.moveId = -1;
           //console.log(result.game.move)
         });
 
-        while (document.hidden){
-          await new Promise(r => setTimeout(r, 1000));
-        }
+        //while (document.hidden){
+        //  await new Promise(r => setTimeout(r, 1000));
+        //}
          
         await new Promise(r => setTimeout(r, 2000)); //I guess try for 2.0 sec
         if (!this.over){
@@ -165,6 +174,8 @@ class Board extends Component {
 
       makeServerMove(data){
         let postLocat = "api/game"
+        data.time = this.moveEndAct();
+        console.log(data.time);
         serverComm.post(data, postLocat)
         .then(result =>{return result.json()})
         .then((result) => {
