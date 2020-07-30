@@ -34,6 +34,7 @@ class Board extends Component {
         this.mode = this.props.gameDetails.aiDiff;
         this.state = {
             grid: grid,
+            okayToRender: false,
         };
 
         this.over = false;
@@ -100,6 +101,13 @@ class Board extends Component {
         .then((result) => {
           this.okayToMove = false;
           //console.log(result.game.move)
+
+          if (result.game.users.length >= 2){
+            this.setState({
+              okayToRender: true,
+            });
+            console.log("OKay")
+          }
           if (this.blockServerUpdate){
             this.blockServerUpdate = false;
             return;
@@ -344,8 +352,11 @@ class Board extends Component {
       let grid = this.state.grid;
         return (
           <>
-            <div className = "col-8">
-              {grid}
+            <div className = "col-8 text-center">
+              {this.state.okayToRender && grid}
+              {!this.state.okayToRender && <div className="spinner-border" role="status">
+                <span className="sr-only">Loading...</span>
+              </div>}
             </div>
           </>
         );
