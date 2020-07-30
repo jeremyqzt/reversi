@@ -47,6 +47,8 @@ class gameViewSet(views.APIView):
         username = str(request.user)
         row = int(request.data["row"])
         col = int(request.data["col"])
+        timeused = 5
+        
         move = gridLocation(row, col)
         serializer = gameSerializer()
         gid = serializer.getGidFromUser(username)

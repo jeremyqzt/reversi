@@ -1,6 +1,7 @@
 import enum
 import json
 from .reversiQSet import reversiQSet
+from .timer import timer
 
 class GridState(enum.IntEnum):
     EMPTY = 0

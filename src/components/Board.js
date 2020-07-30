@@ -106,8 +106,8 @@ class Board extends Component {
             this.setState({
               okayToRender: true,
             });
-            console.log("OKay")
           }
+
           if (this.blockServerUpdate){
             this.blockServerUpdate = false;
             return;
