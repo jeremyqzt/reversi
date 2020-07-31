@@ -32,7 +32,8 @@ class gameViewSet(views.APIView):
         ret["lastMove"] = game.last
         ret["lastFlip"] = game.turned
         ret["lastTurn"] = game.lastTurn
-        print(game)
+        ret["whiteTimeLeft"] = game.whiteTimeRemain
+        ret["blackTimeLeft"] = game.blackTimeRemain
 
         if getGrid:
             ret["grid"] = game.grid
