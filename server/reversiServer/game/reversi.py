@@ -1,7 +1,7 @@
 import enum
 import json
 from .reversiQSet import reversiQSet
-from .timer import timer
+from .timer import ReversiTimer
 
 class GridState(enum.IntEnum):
     EMPTY = 0
@@ -57,7 +57,7 @@ class gridLocation():
         return ("R%dC%d" % (self.row, self.col))
 
 class reversi:
-    def __init__(self, grid = None, turn = None, moveId = 0, lastTurn = GridState.BLACK, over = False, additionalMeta = {}, lastMove = "", lastFlipped = []):
+    def __init__(self, grid = None, turn = None, moveId = 0, lastTurn = GridState.BLACK, over = False, additionalMeta = {}, lastMove = "", lastFlipped = [], lastMoveTime = 0, black=1800, white=1800):
         self.additionalMeta = additionalMeta
 
         if(grid == None):
@@ -82,6 +82,12 @@ class reversi:
         self.avail = self.computeAvailable(self.turn)
         self.lastMove = lastMove
         self.lastFlipped = lastFlipped
+        if(0 == lastMoveTime):
+            lastMoveTime = ReversiTimer.getCurrent()
+        
+        self.lastMoveTime = lastMoveTime
+        self.blackTimeRemain = black
+        self.whiteTimeRemain = white
 
     def getTurn(self):
         return self.turn
@@ -98,6 +104,14 @@ class reversi:
 
         self.grid[move.row][move.col] = self.turn
         self.lastTurn = self.turn
+
+        if (self.turn == GridState.BLACK):
+            self.blackTimeRemain = self.blackTimeRemain - (ReversiTimer.getCurrent() - int(self.lastMoveTime))
+        else:
+            self.whiteTimeRemain = self.whiteTimeRemain - (ReversiTimer.getCurrent() - int(self.lastMoveTime))
+
+        self.lastMoveTime = ReversiTimer.getCurrent()
+
         self.lastMove = str(move)
         self.lastFlipped = [str(i) for i in self.avail[move]] 
 
@@ -113,10 +127,11 @@ class reversi:
             self.avail = self.computeAvailable(self.turn)
             if self.avail == {}:
                 self.over = True
-        return reversiQSet(self.grid, self.turn, self.moveId + 1, self.lastMove, self.lastTurn, self.lastFlipped, self.over, self.additionalMeta)
+
+        return reversiQSet(self.grid, self.turn, self.moveId + 1, self.lastMove, self.lastTurn, self.lastFlipped, self.over, self.additionalMeta, self.lastMoveTime, self.blackTimeRemain, self.whiteTimeRemain)
 
     def getCurrentQset(self):
-        return reversiQSet(self.grid, self.turn, self.moveId, self.lastMove, self.lastTurn, self.lastFlipped, self.over,  self.additionalMeta)
+        return reversiQSet(self.grid, self.turn, self.moveId, self.lastMove, self.lastTurn, self.lastFlipped, self.over,  self.additionalMeta, self.lastMoveTime, self.blackTimeRemain, self.whiteTimeRemain)
 
     def computeAvailable(self, color):
         ret = {}

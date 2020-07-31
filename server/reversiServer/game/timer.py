@@ -1,7 +1,7 @@
 from datetime import datetime
 import time
 
-class timer:
+class ReversiTimer:
     @staticmethod
     def getCurrent():
         now = datetime.now()

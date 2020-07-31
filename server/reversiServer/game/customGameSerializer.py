@@ -32,7 +32,7 @@ class gameSerializer():
             if (not "grid" in existingRoom):
                 game = reversi()
             else:
-                game = reversi(existingRoom["grid"], existingRoom["turn"], existingRoom["move"], existingRoom["lastTurn"], existingRoom["over"], existingRoom, existingRoom["last"], existingRoom["turned"])
+                game = reversi(existingRoom["grid"], existingRoom["turn"], existingRoom["move"], existingRoom["lastTurn"], existingRoom["over"], existingRoom, existingRoom["last"], existingRoom["turned"], existingRoom["lastMoveTime"], existingRoom["blackTime"], existingRoom["whiteTime"])
         else:
             return {"error": "No Room", "errCode": GameErrors.NO_ROOM.value} #No such room...
         
@@ -44,11 +44,12 @@ class gameSerializer():
         #Must have a room (because lobby)
         existingRoom = model.getState(gid)
         game, ret = (None, None)
+        lastTime = existingRoom["lastMoveTime"]
         if(existingRoom != None):
             if (not "grid" in existingRoom):
                 game = reversi()
             else:
-                game = reversi(existingRoom["grid"], existingRoom["turn"], existingRoom["move"], existingRoom["lastTurn"], existingRoom["over"], {}, existingRoom["last"], existingRoom["turned"])
+                game = reversi(existingRoom["grid"], existingRoom["turn"], existingRoom["move"], existingRoom["lastTurn"], existingRoom["over"], {}, existingRoom["last"], existingRoom["turned"], existingRoom["lastMoveTime"], existingRoom["blackTime"], existingRoom["whiteTime"])
         else:
             return {"error": "No Room", "errCode": GameErrors.NO_ROOM.value} #No such room...
 
@@ -61,11 +62,8 @@ class gameSerializer():
         if (not maker in existingRoom["users"]):
             return {"error": "Not Such Player", "errCode": GameErrors.PLAYER_NOT_IN_GAME.value}
 
-        #print(turnIdx)
-        #print(existingRoom["users"][turnIdx])
         ret = {"error": "Not Your Turn", "errCode": GameErrors.NOT_YOUR_TURN.value}
 
-        #if (True):
         if (maker == existingRoom["users"][turnIdx]):
             ret = game.makeMove(move).getDict()
             existingRoom.update(ret)
@@ -81,7 +79,7 @@ class gameSerializer():
             if (not "grid" in existingRoom):
                 game = reversi()
             else:
-                game = reversi(existingRoom["grid"], existingRoom["turn"], existingRoom["move"], existingRoom["lastTurn"], existingRoom["over"], {}, existingRoom["last"], existingRoom["turned"])
+                game = reversi(existingRoom["grid"], existingRoom["turn"], existingRoom["move"], existingRoom["lastTurn"], existingRoom["over"], {}, existingRoom["last"], existingRoom["turned"], existingRoom["lastMoveTime"], existingRoom["blackTime"], existingRoom["whiteTime"])
         else:
             return {"error": "No Room", "errCode": GameErrors.NO_ROOM.value} #No such room...
 
