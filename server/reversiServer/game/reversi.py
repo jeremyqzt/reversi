@@ -106,9 +106,9 @@ class reversi:
         self.lastTurn = self.turn
 
         if (self.turn == GridState.BLACK):
-            self.blackTimeRemain = self.blackTimeRemain - (ReversiTimer.getCurrent() - int(self.lastMoveTime))
+            self.blackTimeRemain = self.blackTimeRemain - (ReversiTimer.getCurrent() - int(self.lastMoveTime)) + 1
         else:
-            self.whiteTimeRemain = self.whiteTimeRemain - (ReversiTimer.getCurrent() - int(self.lastMoveTime))
+            self.whiteTimeRemain = self.whiteTimeRemain - (ReversiTimer.getCurrent() - int(self.lastMoveTime)) + 1
 
         self.lastMoveTime = ReversiTimer.getCurrent()
 
