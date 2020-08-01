@@ -3,6 +3,7 @@ from rest_framework import permissions, views, response, status
 from .customGameSerializer import gameSerializer
 from .reversi import gridLocation
 import json
+from .timer import ReversiTimer
 
 class gameViewSet(views.APIView):
     def get(self, request):
@@ -34,6 +35,11 @@ class gameViewSet(views.APIView):
         ret["lastTurn"] = game.lastTurn
         ret["whiteTimeLeft"] = game.whiteTimeRemain
         ret["blackTimeLeft"] = game.blackTimeRemain
+
+        if (game.turn == 1):
+            ret["blackTimeLeft"] = ret["blackTimeLeft"] - (ReversiTimer.getDifference(game.moveTime))
+        else:
+            ret["whiteTimeLeft"] = ret["blackTimeLeft"] - (ReversiTimer.getDifference(game.moveTime))
 
         if getGrid:
             ret["grid"] = game.grid
