@@ -39,7 +39,7 @@ class gameViewSet(views.APIView):
         if (game.turn == 1):
             ret["blackTimeLeft"] = ret["blackTimeLeft"] - (ReversiTimer.getDifference(game.moveTime))
         else:
-            ret["whiteTimeLeft"] = ret["blackTimeLeft"] - (ReversiTimer.getDifference(game.moveTime))
+            ret["whiteTimeLeft"] = ret["whiteTimeLeft"] - (ReversiTimer.getDifference(game.moveTime))
 
         if getGrid:
             ret["grid"] = game.grid
