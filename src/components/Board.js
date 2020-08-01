@@ -8,6 +8,7 @@ import '../css/alerts.css';
 
 import reversiLogic from '../reversiLogic/reversi';
 import serverComm from '../utils/serverComm.js';
+import timerHelper from '../utils/timeHelper.js';
 
 import boardClickSound from '../sound/move.wav';
 import clickSound from '../sound/click.wav';
@@ -117,7 +118,11 @@ class Board extends Component {
           this.over = result.game.over;
           //Can only set timer if timer is stopped
           //this.setTime({min: 10, sec: 30}, {min: 15, sec: 45});
-          
+          let blackTimeleft = timerHelper.convertSecondMin(result.game.blackTimeLeft);
+          let whiteTimeleft = timerHelper.convertSecondMin(result.game.whiteTimeLeft);
+          console.log(result.game);
+          this.setTime(blackTimeleft, whiteTimeleft);
+
           if (result.game.move === this.moveId + 1){
             this.moveId = result.game.move;
             let lastMove = result.game.lastMove;

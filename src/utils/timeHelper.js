@@ -1,4 +1,4 @@
-class timerHerlpe{
+class timerHelper{
     static convertSecondMin(second){
         const secInMin = 60;
         let min = Math.floor(second/secInMin);
@@ -13,3 +13,5 @@ class timerHerlpe{
         return min.min*60 + min.sec;
     }
 }
+
+export default timerHelper; 
