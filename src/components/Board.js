@@ -122,7 +122,6 @@ class Board extends Component {
             this.moveId = result.game.move;
             let lastMove = result.game.lastMove;
             let move = reversiLogic.objFromKey(lastMove);
-            this.moveEndAct();
             if (this.reversiGame.makeMove(move) !== null){
               this.removeHighlight();
               this.placePieceSound();
@@ -135,7 +134,6 @@ class Board extends Component {
             this.reversiGame.setGrid(result.game.grid);
             this.reversiGame.setTurn(result.game.turn);
             this.reversiGame.triggerRecompute();
-            this.moveEndAct();
           }
           this.updateStats();
           this.getAvail();
@@ -147,7 +145,6 @@ class Board extends Component {
           } else {
             this.removeHighlight();
           }
-          this.moveStartAct(result.game.turn);
         })
         .catch((e)=> {
           this.moveId = -1;
