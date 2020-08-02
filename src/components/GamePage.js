@@ -129,7 +129,7 @@ class Game extends Component {
             this.setLastMove(lastMove);
         }
         this.setCount(pieceCount);
-        this.setOpp(this.getOppStr(this.aiDiff));
+        this.setOpp(this.getOppStr(this.aiDiff), this.aiDiff);
         this.setGameWinner(gameOver, winner);
     }
 

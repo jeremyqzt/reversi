@@ -22,6 +22,7 @@ class Stats extends Component {
             blackTime: 0,
             whiteMinute: 30,
             blackMinute: 30,
+            timerVis: false,
         };
         this.timerCounter = 0;
         this.interval = null;
@@ -201,9 +202,15 @@ class Stats extends Component {
         });
       }
 
-      setOpp = (opp) => {
+      setOpp = (opp, mode) => {
+        let timerVis = false;
+        if (mode === 5){
+            timerVis = true;
+        }
+
         this.setState({
             opponent: opp,
+            timerVis: timerVis,
         });
       }
 
@@ -250,7 +257,7 @@ class Stats extends Component {
                         <p className="text-center">{this.state.opponent}</p>
                     </div>
                 </div>
-                {true && <><div className="row">
+                {this.state.timerVis && <><div className="row">
                     <div className="col-2"></div>
                     <div className="col-4">
                         <h6><span role="img" aria-label="blkCircle">⚫</span> {this.state.blackMinute} Min</h6>

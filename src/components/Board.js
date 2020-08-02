@@ -33,9 +33,11 @@ class Board extends Component {
 
         this.updateStats = this.props.gameDetails.moveAct;
         this.mode = this.props.gameDetails.aiDiff;
+
+
         this.state = {
             grid: grid,
-            okayToRender: false,
+            okayToRender: (this.mode !== 5),
         };
 
         this.over = false;
@@ -133,7 +135,7 @@ class Board extends Component {
               this.placePieceSound();
               this.serverMoved(move, `R${move.row}C${move.col}`, result.game.lastTurn);
             }
-          } else if(result.game.move !== this.moveId && result.game.over === false){
+          } else if(result.game.move !== this.moveId){
             this.moveId = result.game.move;
             this.reRenderGrid(result.game.grid);
             this.removeHighlight();
@@ -292,7 +294,6 @@ class Board extends Component {
         }
       }
 
-      
       registerPiece = (i, j, obj) => {
         this.gridRef[i][j] = obj;
         this.pieceOutstanding -= 1;
