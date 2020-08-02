@@ -12,6 +12,7 @@ class CreateLobbyCard extends Component {
             playerW: "...",
             inLobby: true,
             compMounted: false,
+            readyToStart: false,
         }
         this.handleJoin = this.handleJoin.bind(this);
         this.handleLobbyUpdate = this.handleLobbyUpdate.bind(this);
@@ -54,13 +55,17 @@ class CreateLobbyCard extends Component {
     }
 
 
-    setPlayers(pArr, room){
+    setPlayers(pArr, room, me){
         let pB = pArr[0].split("@")[0];
         let pW = (pArr.length > 1)? pArr[1].split("@")[0]: "...";
         let inLobby = false;
-
+        let readyToStart = false;
         if (room !== undefined){
             inLobby = true;
+        }
+
+        if (pArr.length >= 2 && me === pArr[0]){
+            readyToStart = true;
         }
 
         this.setState({
@@ -68,6 +73,7 @@ class CreateLobbyCard extends Component {
             playerW: pW,
             room: room,
             inLobby: inLobby,
+            readyToStart: readyToStart,
         })
     }
 
@@ -114,9 +120,9 @@ class CreateLobbyCard extends Component {
         serverComm.get(roomLocat)
         .then(result =>{return result.json()})
         .then((result) => {
-            console.log(result)
+            //console.log(result)
             if (Object.keys(result).length > 1){
-                this.setPlayers(result.users, result.room);
+                this.setPlayers(result.users, result.room, result.you);
                 if(result.started){
                     if (result.started.length < 2){
                         if (!(result.started.includes(result.you))){
@@ -139,6 +145,7 @@ class CreateLobbyCard extends Component {
             playerW: "...",
             room: "None",
             inLobby: false,
+            readyToStart: false,
         });
     }
 
@@ -167,7 +174,7 @@ class CreateLobbyCard extends Component {
                         <div className="row">
                             <div className="col-3"></div>
                             <div className="col-6">
-                                <button onClick={this.handleCreate}  className="btn btn-outline-dark w-100" disabled={this.state.inLobby && this.state.compMounted}>Create</button>
+                                <button onClick={this.handleCreate}  className="btn btn-outline-dark w-100" disabled={this.state.inLobby || !this.state.compMounted}>Create</button>
                             </div>
                             <div className="col-3"></div>
                         </div>
@@ -182,7 +189,7 @@ class CreateLobbyCard extends Component {
                             <div className="input-group mb-10">
                             <input type="text" className="form-control" id="room" placeholder="Enter ID" aria-label="opp" aria-describedby="basic-addon2" />
                             <div className="input-group-append">
-                                <button className="btn btn-outline-secondary" type="button" onClick={this.handleJoin} disabled={this.state.inLobby && this.state.compMounted}>Join Room</button>
+                                <button className="btn btn-outline-secondary" type="button" onClick={this.handleJoin} disabled={this.state.inLobby || !this.state.compMounted}>Join Room</button>
                             </div>
                             </div>
                             <div className="col-1"></div>
@@ -192,14 +199,14 @@ class CreateLobbyCard extends Component {
                 <div className="col-6">
                     <div className="card-body">
                         <h5 className="card-title">Current: {this.state.room}</h5>
-                        <p className="card-text noSelect"><span role="img" aria-label="blackCircle">⚫</span> {this.state.playerB} Vs. <span role="img" aria-label="whiteCircle"> {this.state.playerW}⚪</span></p>
+                        <p className="card-text noSelect"><span role="img" aria-label="blackCircle">⚫</span> {this.state.playerB} {this.state.inLobby && <span role="img" aria-label="crown">(👑) </span>} Vs. <span role="img" aria-label="whiteCircle"> {this.state.playerW}⚪</span></p>
                         <div className="row">
                             <div className="col-1"></div>
                             <div className="col-5">
-                                <button className="btn btn-outline-danger w-100" onClick={this.handleLeave} disabled={!this.state.inLobby && this.state.compMounted}>Leave</button>
+                                <button className="btn btn-outline-danger w-100" onClick={this.handleLeave} disabled={!this.state.inLobby || !this.state.compMounted}>Leave</button>
                             </div>
                             <div className="col-5">
-                                <button onClick={this.handleGameStart} className="btn btn-outline-success w-100" disabled={!this.state.inLobby && this.state.compMounted}>Start</button>
+                                <button onClick={this.handleGameStart} className="btn btn-outline-success w-100" disabled={!this.state.inLobby  || !this.state.readyToStart ||  !this.state.compMounted}>Start</button>
                             </div>
                             <div className="col-1"></div>
                         </div>
