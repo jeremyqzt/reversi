@@ -8,6 +8,7 @@ import RulesPage from './components/RulesPage';
 import AboutPage from './components/AboutPage';
 import AccountPage from './components/AccountPage';
 import LandingPage from './components/LandingPage';
+import Page404 from './components/404Page';
 
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -19,13 +20,14 @@ ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Switch>
-        <Route path="/board" component={GamePage} />
-        <Route path="/home" component={HomePage} />
-        <Route path="/rules" component={RulesPage} />
-        <Route path="/about" component={AboutPage} />
-        <Route path="/account" component={AccountPage} />
-        <Route path="/login" component={LoginPage} />
-        <Route path="/" component={LandingPage} />
+        <Route exact path="/board" component={GamePage} />
+        <Route exact path="/home" component={HomePage} />
+        <Route exact path="/rules" component={RulesPage} />
+        <Route exact path="/about" component={AboutPage} />
+        <Route exact path="/account" component={AccountPage} />
+        <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/" component={LandingPage} />
+        <Route component={Page404} />
       </Switch>
     </Router>
   </React.StrictMode>,
