@@ -49,11 +49,11 @@ class gameViewSet(views.APIView):
             ret["over"] = game.over
 
         if (ReversiTimer.isTimedOut(ret["whiteTimeLeft"])):
-            ret["blackTimeLeft"] = 0
+            ret["whiteTimeLeft"] = 0
             ret["over"] = True
     
         if (ReversiTimer.isTimedOut(ret["blackTimeLeft"])):
-            ret["whiteTimeLeft"] = 0
+            ret["blackTimeLeft"] = 0
             ret["over"] = True
 
         return response.Response({"game": ret}, status=status.HTTP_200_OK)
