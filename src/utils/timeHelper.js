@@ -1,5 +1,9 @@
 class timerHelper{
     static convertSecondMin(second){
+        if (second < 0){
+            second = 0;
+        }
+
         const secInMin = 60;
         let min = Math.floor(second/secInMin);
         let sec = Math.round(second % secInMin);
