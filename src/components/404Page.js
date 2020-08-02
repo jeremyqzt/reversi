@@ -24,7 +24,7 @@ class Page404 extends Component {
 
     async goHome(){
         await new Promise(r => setTimeout(r, 5000));
-        //window.location.href = '/home';
+        window.location.href = '/home';
     }
 
     render(){
