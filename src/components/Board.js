@@ -101,7 +101,6 @@ class Board extends Component {
         })
         .then((result) => {
           this.okayToMove = false;
-          //console.log(result.game.move)
 
           if (result.game.users.length >= 2){
             this.setState({
@@ -113,17 +112,19 @@ class Board extends Component {
             this.blockServerUpdate = false;
             return;
           }
-          //console.log(result.game);
+
           this.reversiGame.setPlayers(result.game.users);
           this.over = result.game.over;
-          //Can only set timer if timer is stopped
+
+          //Can only set timer if timer is stopped, but we never start so...
           //this.setTime({min: 10, sec: 30}, {min: 15, sec: 45});
           let blackTimeleft = timerHelper.convertSecondMin(result.game.blackTimeLeft);
           let whiteTimeleft = timerHelper.convertSecondMin(result.game.whiteTimeLeft);
-          console.log(result.game);
+          //console.log(result.game);
           this.setTime(blackTimeleft, whiteTimeleft);
+          this.reversiGame.setTimeRemain(blackTimeleft, whiteTimeleft);
 
-          if (result.game.move === this.moveId + 1){
+          if (result.game.move === this.moveId + 1 && result.game.over === false){
             this.moveId = result.game.move;
             let lastMove = result.game.lastMove;
             let move = reversiLogic.objFromKey(lastMove);
@@ -132,7 +133,7 @@ class Board extends Component {
               this.placePieceSound();
               this.serverMoved(move, `R${move.row}C${move.col}`, result.game.lastTurn);
             }
-          } else if(result.game.move !== this.moveId){
+          } else if(result.game.move !== this.moveId && result.game.over === false){
             this.moveId = result.game.move;
             this.reRenderGrid(result.game.grid);
             this.removeHighlight();
@@ -144,7 +145,7 @@ class Board extends Component {
           this.getAvail();
           let serverTurnIdx = result.game.turn - 1;
           let currentTurn = result.game.users[serverTurnIdx];
-          if (currentTurn === result.game.you){
+          if (currentTurn === result.game.you && result.game.over === false){
             this.postMoveHumanHelp();
             this.okayToMove = true;
           } else {

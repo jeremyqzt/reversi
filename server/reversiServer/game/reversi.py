@@ -57,7 +57,7 @@ class gridLocation():
         return ("R%dC%d" % (self.row, self.col))
 
 class reversi:
-    def __init__(self, grid = None, turn = None, moveId = 0, lastTurn = GridState.BLACK, over = False, additionalMeta = {}, lastMove = "", lastFlipped = [], lastMoveTime = None, black=1800, white=1800):
+    def __init__(self, grid = None, turn = None, moveId = 0, lastTurn = GridState.BLACK, over = False, additionalMeta = {}, lastMove = "", lastFlipped = [], lastMoveTime = None, black=50, white=50):
         self.additionalMeta = additionalMeta
 
         if(grid == None):

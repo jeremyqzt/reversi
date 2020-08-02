@@ -22,8 +22,22 @@ class reversiLogic{
 		this.madeMoves = 0;
 		this.lastMove = null;
 		this.playerArr = null;
+
+		this.whiteTimeLeft = 1800;
+		this.blackTimeLeft = 1800;
 	}
 
+	setTimeRemain(black, white){
+		this.blackTimeLeft = black;
+		this.whiteTimeLeft = white;
+	}
+
+	getTimeRemain(){
+		return {
+			black: this.blackTimeLeft,
+			white: this.whiteTimeLeft,
+		};
+	}
 	setPlayers = (playerArr) => {
 		this.playerArr = playerArr;
 	}

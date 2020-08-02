@@ -100,6 +100,8 @@ class Game extends Component {
         let pieceCount = this.reversiGame.reversi.getPieceCount();
 
         let gameOver = this.reversiGame.reversi.getOver();
+        let timeRemain = this.reversiGame.reversi.getTimeRemain();
+        
         //console.log(gameOver)
         //game is over
         let winner = pieceVal.EMPTY;
@@ -108,6 +110,12 @@ class Game extends Component {
                 winner = pieceVal.BLACK;
             } else if(pieceCount.white > pieceCount.black ){
                 winner = pieceVal.WHITE;
+            }
+
+            if (timeRemain.black <= 0){
+                winner = pieceVal.WHITE;
+            } else if(timeRemain.white <= 0){
+                winner = pieceVal.BLACK;
             }
         }
 

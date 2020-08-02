@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 
 import '../css/board.css';
 import { pieceVal } from './Piece';
+import serverComm from '../utils/serverComm.js';
 
 class Stats extends Component {
     constructor(props) {
         super(props);
+        this.goHome = this.goHome.bind(this);
         this.state = {
             white: 2,
             black: 2,
@@ -28,7 +30,6 @@ class Stats extends Component {
         this.timerRunning = false;
         this.cachedState = {};
         this.storeCachedState();
-
     }
 
     storeCachedState = () => {
@@ -36,6 +37,36 @@ class Stats extends Component {
         this.cachedState.whiteTime = this.state.whiteTime;
         this.cachedState.whiteMinute = this.state.whiteMinute;
         this.cachedState.blackMinute = this.state.blackMinute;
+    }
+
+    goHome = () =>{
+        let postLocat = "lobby/room/";
+        serverComm.get(postLocat)
+        .then(result =>{return result.json()})
+        .then((result) => {
+           
+            let data = {
+                gid: result.room,
+                join: false,
+            };
+
+            serverComm.post(data, postLocat)
+            .then(result => {
+                if (result.status > 400){
+                    return Promise.reject(result.json());
+                }
+                return result.json();
+            })
+            .then((result) => {
+                window.location.href = "/home";
+            })
+            .catch((result)=> {
+                console.log(result);
+            });
+        })
+        .catch((result)=> {
+            console.log(result);
+        });
     }
 
     setTime = (blackTime, whiteTime) => {
@@ -201,7 +232,7 @@ class Stats extends Component {
                     <div className="col-12">
                         <h2 className="text-center"> <span role="img" aria-label="winner">👑</span>Winner</h2>
                         <p className="text-center"> {this.state.winnerMsg} </p>
-                        <a href="/home" className="btn btn-outline-dark w-100"> Go Home </a>
+                        <button onClick={this.goHome} className="btn btn-outline-dark w-100"> Go Home </button>
                     </div>
                 </div>}
                 <div className="row">
@@ -219,7 +250,7 @@ class Stats extends Component {
                         <p className="text-center">{this.state.opponent}</p>
                     </div>
                 </div>
-                <div className="row">
+                {true && <><div className="row">
                     <div className="col-2"></div>
                     <div className="col-4">
                         <h6><span role="img" aria-label="blkCircle">⚫</span> {this.state.blackMinute} Min</h6>
@@ -242,7 +273,7 @@ class Stats extends Component {
                         </div>
                     </div>
                     <div className="col-2"></div>
-                </div>
+                </div> </>}
                 <div className="row">
                     <div className="col-12">
                         <h2 className="text-center">Last Move</h2>
