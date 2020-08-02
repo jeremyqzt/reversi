@@ -13,3 +13,8 @@ class ReversiTimer:
         now = datetime.now()
         timestamp = datetime.timestamp(now)
         return timestamp - last
+
+    @staticmethod
+    def isTimedOut(remaining):
+        if (0 >= remaining):
+            return True

@@ -48,7 +48,16 @@ class gameViewSet(views.APIView):
         if getGameOver:
             ret["over"] = game.over
 
+        if (ReversiTimer.isTimedOut(ret["whiteTimeLeft"])):
+            ret["blackTimeLeft"] = 0
+            ret["over"] = True
+    
+        if (ReversiTimer.isTimedOut(ret["blackTimeLeft"])):
+            ret["whiteTimeLeft"] = 0
+            ret["over"] = True
+
         return response.Response({"game": ret}, status=status.HTTP_200_OK)
+
     def post(self, request):
         if (not "row" in request.data) or (not "col" in request.data):
             return Response(None, status=status.HTTP_404_NOT_FOUND)

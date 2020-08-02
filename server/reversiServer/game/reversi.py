@@ -61,7 +61,7 @@ class reversi:
         self.additionalMeta = additionalMeta
 
         if(grid == None):
-            self.grid = self.__initBoard(8,8)
+            self.grid = self.__initBoard(8, 8)
             self.__initPiece(self.grid)
         else:
             self.grid = grid

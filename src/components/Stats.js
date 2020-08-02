@@ -16,10 +16,10 @@ class Stats extends Component {
             opponent: "🤖 Beep-Boop",
             someoneWon: false,
             winnerMsg: "",
-            whiteTime: 100,
-            blackTime: 100,
-            whiteMinute: 29,
-            blackMinute: 29,
+            whiteTime: 0,
+            blackTime: 0,
+            whiteMinute: 30,
+            blackMinute: 30,
         };
         this.timerCounter = 0;
         this.interval = null;
