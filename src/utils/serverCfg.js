@@ -1,5 +1,5 @@
 const serverCfg = {
-    server: "http://localhost:8000/",
+    server: "",
     cors: "cors",
 }
 
