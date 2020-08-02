@@ -122,7 +122,7 @@ class Board extends Component {
           //this.setTime({min: 10, sec: 30}, {min: 15, sec: 45});
           let blackTimeleft = timerHelper.convertSecondMin(result.game.blackTimeLeft);
           let whiteTimeleft = timerHelper.convertSecondMin(result.game.whiteTimeLeft);
-          console.log(result.game);
+          //console.log(result.game);
           this.setTime(blackTimeleft, whiteTimeleft);
           this.reversiGame.setTimeRemain(blackTimeleft, whiteTimeleft);
 
