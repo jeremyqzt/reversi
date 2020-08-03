@@ -8,8 +8,8 @@ class LandingPage extends Component {
         <div className="reversiColors">
             <div className="d-flex fullScreen">
                 <div className="justify-content-center center text-center">
-                    <h1 className="noSelect reversiHeader big">Online Reversi</h1>
-                    <a href="/login" role="button" className="btn btn-primary" style={{color: "lavender", backgroundColor: "#505160", borderColor: "lavender"}}>Play Now!</a>
+                    <h1 className="noSelect reversiHeader big">Reversi</h1>
+                    <a href="/login" role="button" className="btn btn-primary" style={{color: "lavender", backgroundColor: "#505160", borderColor: "lavender"}}>Get Started</a>
                 </div>
             </div>
         </div>
