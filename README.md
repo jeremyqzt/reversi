@@ -1,11 +1,22 @@
 # Reversi
 
-## Server Aspect
+
+## Building and installing
+
+The frontend is based off of React, it sits in the project root. It must be built before it can be used. Install the dependencies by:
+```
+npm install
+cd server; pip install requirements.txt; cd ..;
+npm run build
+```
+
+Also remember to set a secret key using the environment variable: SECRET_KEY
+
+## Run he server
 This server is based off of django. Go to the server directory and run:
 ```
 cd /server/reversiServer/
-pipenv shell
-python manage.py runserver
+uwsgi --http :8000 --module reversiServer.wsgi --static-map /=$(pwd)/build
 ```
 
 ## DB Server Aspect
@@ -17,19 +28,3 @@ Go to the db server direction and run:
 cd  nodeDb
 node ./dbStarter.js
 ```
-
-## FrontEnd
-
-The frontend is based off of React, it sits in the project root. Run it using:
-```
-npm start
-```
-
-Login/register is functional currently. logging in will return a Json web token for access. next step is to save to local storage.
-
-The Django server must be started first for this to work.
-
-## Todo
-
-Webpack the react add and server with Django
-
