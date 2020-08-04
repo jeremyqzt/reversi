@@ -16,7 +16,8 @@ Also remember to set a secret key using the environment variable: SECRET_KEY
 This server is based off of django. Go to the server directory and run:
 ```
 cd /server/reversiServer/
-uwsgi --http :8000 --module reversiServer.wsgi --static-map /=$(pwd)/build
+uwsgi --http :80 --module reversiServer.wsgi --static-map /=$(pwd)/build
+
 ```
 
 ## DB Server Aspect
