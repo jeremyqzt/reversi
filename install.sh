@@ -1,8 +1,12 @@
 #!/bin/bash
 
-cp systemd/* /lib/systemd/system
+cp systemd/*.service /lib/systemd/system
 systemctl unmask nodeDb
 systemctl unmask reversi
 systemctl enable nodeDb
 systemctl enable reversi
 systemctl start nodeDb
+
+cp systemd/nginx.conf /etc/nginx/sites-available/reversi.conf
+ln -sf /etc/nginx/sites-available/reversi.conf /etc/nginx/sites-enabled/
+systemctl reload nginx
