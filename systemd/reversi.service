@@ -5,7 +5,7 @@ After=network.target nodeDb.service
 [Service]
 User=root
 WorkingDirectory=/home/jeremyq357/reversi/server/reversiServer
-ExecStart=/home/jeremyq357/.local/bin/uwsgi -s /home/jeremyq357/reversi/server/sockets/sock1 --module reversiServer.wsgi --static-map /=$(pwd)/build --chmod-socket=666 &; /home/jeremyq357/.local/bin/uwsgi -s /home/jeremyq357/reversi/server/sockets/sock2 --module reversiServer.wsgi --static-map /=$(pwd)/build
+ExecStart=/home/jeremyq357/.local/bin/uwsgi -s /home/jeremyq357/reversi/server/sockets/sock1 --module reversiServer.wsgi --static-map /=/home/jeremyq357/reversi/server/reversiServer/build --chmod-socket=666 &; /home/jeremyq357/.local/bin/uwsgi -s /home/jeremyq357/reversi/server/sockets/sock2 --module reversiServer.wsgi --static-map /=/home/jeremyq357/reversi/server/reversiServer/build
 Restart=always
 RestartSec=10
 
