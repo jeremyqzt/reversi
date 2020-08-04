@@ -7,7 +7,7 @@ systemctl enable nodeDb
 systemctl enable reversi
 systemctl start nodeDb
 
-mkdir /etc/reversi
+mkdir -p /etc/reversi
 cp systemd/uwsgi_params /etc/reversi/
 
 cp systemd/nginx.conf /etc/nginx/sites-available/reversi.conf
