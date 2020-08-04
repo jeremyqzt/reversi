@@ -26,7 +26,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-ALLOWED_HOSTS = [ gethostname(), gethostbyname(gethostname()), "192.168.0.111", "localhost"] 
+ALLOWED_HOSTS = [ gethostname(), gethostbyname(gethostname()), "192.168.0.111", "localhost", "*"] 
 
 # Application definition
 
