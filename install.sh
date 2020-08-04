@@ -10,12 +10,17 @@ cp systemd/uwsgi_params /etc/reversi/
 
 cp systemd/nginx.conf /etc/nginx/sites-available/reversi.conf
 ln -sf /etc/nginx/sites-available/reversi.conf /etc/nginx/sites-enabled/
-systemctl reload nginx
 
 cd server/reversiServer/
 
 /home/jeremyq357/.local/bin/uwsgi --daemonize \
             -s /home/jeremyq357/reversi/server/sockets/sock1 --module reversiServer.wsgi \
-            --disable-logging --static-map /=/home/jeremyq357/reversi/server/reversiServer/build --chmod-socket=666 & \
-            /home/jeremyq357/.local/bin/uwsgi --daemonize -s /home/jeremyq357/reversi/server/sockets/sock2 \
-            --module reversiServer.wsgi --disable-logging --static-map /=/home/jeremyq357/reversi/server/reversiServer/build
+            --disable-logging --static-map /=/home/jeremyq357/reversi/server/reversiServer/build --chmod-socket=666 
+
+/home/jeremyq357/.local/bin/uwsgi --daemonize \
+            -s /home/jeremyq357/reversi/server/sockets/sock2 --module reversiServer.wsgi \
+            --disable-logging --static-map /=/home/jeremyq357/reversi/server/reversiServer/build --chmod-socket=666 
+
+systemctl reload nginx
+
+cd ../../
