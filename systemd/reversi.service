@@ -1,0 +1,14 @@
+[Unit]
+Description=uWSGI service to serve the Reversi Game
+After=network.target
+
+
+[Service]
+User=root
+WorkingDirectory=/home/azureuser/reversi/server/reversiServer
+ExecStart=/usr/bin/uwsgi -s /tmp/uwsgi.sock --module reversiServer.wsgi --static-map /=$(pwd)/build
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
