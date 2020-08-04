@@ -13,7 +13,6 @@ class Page404 extends Component {
         let postLocat = "auth/check/";
         serverComm.get(postLocat)
         .then((result) => {
-          console.log(result.status)
           if (result.status === 200){
             this.goHome();
           } else {

@@ -20,7 +20,7 @@ cd server/reversiServer/
             -s /home/jeremyq357/reversi/server/sockets/sock1 --module reversiServer.wsgi \
             --disable-logging --static-map /=/home/jeremyq357/reversi/server/reversiServer/build --chmod-socket=666 --daemonize /var/log/reversi1.log
 
-/home/jeremyq357/.local/bin/uwsgi --daemonize \
+/home/jeremyq357/.local/bin/uwsgi \
             -s /home/jeremyq357/reversi/server/sockets/sock2 --module reversiServer.wsgi \
             --disable-logging --static-map /=/home/jeremyq357/reversi/server/reversiServer/build --chmod-socket=666 --daemonize /var/log/reversi2.log
 
