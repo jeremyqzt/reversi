@@ -1,6 +1,9 @@
 #!/bin/bash
 
+kill $(pidof uwsgi)
+
 cp systemd/*.service /lib/systemd/system
+
 systemctl unmask nodeDb
 systemctl enable nodeDb
 systemctl start nodeDb
@@ -22,5 +25,3 @@ cd server/reversiServer/
             --disable-logging --static-map /=/home/jeremyq357/reversi/server/reversiServer/build --chmod-socket=666 
 
 systemctl reload nginx
-
-cd ../../
