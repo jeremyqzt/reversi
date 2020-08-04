@@ -1,3 +1,5 @@
+#!/bin/bash
+
 cp systemd/* /lib/systemd/system
 systemctl unmask nodeDb
 systemctl unmask reversi
