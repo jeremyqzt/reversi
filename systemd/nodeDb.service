@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 User=root
-WorkingDirectory=/home/azureuser/reversi/
+WorkingDirectory=/home/jeremyq357/reversi/
 ExecStart=/usr/bin/node ./nodeDb/dbStarter.js
 Restart=always
 RestartSec=10

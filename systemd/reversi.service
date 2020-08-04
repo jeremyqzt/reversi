@@ -4,7 +4,7 @@ After=network.target nodeDb.service
 
 [Service]
 User=root
-WorkingDirectory=/home/azureuser/reversi/server/reversiServer
+WorkingDirectory=/home/jeremyq357/reversi/server/reversiServer
 ExecStart=/usr/bin/uwsgi -s /tmp/uwsgi.sock --module reversiServer.wsgi --static-map /=$(pwd)/build
 Restart=always
 RestartSec=10
