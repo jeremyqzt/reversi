@@ -1,7 +1,6 @@
 [Unit]
 Description=uWSGI service to serve the Reversi Game
-After=network.target
-
+After=network.target nodeDb.service
 
 [Service]
 User=root

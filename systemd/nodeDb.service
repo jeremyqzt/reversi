@@ -1,0 +1,13 @@
+[Unit]
+Description=In memory database to store reversi game states
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/home/azureuser/reversi/server/reversiServer
+ExecStart=/usr/bin/node nodeDb/dbStarter.js
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
