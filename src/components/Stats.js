@@ -41,6 +41,12 @@ class Stats extends Component {
     }
 
     goHome = () =>{
+        //untimed game, so can just leave
+        if (!this.state.timerVis){
+            window.location.href = "/home";
+            return;
+        }
+
         let postLocat = "lobby/room/";
         serverComm.get(postLocat)
         .then(result =>{return result.json()})
