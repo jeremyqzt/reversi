@@ -19,6 +19,9 @@ class ReversiRoom(APIView):
         gid = request.data["gid"]
         join = request.data["join"]
 
+        if (gid == ""):
+            return Response({}, status=status.HTTP_404_NOT_FOUND)
+
         username = str(request.user)
         serializer = LobbySerializer()
         if (None == serializer.join(username, gid, join)):

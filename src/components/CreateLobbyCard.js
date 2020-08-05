@@ -13,6 +13,7 @@ class CreateLobbyCard extends Component {
             inLobby: true,
             compMounted: false,
             readyToStart: false,
+            invalidRoom: "",
         }
         this.handleJoin = this.handleJoin.bind(this);
         this.handleLobbyUpdate = this.handleLobbyUpdate.bind(this);
@@ -99,6 +100,11 @@ class CreateLobbyCard extends Component {
     handleJoin = (event) => {
         event.preventDefault();
         let postLocat = "lobby/room/";
+
+        this.setState({
+            invalidRoom: "",
+        });
+
         let roomVal = document.getElementById('room').value;
         let data = {
             gid: roomVal,
@@ -106,12 +112,19 @@ class CreateLobbyCard extends Component {
         };
 
         serverComm.post(data, postLocat)
-        .then(result =>{return result.json()})
+        .then(result =>{
+            if(result.status === 200){
+                return result.json()
+            }
+            return Promise.reject(result);
+        })
         .then((result) => {
             this.handleLobbyUpdate();
         })
         .catch((result)=> {
-            alert("No Such Room");
+            this.setState({
+                invalidRoom: "is-invalid",
+            });
         });
     }
 
@@ -183,11 +196,11 @@ class CreateLobbyCard extends Component {
                 <div className="col-3">
                     <div className="card-body">
                         <h5 className="card-title">Join a Room</h5>
-                        <p className="card-text">To face a opponent!</p>
+                        <p className="card-text">{this.state.invalidRoom === "" ? "Enter Room": "Invalid Room"}</p>
                         <div className="row">
                             <div className="col-1"></div>
                             <div className="input-group mb-10">
-                            <input type="text" className="form-control" id="room" placeholder="Enter ID" aria-label="opp" aria-describedby="basic-addon2" />
+                            <input type="text" className={`form-control ${this.state.invalidRoom}`} id="room" placeholder="Enter ID" aria-label="opp" aria-describedby="basic-addon2" />
                             <div className="input-group-append">
                                 <button className="btn btn-outline-secondary" type="button" onClick={this.handleJoin} disabled={this.state.inLobby || !this.state.compMounted}>Join Room</button>
                             </div>
