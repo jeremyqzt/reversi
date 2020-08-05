@@ -224,6 +224,7 @@ class Board extends Component {
       }
 
       async getAiMove(){
+        this.okayToMove = false;
         let aiTurn = pieceVal.WHITE;
         let aiMove = null;
         let minMaxStat = null
@@ -255,7 +256,7 @@ class Board extends Component {
         }
         //Once done, help human again
         this.postMoveHumanHelp();
-
+        this.okayToMove = true;
       }
 
       async flipBulkPieces(toFlip, flipTo){
