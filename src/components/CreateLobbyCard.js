@@ -113,7 +113,7 @@ class CreateLobbyCard extends Component {
 
         serverComm.post(data, postLocat)
         .then(result =>{
-            if(result.status === 200){
+            if(result.status >= 200 || result.status < 300){
                 return result.json()
             }
             return Promise.reject(result);
@@ -185,11 +185,11 @@ class CreateLobbyCard extends Component {
                         <h5 className="card-title">Create a Room</h5>
                         <p className="card-text">For others to join!</p>
                         <div className="row">
-                            <div className="col-3"></div>
-                            <div className="col-6">
+                            <div className="col-1"></div>
+                            <div className="col-10">
                                 <button onClick={this.handleCreate}  className="btn btn-outline-dark w-100" disabled={this.state.inLobby || !this.state.compMounted}>Create</button>
                             </div>
-                            <div className="col-3"></div>
+                            <div className="col-1"></div>
                         </div>
                     </div>
                 </div>
@@ -214,14 +214,14 @@ class CreateLobbyCard extends Component {
                         <h5 className="card-title">Current: {this.state.room}</h5>
                         <p className="card-text noSelect"><span role="img" aria-label="blackCircle">⚫</span> {this.state.playerB} {this.state.inLobby && <span role="img" aria-label="crown">(👑) </span>} Vs. <span role="img" aria-label="whiteCircle"> {this.state.playerW}⚪</span></p>
                         <div className="row">
-                            <div className="col-1"></div>
-                            <div className="col-5">
+                            <div className="col-2"></div>
+                            <div className="col-4">
                                 <button className="btn btn-outline-danger w-100" onClick={this.handleLeave} disabled={!this.state.inLobby || !this.state.compMounted}>Leave</button>
                             </div>
-                            <div className="col-5">
+                            <div className="col-4">
                                 <button onClick={this.handleGameStart} className="btn btn-outline-success w-100" disabled={!this.state.inLobby  || !this.state.readyToStart ||  !this.state.compMounted}>Start</button>
                             </div>
-                            <div className="col-1"></div>
+                            <div className="col-2"></div>
                         </div>
                     </div>
                 </div>
