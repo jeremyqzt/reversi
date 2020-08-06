@@ -28,7 +28,7 @@ class HomePage extends Component {
         };
 
         let twoPlayerRenderDetails = {
-            bigTitle: "2️⃣ Local Multiplayer",
+            bigTitle: "2️⃣ Offline Multiplayer",
             smallTitle: "🎎 Against a Friend.",
             description: "Play Reversi Against Someone Sitting Next to You.",
             href: "/board?mode=0",
@@ -38,17 +38,17 @@ class HomePage extends Component {
         let ruleDetails = {
             bigTitle: "📖 Reversi Rules",
             smallTitle: "",
-            description: "Read up on Game Rules.",
+            description: "Read up on game rules.",
             href: "/rules",
-            navMsg: "Show Me",
+            navMsg: "Read~",
         };
 
         let accountDetails = {
-            bigTitle: "🔒 Account Management",
+            bigTitle: "⚙️ Account Management",
             smallTitle: "",
-            description: "Make Edits to Your Account.",
+            description: "Make changes to your account.",
             href: "/account",
-            navMsg: "Make Edits",
+            navMsg: "Edits~",
         };
 
         let aboutDetails = {
@@ -56,7 +56,7 @@ class HomePage extends Component {
             smallTitle: "",
             description: "See Any Bugs? Contact Us.",
             href: "/about",
-            navMsg: "Contact",
+            navMsg: "Contact~",
         };
         return (
             <div>           

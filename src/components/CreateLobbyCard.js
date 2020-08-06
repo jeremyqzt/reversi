@@ -178,7 +178,7 @@ class CreateLobbyCard extends Component {
     render(){
         return (
             <div className="card text-center h-100">
-            <h5 className="card-header bg-dark text-light noSelect"><span role="img" aria-label="multi">⚔️</span> Multiplayer - Start a Lobby <span role="img" aria-label="multi">🛡️</span></h5>
+            <h5 className="card-header bg-dark text-light noSelect"><span role="img" aria-label="multi">⚔️</span> Multiplayer<span role="img" aria-label="multi">🛡️</span></h5>
             <div className="row">
                 <div className="col-3">
                     <div className="card-body">
@@ -196,7 +196,7 @@ class CreateLobbyCard extends Component {
                 <div className="col-3">
                     <div className="card-body">
                         <h5 className="card-title">Join a Room</h5>
-                        <p className="card-text">{this.state.invalidRoom === "" ? "Enter Room": "Invalid Room"}</p>
+                        <p className="card-text">{this.state.invalidRoom === "" ? "Enter Room!": "Invalid Room!"}</p>
                         <div className="row">
                             <div className="col-1"></div>
                             <div className="input-group mb-10">
@@ -216,10 +216,10 @@ class CreateLobbyCard extends Component {
                         <div className="row">
                             <div className="col-2"></div>
                             <div className="col-4">
-                                <button className="btn btn-outline-danger w-100" onClick={this.handleLeave} disabled={!this.state.inLobby || !this.state.compMounted}>Leave</button>
+                                <button className="btn btn-outline-danger w-100" onClick={this.handleLeave} disabled={!this.state.inLobby || !this.state.compMounted}>Leave¡</button>
                             </div>
                             <div className="col-4">
-                                <button onClick={this.handleGameStart} className="btn btn-outline-success w-100" disabled={!this.state.inLobby  || !this.state.readyToStart ||  !this.state.compMounted}>Start</button>
+                                <button onClick={this.handleGameStart} className="btn btn-outline-success w-100" disabled={!this.state.inLobby  || !this.state.readyToStart ||  !this.state.compMounted}>Start!</button>
                             </div>
                             <div className="col-2"></div>
                         </div>
