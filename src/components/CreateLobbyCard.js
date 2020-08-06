@@ -113,7 +113,7 @@ class CreateLobbyCard extends Component {
 
         serverComm.post(data, postLocat)
         .then(result =>{
-            if(result.status >= 200 || result.status < 300){
+            if(result.status >= 200 && result.status < 300){
                 return result.json()
             }
             return Promise.reject(result.json());
