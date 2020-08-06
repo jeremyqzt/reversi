@@ -116,7 +116,7 @@ class CreateLobbyCard extends Component {
             if(result.status >= 200 || result.status < 300){
                 return result.json()
             }
-            return Promise.reject(result);
+            return Promise.reject(result.json());
         })
         .then((result) => {
             this.handleLobbyUpdate();
