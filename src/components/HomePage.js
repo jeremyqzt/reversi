@@ -17,8 +17,8 @@ class HomePage extends Component {
     render(){
         let aiRenderDetails = {
             bigTitle: "1️⃣ Single Player",
-            smallTitle: "🤖 Against the AI.",
-            description: "Play Reversi Against a Computer Player.",
+            smallTitle: "🤖 Against the Bot.",
+            description: "Play reversi against a computer player.",
             hrefEasy: "/board?mode=1",
             navMsgEasy: "🍂 EZ",
             hrefMed: "/board?mode=2",
@@ -29,8 +29,8 @@ class HomePage extends Component {
 
         let twoPlayerRenderDetails = {
             bigTitle: "2️⃣ Offline Multiplayer",
-            smallTitle: "🎎 Against a Friend.",
-            description: "Play Reversi Against Someone Sitting Next to You.",
+            smallTitle: "🎎 Against a friend.",
+            description: "Play reversi against someone sitting next to you.",
             href: "/board?mode=0",
             navMsg: "Get Started!",
         };
@@ -54,7 +54,7 @@ class HomePage extends Component {
         let aboutDetails = {
             bigTitle: "📇 Contact Us",
             smallTitle: "",
-            description: "See Any Bugs? Contact Us.",
+            description: "See any bugs? Contact us!",
             href: "/about",
             navMsg: "Contact~",
         };
