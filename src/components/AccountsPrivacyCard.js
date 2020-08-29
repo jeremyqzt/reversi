@@ -16,7 +16,7 @@ class AccountPrivacyCard extends Component {
                     </p>
                     <h5 className="card-title">You can choose to</h5>
                     <p className="card-text">
-                        Permanently delete your account from our servers - it will be removed
+                        Permanently delete your account from our servers - all related data is removed instantly
                     </p>
                 </div>
             </div>
