@@ -240,7 +240,7 @@ class Board extends Component {
               await new Promise(r => setTimeout(r, 300));
               break;
             case 3:
-              minMaxStat = await MinMaxAlgo.getMinMaxMove(this.reversiGame.getDuplicateGrid(), 4, aiTurn);
+              minMaxStat = await MinMaxAlgo.getMinMaxMove(this.reversiGame.getDuplicateGrid(), 5, aiTurn);
               aiMove = minMaxStat.move;
               //console.log(minMaxStat.score);
               break;
