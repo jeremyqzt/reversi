@@ -13,6 +13,7 @@ class Game extends Component {
     constructor(props){
         super(props);
         JwtUtils.checkTokenPresent();
+        document.body.style.overflow = "hidden"
         this.handleMoveAction = this.handleMoveAction.bind(this);
         this.handleTurn = this.handleTurn.bind(this);
         this.handleCount = this.handleCount.bind(this);
