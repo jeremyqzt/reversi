@@ -2,7 +2,7 @@
 
 This is a online reversi game, the deployed website can be found at: https://playreversi.net/
 
-uwsgi, python3.7+ and nginx must be installed independentlly firs (Use apt or any other package manager)
+uwsgi, python3.7+ and nginx must be installed independentlly first (Use apt or any other package manager)
 
 This has been tested on Windows 10 and Debian 10.
 
